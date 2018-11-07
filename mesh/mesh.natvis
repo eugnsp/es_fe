@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <Type Name="fe::View&lt;fe::Vertex_tag,*&gt;">
+    <DisplayString>vertex {{index = {index_}}}</DisplayString>
+  </Type>
+
+  <Type Name="fe::View&lt;fe::Halfedge_tag,*&gt;">
+    <DisplayString>halfedge {{index = {index_}}} : {mesh_.halfedges_[index_].vertex} -> {mesh_.halfedges_[index_ ^ 1].vertex}</DisplayString>
+    <Expand>
+      <Item Name="From vertex">mesh_.vertices_[mesh_.halfedges_[index_].vertex].point</Item>
+      <Item Name="To vertex">mesh_.vertices_[mesh_.halfedges_[index_ ^ 1].vertex].point</Item>
+      <Item Name="Next">mesh_.halfedges_[index_].next</Item>
+      <Item Name="Twin">index_ ^ 1</Item>
+    </Expand>
+  </Type>
+
+  <Type Name="fe::View&lt;fe::Face_tag,*&gt;">
+    <DisplayString>face {{index = {index_}}}</DisplayString>
+    <!--<Expand>
+      <Item Name="from vertex">mesh_.halfedges_[index_].vertex</Item>
+      <Item Name="to vertex">mesh_.halfedges_[index_ ^ 1].vertex</Item>
+      <Item Name="next">mesh_.halfedges_[index_].next</Item>
+      <Item Name="twin">index_ ^ 1</Item>
+    </Expand>-->
+  </Type>
+
+  <Type Name="fe::Random_access_iterator&lt;fe::Vertex_tag,*&gt;">
+    <DisplayString>vertex {{index = {view_.index_}}}</DisplayString>
+  </Type>
+
+  <Type Name="fe::Random_access_iterator&lt;fe::Halfedge_tag,*&gt;">
+    <DisplayString>halfedge {{index = {view_.index_}}}</DisplayString>
+  </Type>
+
+  <Type Name="fe::Random_access_iterator&lt;fe::Edge_tag,*&gt;">
+    <DisplayString>edge {{index = {view_.index_ / 2}, halfedge_index = {view_.index_}}}</DisplayString>
+  </Type>
+
+  <Type Name="fe::Random_access_iterator&lt;fe::Face_tag,*&gt;">
+    <DisplayString>face {{index = {view_.index_}}}</DisplayString>
+    <Expand>
+      <CustomListItems MaxItemsPerView="3">
+        <Variable Name="first_halfedge" InitialValue="view_.mesh_.faces_[view_.index_].halfedge"/>
+        <Variable Name="halfedge" InitialValue="first_halfedge"/>
+        <Variable Name="i" InitialValue="0"/>
+        <Loop>
+          <Item Name="vertex[{i}]">view_.mesh_.halfedges_[halfedge].vertex</Item>
+          <Exec>halfedge = view_.mesh_.halfedges_[halfedge].next</Exec>          
+          <Break Condition="halfedge == first_halfedge"/>
+          <Exec>++i</Exec>
+        </Loop>
+      </CustomListItems>
+      <CustomListItems MaxItemsPerView="3">
+        <Variable Name="first_halfedge" InitialValue="view_.mesh_.faces_[view_.index_].halfedge"/>
+        <Variable Name="halfedge" InitialValue="first_halfedge"/>
+        <Variable Name="i" InitialValue="0"/>
+        <Loop>
+          <Item Name="halfedge[{i}]">halfedge</Item>
+          <Exec>halfedge = view_.mesh_.halfedges_[halfedge].next</Exec>
+          <Break Condition="halfedge == first_halfedge"/>
+          <Exec>++i</Exec>
+        </Loop>
+      </CustomListItems>
+      <CustomListItems MaxItemsPerView="3">
+        <Variable Name="first_halfedge" InitialValue="view_.mesh_.faces_[view_.index_].halfedge"/>
+        <Variable Name="halfedge" InitialValue="first_halfedge"/>
+        <Variable Name="i" InitialValue="0"/>
+        <Loop>
+          <Item Name="face[{i}]">view_.mesh_.halfedges_[halfedge ^ 1].face</Item>
+          <Exec>halfedge = view_.mesh_.halfedges_[halfedge].next</Exec>
+          <Break Condition="halfedge == first_halfedge"/>
+          <Exec>++i</Exec>
+        </Loop>
+      </CustomListItems>
+    </Expand>
+  </Type>
+
+</AutoVisualizer>
