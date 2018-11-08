@@ -3,7 +3,7 @@
 //#include "element_quadr.hpp"
 #include <cstddef>
 
-namespace fe
+namespace es_fe
 {
 namespace internal
 {

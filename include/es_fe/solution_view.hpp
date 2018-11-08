@@ -8,7 +8,7 @@
 #include <es_util/type_traits.hpp>
 #include <cstddef>
 
-namespace fe
+namespace es_fe
 {
 template<class System, std::size_t var>
 class Solution_view;
@@ -30,7 +30,7 @@ struct Traits_impl<fe::Solution_view<System, var>>
 };
 }
 
-namespace fe
+namespace es_fe
 {
 template<class System, std::size_t var>
 class Solution_view : public la::Expression<Solution_view<System, var>>

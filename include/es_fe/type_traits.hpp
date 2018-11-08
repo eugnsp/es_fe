@@ -7,7 +7,7 @@
 
 #include <type_traits>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 //////////////////////////////////////////////////////////////////////////
 // Element tag type by index type, and vice versa
@@ -51,7 +51,7 @@ using Element_tag_by_index = typename Element_tag_by_index_impl<Element_tag>::Ty
 //////////////////////////////////////////////////////////////////////////
 }
 
-namespace fe
+namespace es_fe
 {
 	template<std::size_t var>
 using Var_index = es_util::Index<var>;
@@ -165,7 +165,7 @@ struct Circulator_type_selector<Edge_tag, Circ_tag>
 };
 }
 
-namespace fe
+namespace es_fe
 {
 template<class Element_tag, class Circ_tag>
 using Circulator = typename internal::Circulator_type_selector<Element_tag, Circ_tag>::Type;

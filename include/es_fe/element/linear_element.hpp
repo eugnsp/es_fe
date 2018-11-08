@@ -1,10 +1,13 @@
 #pragma once
-#include <es/fe/types.hpp>
+#include <es_fe/types.hpp>
 
-namespace fe::internal
+namespace es_fe::internal
 {
-// Base class for a 1D linear element with (vertex_dofs) internal dofs per vertex
-// and (edge_dofs) internal dofs per edge
+// Base class of a 1D linear element
+//
+// Template parameters:
+//		vertex_dofs		- number of internal dofs per vertex,
+//		edge_dofs		- number of internal dofs per edge.
 template<Local_index vertex_dofs, Local_index edge_dofs>
 class Linear_element
 {
@@ -53,11 +56,12 @@ public:
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	// Checks if the element has internal vertex dofs
+	// True if the element has internal vertex dofs
 	static constexpr bool has_vertex_dofs = (n_vertex_dofs > 0);
 
-	// Checks if the element has internal edge dofs
+	// True if the element has internal edge dofs
 	static constexpr bool has_edge_dofs = (n_edge_dofs > 0);
+	static constexpr bool has_cell_dofs = has_edge_dofs;
 
 	// Checks if the element has dofs of the given type
 	template<class Tag>
@@ -66,4 +70,4 @@ public:
 		return n_dofs(tag) > 0;
 	}
 };
-}
+} // namespace es_fe::internal

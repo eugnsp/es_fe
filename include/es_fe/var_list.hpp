@@ -1,7 +1,7 @@
 #pragma once
 #include <es_util/type_traits.hpp>
 
-namespace fe
+namespace es_fe
 {
 template<class... Variables>
 struct Var_list

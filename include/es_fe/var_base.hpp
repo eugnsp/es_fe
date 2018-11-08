@@ -1,19 +1,24 @@
 #pragma once
-#include "types.hpp"
+#include <es_fe/types.hpp>
 
 #include <es_util/tuple.hpp>
 #include <es_util/type_traits.hpp>
 
 #include <cassert>
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <tuple>
 #include <type_traits>
 #include <utility>
-#include <vector>
 
-namespace fe::internal
+namespace es_fe::internal
 {
+// Base class of a variable
+//
+// Template parameters:
+//		Element 		- finite element type,
+//		Bnd_conds... 	- zero of more boundary condition types.
 template<class Element_, class... Bnd_conds_>
 class Var_base
 {
@@ -29,18 +34,19 @@ private:
 	using Bnd_conds_tuple = std::tuple<std::unique_ptr<Bnd_conds_>...>;
 
 public:
-	template<std::size_t i = 0, typename... Args>
+	template<std::size_t index = 0, typename... Args>
 	void set_bnd_cond(Args&&... args)
 	{
-		using Bnd_cond = typename std::tuple_element_t<i, Bnd_conds_tuple>::element_type;
-		std::get<i>(bnd_conds_) = std::make_unique<Bnd_cond>(std::forward<Args>(args)...);
+		using Bnd_cond = typename std::tuple_element_t<index, Bnd_conds_tuple>::element_type;
+		std::get<index>(bnd_conds_) = std::make_unique<Bnd_cond>(std::forward<Args>(args)...);
 	}
 
 	template<class Func>
 	void for_each_ess_bnd_cond(Func func) const
 	{
 		es_util::tuple_for_each(
-			[&func](const auto& bnd_cond) {
+			[&func](const auto& bnd_cond)
+			{
 				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);
@@ -54,7 +60,8 @@ public:
 	void for_each_non_ess_bnd_cond(Func func) const
 	{
 		es_util::tuple_for_each(
-			[&func](const auto& bnd_cond) {
+			[&func](const auto& bnd_cond)
+			{
 				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);

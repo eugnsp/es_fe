@@ -13,7 +13,7 @@
 #include <iostream>
 #include <iomanip>
 
-namespace fe
+namespace es_fe
 {
 template<class Linear_solver, class Var_or_var_list, template<class> class T_Dof_mapper = Dof_mapper>
 class Nonlinear_system : public System<Var_or_var_list, T_Dof_mapper>

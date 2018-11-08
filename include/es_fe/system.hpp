@@ -15,7 +15,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace fe
+namespace es_fe
 {
 template<class Var_list_, template<class> class T_Dof_mapper>
 class System

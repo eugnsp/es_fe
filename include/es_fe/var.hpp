@@ -1,6 +1,5 @@
 #pragma once
-#include "types.hpp"
-
+#include <es_fe/types.hpp>
 #include <es_fe/var_base.hpp>
 
 #include <es_util/tuple.hpp>
@@ -14,15 +13,21 @@
 #include <utility>
 #include <vector>
 
-namespace fe
+namespace es_fe
 {
-template<class Element_, Local_index dim_ = 1, class... Bnd_conds>
-class Var : public internal::Var_base<Element_, Bnd_conds...>
+// Class of a variable with static dimension
+//
+// Template parameters:
+//		Element 		- finite element type,
+//		dim				- dimension of a variable (positive),
+//		Bnd_conds... 	- zero of more boundary condition types.
+template<class Element, Local_index dim_ = 1, class... Bnd_conds>
+class Var : public internal::Var_base<Element, Bnd_conds...>
 {
 	static_assert(dim_ > 0);
 
 private:
-	using Base = internal::Var_base<Element_, Bnd_conds...>;
+	using Base = internal::Var_base<Element, Bnd_conds...>;
 
 public:
 	static constexpr Local_index dim()
@@ -33,18 +38,23 @@ public:
 	template<class Tag>
 	static constexpr Local_index n_dofs(Tag tag)
 	{
-		return dim() * Element_::n_dofs(tag);
+		return dim() * Element::n_dofs(tag);
 	}
 
 	template<class Tag>
 	static constexpr Local_index n_total_dofs(Tag tag)
 	{
-		return dim() * Element_::n_total_dofs(tag);
+		return dim() * Element::n_total_dofs(tag);
 	}
 };
 
-template<class Element_, class... Bnd_conds>
-class Var_x : public internal::Var_base<Element_, Bnd_conds...>
+// Class of a variable with dynamic dimension
+//
+// Template parameters:
+//		Element 		- finite element type,
+//		Bnd_conds... 	- zero of more boundary condition types.
+template<class Element, class... Bnd_conds>
+class Var_x : public internal::Var_base<Element, Bnd_conds...>
 {
 public:
 	Local_index dim() const
@@ -60,13 +70,13 @@ public:
 	template<typename Tag>
 	Local_index n_dofs(Tag tag) const
 	{
-		return dim() * Element_::n_dofs(tag);
+		return dim() * Element::n_dofs(tag);
 	}
 
 	template<typename Tag>
 	Local_index n_total_dofs(Tag tag) const
 	{
-		return dim() * Element_::n_total_dofs(tag);
+		return dim() * Element::n_total_dofs(tag);
 	}
 
 private:

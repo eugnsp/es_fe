@@ -1,7 +1,7 @@
 #pragma once
 #include <es/fe/types.hpp>
 
-namespace fe
+namespace es_fe
 {
 //////////////////////////////////////////////////////////////////////////
 /** Mesh-related forward declarations */
