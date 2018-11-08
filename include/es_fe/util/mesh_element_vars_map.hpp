@@ -1,17 +1,15 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/type_traits.hpp>
-#include <es/fe/var_list.hpp>
-
+#include <es_fe/types.hpp>
+#include <es_fe/type_traits.hpp>
+#include <es_fe/var_list.hpp>
 #include <es_util/array.hpp>
 #include <es_util/algorithm.hpp>
-
 #include <array>
 #include <algorithm>
 #include <cstddef>
 #include <vector>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 // A class that maps a mesh element index and a variable index
 // into an element of given type:
@@ -62,7 +60,6 @@ public:
 	}
 
 private:
-	// TODO : no static_cast
 	static constexpr auto has_dof_flags = 
 		es_util::make_array(Vars::Element::has_dofs(Element_tag{})...);
 

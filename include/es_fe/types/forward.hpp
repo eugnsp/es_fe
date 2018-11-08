@@ -1,5 +1,5 @@
 #pragma once
-#include <es/fe/types.hpp>
+#include <es_fe/types/index.hpp>
 
 namespace es_fe
 {
@@ -10,7 +10,8 @@ class Mesh1;
 class Mesh2;
 
 template<class Element_tag, class Circ_tag>
-class End_circular_iterator { };
+class End_circular_iterator
+{};
 
 template<class Element_tag, class Mesh>
 class Random_access_iterator;
@@ -53,4 +54,4 @@ class System;
 
 template<class System>
 class Dof_tools;
-}
+} // namespace es_fe

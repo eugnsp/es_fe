@@ -19,19 +19,20 @@ namespace es_fe::internal
 // Template parameters:
 //		Element 		- finite element type,
 //		Bnd_conds... 	- zero of more boundary condition types.
-template<class Element_, class... Bnd_conds_>
+template<class Element_, class... Bnd_conds>
 class Var_base
 {
 public:
 	using Element = Element_;
-	static constexpr bool has_bnd_cond = sizeof...(Bnd_conds_) > 0;
+	static constexpr auto n_bnd_conds = sizeof...(Bnd_conds);
+	static constexpr bool has_bnd_cond = n_bnd_conds > 0;
 	static constexpr Local_index space_dim = Element::dim;
 
 	// TODO : remove
 	static constexpr Local_index n_total_dofs = Element::n_total_face_dofs;
 
 private:
-	using Bnd_conds_tuple = std::tuple<std::unique_ptr<Bnd_conds_>...>;
+	using Bnd_conds_tuple = std::tuple<std::unique_ptr<Bnd_conds>...>;
 
 public:
 	template<std::size_t index = 0, typename... Args>

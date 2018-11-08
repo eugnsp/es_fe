@@ -1,11 +1,13 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/element/lagrange/util.hpp>
+#include <es_fe/element/lagrange/util.hpp>
+#include <es_fe/types.hpp>
+
 #include <es_la/dense.hpp>
+
 #include <array>
 #include <cassert>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 template<Local_index order_>
 class Lagrange_base_2
@@ -51,37 +53,36 @@ public:
 			pz_dz += prod_frac_xmk_nmk(z, r[2], p);
 
 		// pz/dx = pz/dy = -pz/dz
-		return la::Vector_2d({
-			py * (px * -pz_dz + pz * px_dx) * order,
-			px * (py * -pz_dz + pz * py_dy) * order});
+		return la::Vector_2d(
+			{py * (px * -pz_dz + pz * px_dx) * order, px * (py * -pz_dz + pz * py_dy) * order});
 	}
 
 private:
-	static constexpr std::array<Local_index, 3>
-		ijk_by_dof_index(Local_index dof, Local_index order = order_)
+	static constexpr std::array<Local_index, 3> ijk_by_dof_index(Local_index dof,
+																 Local_index order = order_)
 	{
 		const auto n_total_dofs = (order + 1) * (order + 2) / 2;
 		assert(dof < n_total_dofs && order <= order_);
 
-		if (dof == 0)			// Vertex (0, 0)
+		if (dof == 0) // Vertex (0, 0)
 			return {0, 0, order};
 
-		if (dof == 1)			// Vertex (1, 0)
+		if (dof == 1) // Vertex (1, 0)
 			return {order, 0, 0};
 
-		if (dof == 2)			// Vertex (0, 1)
+		if (dof == 2) // Vertex (0, 1)
 			return {0, order, 0};
 
 		dof -= 2;
-		if (dof <= order - 1)	// Edge (0, 0) -> (1, 0)
+		if (dof <= order - 1) // Edge (0, 0) -> (1, 0)
 			return {dof, 0, order - dof};
 
 		dof -= order - 1;
-		if (dof <= order - 1)	// Edge (1, 0) -> (0, 1)
+		if (dof <= order - 1) // Edge (1, 0) -> (0, 1)
 			return {order - dof, dof, 0};
 
 		dof -= order - 1;
-		if (dof <= order - 1)	// Edge (0, 1) -> (0, 0)
+		if (dof <= order - 1) // Edge (0, 1) -> (0, 0)
 			return {0, order - dof, dof};
 
 		// Internal nodes
@@ -92,4 +93,4 @@ private:
 		return {r[0] + 1, r[1] + 1, r[2] + 1};
 	}
 };
-}
+} // namespace es_fe::internal

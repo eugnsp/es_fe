@@ -1,7 +1,7 @@
 #pragma once
-#include <es/fe/types.hpp>
+#include <es_fe/types.hpp>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 // Returns the product prod_{k=0}^{n-1} (x-k) / (n-k),
 // returns 1 if the product contains no terms (e.g., if n = 0).
@@ -25,4 +25,4 @@ constexpr double prod_frac_xmk_nmk(double x, Local_index n, Local_index k_exclud
 
 	return value;
 }
-}
+} // namespace es_fe::internal

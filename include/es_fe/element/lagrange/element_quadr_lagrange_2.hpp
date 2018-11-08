@@ -1,9 +1,9 @@
 #pragma once
-#include <es/fe/forward.hpp>
-#include <es/fe/types.hpp>
+#include <es_fe/types.hpp>
+
 #include <es_la/dense.hpp>
 
-namespace fe
+namespace es_fe
 {
 template<Local_index order, class Quadr>
 class Element_quadr<Lagrange<order, 2>, Quadr>
@@ -18,19 +18,17 @@ public:
 	// in the matrix of the size (# quadr. points) x (# dofs)
 	static constexpr la::Matrix_d<n_points, n_dofs> basis()
 	{
-		return la::make_matrix<n_points, n_dofs>(
- 			[](Local_index quadr, Local_index dof) constexpr
- 		{
- 			return Element::basis(dof, Quadr::point(quadr));
- 		});
+		return la::make_matrix<n_points, n_dofs>([](Local_index quadr, Local_index dof) constexpr
+		{
+			return Element::basis(dof, Quadr::point(quadr));
+		});
 	}
 
 	// Returns the values of gradients of basis functions at the quadrature points
 	// in the matrix of the size (# quadr. points) x (# dofs)
 	static constexpr la::Matrix<la::Vector_2d, n_points, n_dofs> basis_grad()
 	{
-		return la::make_matrix<n_points, n_dofs>(
-			[](Local_index quadr, Local_index dof) constexpr
+		return la::make_matrix<n_points, n_dofs>([](Local_index quadr, Local_index dof) constexpr
 		{
 			return Element::basis_grad(dof, Quadr::point(quadr));
 		});
@@ -40,5 +38,5 @@ public:
 template<Local_index order, class Quadr>
 struct Element_quadr<Discontinuous_lagrange<order, 2>, Quadr> :
 	Element_quadr<Lagrange<order, 2>, Quadr>
-{ };
-}
+{};
+} // namespace es_fe

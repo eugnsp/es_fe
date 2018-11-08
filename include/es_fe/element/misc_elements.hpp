@@ -10,7 +10,7 @@
 #include <utility>
 #include <array>
 
-namespace fe
+namespace es_fe
 {
 class Edge_el : public internal::Triangular_element<0, 1, 0>
 {

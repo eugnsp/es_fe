@@ -1,10 +1,11 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/element/lagrange/util.hpp>
+#include <es_fe/element/lagrange/util.hpp>
+#include <es_fe/types.hpp>
+
 #include <array>
 #include <cassert>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 template<Local_index order_>
 class Lagrange_base_1
@@ -58,4 +59,4 @@ private:
 		return {dof, order - dof};
 	}
 };
-}
+} // namespace es_fe::internal
