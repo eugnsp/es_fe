@@ -3,7 +3,7 @@
 //#include "math/LA/Vector.h"
 //#include "math/LA/VectorX.h"
 #include <es_la/base/expression.hpp>
-#include <es/geom/rect.hpp>
+#include <es_geom/rect.hpp>
 #include <es/math/const.hpp>
 #include <es_util/type_traits.hpp>
 #include <cstddef>

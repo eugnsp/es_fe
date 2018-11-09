@@ -7,7 +7,7 @@
 namespace es_fe::internal
 {
 template<class Element_tag, class Mesh>
-class View_base
+class Element_view_base
 {
 public:
 	using Element_index = Element_index_by_tag<Element_tag>;
@@ -17,10 +17,10 @@ public:
 	using Internal_index = Decay_element_index<Element_index>;
 
 public:
-	View_base(const Mesh& mesh, Internal_index index) : index_(index), mesh_(mesh)
+	Element_view_base(const Mesh& mesh, Internal_index index) : index_(index), mesh_(mesh)
 	{}
 
-	View_base& operator=(const View_base& view)
+	Element_view_base& operator=(const Element_view_base& view)
 	{
 		assert(&mesh_ == &view.mesh_);
 		set_index(*view);
@@ -44,7 +44,7 @@ public:
 
 	bool is_valid() const
 	{
-		return fe::is_valid(index_);
+		return es_fe::is_valid(index_);
 	}
 
 	bool is_boundary() const

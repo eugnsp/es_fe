@@ -1,8 +1,8 @@
 #pragma once
 #include <es_fe/mesh.hpp>
 
-#include <es/geom/compare.hpp>
-#include <es/geom/rect.hpp>
+#include <es_geom/compare.hpp>
+#include <es_geom/rect.hpp>
 
 #include <algorithm>
 #include <cassert>

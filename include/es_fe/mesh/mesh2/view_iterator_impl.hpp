@@ -116,15 +116,4 @@ inline auto Mesh2::cells() const -> es_util::Iterable<Cell_iter>
 {
 	return faces();
 }
-
-inline std::ostream& operator<<(std::ostream& ost, const Mesh2& mesh)
-{
-	ost << mesh.type_string() << '\n'
-		<< "Vertices: " << *mesh.n_vertices() << '\n'
-		<< "Edges:    " << *mesh.n_edges() << '\n'
-		<< "Faces:    " << *mesh.n_faces() << '\n'
-		<< "Memory:   " << es_util::size_string(mesh.memory_size()) << std::endl;
-
-	return ost;
-}
 } // namespace es_fe

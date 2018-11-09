@@ -3,12 +3,12 @@
 
 namespace es_fe
 {
-inline const geom::Point& View<Edge_tag, Mesh2>::vertex(Local_index index) const
+inline const geom::Point& Element_view<Edge_tag, Mesh2>::vertex(Local_index index) const
 {
 	return mesh_.vertex(vertex_index(index));
 }
 
-inline Vertex_index View<Edge_tag, Mesh2>::vertex_index(Local_index index) const
+inline Vertex_index Element_view<Edge_tag, Mesh2>::vertex_index(Local_index index) const
 {
 	assert(index < 2);
 	if (index == 0)

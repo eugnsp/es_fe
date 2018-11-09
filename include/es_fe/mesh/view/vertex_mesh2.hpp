@@ -3,12 +3,12 @@
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/view/base.hpp>
 
-#include <es/geom/point.hpp>
+#include <es_geom/point.hpp>
 
 namespace es_fe
 {
 template<>
-class View<Vertex_tag, Mesh2> : public internal::View_base<Vertex_tag, Mesh2>
+class Element_view<Vertex_tag, Mesh2> : public internal::Element_view_base<Vertex_tag, Mesh2>
 {
 public:
 	using Vertex_circ = Circulator<Vertex_tag, Vertex_out_circ_tag>;
@@ -20,7 +20,7 @@ public:
 	using Face_circ = Circulator<Face_tag, Vertex_out_circ_tag>;
 
 public:
-	using View_base::View_base;
+	using Element_view_base::Element_view_base;
 
 	const geom::Point& vertex() const;
 

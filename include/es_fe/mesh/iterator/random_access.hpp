@@ -1,8 +1,8 @@
 #pragma once
 #include <es_fe/mesh/iterator/iterator_base.hpp>
 
-#include <es/geom/point.hpp>
-#include <es/geom/abstract_geometry.hpp>
+#include <es_geom/point.hpp>
+#include <es_geom/abstract_geometry.hpp>
 
 #include <cassert>
 #include <cstddef>

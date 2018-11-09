@@ -4,9 +4,9 @@
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/view/base.hpp>
 
-//#include <es/geom/point.hpp>
-#include <es/geom/tags.hpp>
-#include <es/geom/traits.hpp>
+//#include <es_geom/point.hpp>
+#include <es_geom/tags.hpp>
+#include <es_geom/traits.hpp>
 
 #include <array>
 #include <utility>
@@ -14,7 +14,7 @@
 namespace es_fe
 {
 template<>
-class View<Face_tag, Mesh2> : public internal::View_base<Face_tag, Mesh2>
+class Element_view<Face_tag, Mesh2> : public internal::Element_view_base<Face_tag, Mesh2>
 {
 public:
 	using Vertex_indices = std::array<Vertex_index, 3>;
@@ -29,7 +29,7 @@ public:
 	using Face_circ = Circulator<Face_tag, Face_circ_tag>;
 
 public:
-	using View_base::View_base;
+	using Element_view_base::Element_view_base;
 
 	Halfedge_index halfedge() const;
 
@@ -82,7 +82,7 @@ public:
 namespace geom::internal
 {
 template<>
-struct Traits<es_fe::View<es_fe::Face_tag, es_fe::Mesh2>>
+struct Traits<es_fe::Element_view<es_fe::Face_tag, es_fe::Mesh2>>
 {
 	using Index = es_fe::Local_index;
 	using Tag = Triangle_tag;

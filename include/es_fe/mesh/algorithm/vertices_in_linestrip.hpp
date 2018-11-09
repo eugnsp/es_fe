@@ -1,8 +1,8 @@
 #pragma once
 #include <es_fe/mesh.hpp>
 
-#include <es/geom/linestring.hpp>
-#include <es/geom/algorithm.hpp>
+#include <es_geom/linestring.hpp>
+#include <es_geom/algorithm.hpp>
 
 #include <stdexcept>
 #include <vector>

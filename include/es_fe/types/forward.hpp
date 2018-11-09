@@ -23,10 +23,10 @@ template<class Element_tag, class Circ_tag>
 class Circulator_halfedge_edge;
 
 template<class Element_tag, class Mesh>
-class View;
+class Element_view;
 
 template<class Element_tag, class Mesh>
-class View2;
+class Element_view2;
 
 //////////////////////////////////////////////////////////////////////////
 template<class Element, Local_index dim, class... Bnd_conds>

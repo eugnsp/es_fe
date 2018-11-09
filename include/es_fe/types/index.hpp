@@ -17,7 +17,7 @@ using Local_index_sequence = std::integer_sequence<Local_index, indices...>;
 template<Local_index n>
 using Make_local_index_sequence = std::make_integer_sequence<Local_index, n>;
 
-#define ES_FE_DEFINE_INDEX_TYPE(Index_name)                                                        \
+#define ES_FE_DEFINE_INDEX_TYPE(Index_name, Literal_name)                                          \
 	enum class Index_name : Index                                                                  \
 	{                                                                                              \
 		invalid = invalid_index                                                                    \
@@ -68,12 +68,20 @@ using Make_local_index_sequence = std::make_integer_sequence<Local_index, n>;
 	inline bool is_valid(Index_name index)                                                         \
 	{                                                                                              \
 		return index != Index_name::invalid;                                                       \
+	}                                                                                              \
+                                                                                                   \
+	namespace literals                                                                             \
+	{                                                                                              \
+	inline constexpr auto operator"" _##Literal_name(unsigned long long index)                     \
+	{                                                                                              \
+		return static_cast<Index_name>(index);                                                     \
+	}                                                                                              \
 	}
 
-ES_FE_DEFINE_INDEX_TYPE(Vertex_index)
-ES_FE_DEFINE_INDEX_TYPE(Halfedge_index)
-ES_FE_DEFINE_INDEX_TYPE(Edge_index)
-ES_FE_DEFINE_INDEX_TYPE(Face_index)
+ES_FE_DEFINE_INDEX_TYPE(Vertex_index, vi)
+ES_FE_DEFINE_INDEX_TYPE(Halfedge_index, hi)
+ES_FE_DEFINE_INDEX_TYPE(Edge_index, ei)
+ES_FE_DEFINE_INDEX_TYPE(Face_index, fi)
 
 // TODO : move to somewhere else
 inline Halfedge_index twin(Halfedge_index index)

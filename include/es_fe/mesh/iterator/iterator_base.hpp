@@ -10,7 +10,7 @@ template<class Element_tag, class Mesh>
 class Iterator_base
 {
 public:
-	using View = View<Element_tag, Mesh>;
+	using View = Element_view<Element_tag, Mesh>;
 	using Element_index = typename View::Element_index;
 	using Internal_index = typename View::Internal_index;
 

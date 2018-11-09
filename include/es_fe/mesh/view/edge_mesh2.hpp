@@ -2,18 +2,18 @@
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/view/base.hpp>
 
-#include <es/geom/tags.hpp>
-#include <es/geom/traits.hpp>
-#include <es/geom/point.hpp>
+#include <es_geom/tags.hpp>
+#include <es_geom/traits.hpp>
+#include <es_geom/point.hpp>
 
 namespace es_fe
 {
 template<>
-class View<Edge_tag, Mesh2> : public internal::View_base<Edge_tag, Mesh2>
+class Element_view<Edge_tag, Mesh2> : public internal::Element_view_base<Edge_tag, Mesh2>
 {
 public:
-	using View_base::set_index;
-	using View_base::View_base;
+	using Element_view_base::set_index;
+	using Element_view_base::Element_view_base;
 
 	Edge_index operator*() const
 	{
@@ -38,7 +38,7 @@ public:
 namespace geom::internal
 {
 template<>
-struct Traits<es_fe::View<es_fe::Edge_tag, es_fe::Mesh2>>
+struct Traits<es_fe::Element_view<es_fe::Edge_tag, es_fe::Mesh2>>
 {
 	using Index = es_fe::Local_index;
 	using Tag = Segment_tag;

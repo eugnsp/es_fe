@@ -1,7 +1,8 @@
 #pragma once
 #include <es_fe/types.hpp>
 
-#include <es/geom/point.hpp>
+#include <es_geom/point.hpp>
+#include <es_util/error.hpp>
 
 #include <array>
 #include <cstddef>
@@ -208,6 +209,9 @@ public:
 		halfedges_.clear();
 		faces_.clear();
 	}
+
+	// Performs some basic checks of mesh data structure consistency
+	es_util::Error check() const;
 
 	// TODO : generic
 	void debug_check_index(Vertex_index index) const

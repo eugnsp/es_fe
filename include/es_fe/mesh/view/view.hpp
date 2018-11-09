@@ -3,9 +3,9 @@
 #include <es_fe/mesh/halfedge_structure.hpp>
 #include <es_fe/mesh/view/base.hpp>
 
-#include <es/geom/tags.hpp>
-#include <es/geom/traits.hpp>
-#include <es/geom/point.hpp>
+#include <es_geom/tags.hpp>
+#include <es_geom/traits.hpp>
+#include <es_geom/point.hpp>
 #include <es_util/iterator.hpp>
 
 #include <cstddef>
@@ -21,21 +21,21 @@ namespace es_fe
 /** 1D mesh views */
 
 // template<>
-// class View<Vertex_tag, Mesh1> : public internal::View_base<Vertex_tag, Mesh1>
+// class Element_view<Vertex_tag, Mesh1> : public internal::Element_view_base<Vertex_tag, Mesh1>
 // {
 // public:
-// 	using View_base::View_base;
+// 	using Element_view_base::Element_view_base;
 //
 // 	const geom::Point& vertex() const;
 //
-// 	View<Edge_tag, Mesh1> _first_cell() const;
+// 	Element_view<Edge_tag, Mesh1> _first_cell() const;
 // };
 //
 // template<>
-// class View<Edge_tag, Mesh1> : public internal::View_base<Edge_tag, Mesh1>
+// class Element_view<Edge_tag, Mesh1> : public internal::Element_view_base<Edge_tag, Mesh1>
 // {
 // public:
-// 	using View_base::View_base;
+// 	using Element_view_base::Element_view_base;
 //
 // 	Index vertex_index(Local_index) const;
 // 	void vertex_indices(Index_array<2>&) const;
@@ -47,17 +47,17 @@ namespace es_fe
 /** 2D mesh views */
 
 template<>
-class View<Halfedge_tag, Mesh2> : public internal::View_base<Halfedge_tag, Mesh2>
+class Element_view<Halfedge_tag, Mesh2> : public internal::Element_view_base<Halfedge_tag, Mesh2>
 {
 	// 	friend class Circular_iterator<Edge_tag, Vertex_out_circ_tag>;
 	// 	friend class Circular_iterator<Edge_tag, Face_circ_tag>;
 
 public:
-	using Vertex_view = View<Vertex_tag, Mesh2>;
-	using Face_view = View<Face_tag, Mesh2>;
+	using Vertex_view = Element_view<Vertex_tag, Mesh2>;
+	using Face_view = Element_view<Face_tag, Mesh2>;
 
 public:
-	using View_base::View_base;
+	using Element_view_base::Element_view_base;
 
 	// 	Index half_edge_index() const;
 	//
@@ -137,17 +137,17 @@ public:
 
 // Edge view (edge view has an arbitrary, but fixed, direction)
 template<>
-class View<Edge_tag, Mesh2> : public internal::View_base<Edge_tag, Mesh2>
+class Element_view<Edge_tag, Mesh2> : public internal::Element_view_base<Edge_tag, Mesh2>
 {
 	friend class Circular_iterator<Edge_tag, Vertex_out_circ_tag>;
 	friend class Circular_iterator<Edge_tag, Face_circ_tag>;
 
 public:
-	using Vertex_view = View<Vertex_tag, Mesh2>;
-	using Face_view = View<Face_tag, Mesh2>;
+	using Vertex_view = Element_view<Vertex_tag, Mesh2>;
+	using Face_view = Element_view<Face_tag, Mesh2>;
 
 public:
-	using View_base::View_base;
+	using Element_view_base::Element_view_base;
 
 	Index half_edge_index() const;
 
@@ -218,7 +218,7 @@ public:
 
 // Cell view
 template<>
-class View<Face_tag, Mesh2> : public internal::View_base<Face_tag, Mesh2>
+class Element_view<Face_tag, Mesh2> : public internal::Element_view_base<Face_tag, Mesh2>
 {
 public:
 	// TODO : dynamic ?
@@ -238,7 +238,7 @@ private:
 	using Face_end_iter = End_circular_iterator<Face_tag, Face_circ_tag>;
 
 public:
-	using View_base::View_base;
+	using Element_view_base::Element_view_base;
 
 #ifndef TRIANGULAR_CELLS_ONLY
 	Local_index n_vertices() const;
@@ -301,7 +301,7 @@ private:
 };
 
 // template<>
-// class View2<Face_tag, Mesh2> : public internal::View_base2<Face_tag, Mesh2>
+// class Element_view2<Face_tag, Mesh2> : public internal::Element_view_base2<Face_tag, Mesh2>
 // {
 // public:
 // 	// TODO : dynamic ?
@@ -321,7 +321,7 @@ private:
 // 	using Face_end_iter = End_circular_iterator<Face_tag, Face_circ_tag>;
 //
 // public:
-// 	using View_base2::View_base2;
+// 	using Element_view_base2::Element_view_base2;
 //
 // #ifndef TRIANGULAR_CELLS_ONLY
 // 	Local_index n_vertices() const;
@@ -382,25 +382,25 @@ private:
 // 	Index bounding_halfedge() const;
 // };
 
-std::ostream& operator<<(std::ostream&, const View<Vertex_tag, Mesh1>&);
-std::ostream& operator<<(std::ostream&, const View<Edge_tag, Mesh1>&);
+std::ostream& operator<<(std::ostream&, const Element_view<Vertex_tag, Mesh1>&);
+std::ostream& operator<<(std::ostream&, const Element_view<Edge_tag, Mesh1>&);
 
-std::ostream& operator<<(std::ostream&, const View<Vertex_tag, Mesh2>&);
-std::ostream& operator<<(std::ostream&, const View<Edge_tag, Mesh2>&);
-std::ostream& operator<<(std::ostream&, const View<Face_tag, Mesh2>&);
+std::ostream& operator<<(std::ostream&, const Element_view<Vertex_tag, Mesh2>&);
+std::ostream& operator<<(std::ostream&, const Element_view<Edge_tag, Mesh2>&);
+std::ostream& operator<<(std::ostream&, const Element_view<Face_tag, Mesh2>&);
 } // namespace es_fe
 
 namespace geom::internal
 {
 template<>
-struct Traits<fe::View<fe::Edge_tag, fe::Mesh2>>
+struct Traits<fe::Element_view<fe::Edge_tag, fe::Mesh2>>
 {
 	using Index = fe::Local_index;
 	using Tag = Segment_tag;
 };
 
 template<>
-struct Traits<fe::View<fe::Face_tag, fe::Mesh2>>
+struct Traits<fe::Element_view<fe::Face_tag, fe::Mesh2>>
 {
 	using Index = fe::Local_index;
 #ifdef TRIANGULAR_CELLS_ONLY

@@ -1,5 +1,5 @@
 #pragma once
-#include <es/geom/algorithm.hpp>
+#include <es_geom/algorithm.hpp>
 #include <es_fe/mesh/mesh2.hpp>
 #include <es_util/error.hpp>
 #include <cassert>

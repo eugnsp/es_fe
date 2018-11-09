@@ -4,11 +4,11 @@
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
 
-#include <es/geom/point.hpp>
-#include <es/geom/rect.hpp>
+#include <es_geom/point.hpp>
+#include <es_geom/rect.hpp>
+#include <es_util/array.hpp>
 #include <es_util/error.hpp>
 #include <es_util/iterator.hpp>
-#include <es_util/array.hpp>
 
 #include <array>
 #include <cassert>
@@ -33,20 +33,20 @@ namespace es_fe
 {
 class Mesh2 : public internal::Halfedge_structure
 {
-	friend class View<Vertex_tag, Mesh2>;
-	friend class View<Edge_tag, Mesh2>;
-	friend class View<Face_tag, Mesh2>;
+	friend class Element_view<Vertex_tag, Mesh2>;
+	friend class Element_view<Edge_tag, Mesh2>;
+	friend class Element_view<Face_tag, Mesh2>;
 
-	friend class View2<Face_tag, Mesh2>;
+	friend class Element_view2<Face_tag, Mesh2>;
 
 public:
 	static constexpr std::size_t dim = 2;
 
 public:
-	using Vertex_view = View<Vertex_tag, Mesh2>;
-	using Halfedge_view = View<Halfedge_tag, Mesh2>;
-	using Edge_view = View<Edge_tag, Mesh2>;
-	using Face_view = View<Face_tag, Mesh2>;
+	using Vertex_view = Element_view<Vertex_tag, Mesh2>;
+	using Halfedge_view = Element_view<Halfedge_tag, Mesh2>;
+	using Edge_view = Element_view<Edge_tag, Mesh2>;
+	using Face_view = Element_view<Face_tag, Mesh2>;
 	using Cell_view = Face_view;
 
 	using Vertex_iter = Random_access_iterator<Vertex_tag, Mesh2>;
@@ -170,22 +170,12 @@ public:
 	// Performs some basic checks of mesh data structure consistency
 	es_util::Error check() const;
 
-	void debug_check() const
-	{
-#ifdef _DEBUG
-		check().throw_if_error();
-#endif
-	}
-
 	// Clears edges and cells preserving vertices
 	void clearEdgesAndCells()
 	{
 		halfedges_.clear();
 		faces_.clear();
 	}
-
-	using Base::add_cell;
-	using Base::add_vertex;
 
 	void scale(double scale)
 	{
@@ -210,7 +200,7 @@ private:
 	}
 };
 
-// Return human readable information about the mesh
+// Outputs human readable information about the mesh
 std::ostream& operator<<(std::ostream&, const Mesh2&);
 
 //////////////////////////////////////////////////////////////////////////
