@@ -1,9 +1,9 @@
 #pragma once
-#include <es/fe/config.hpp>
-#include <es/fe/forward.hpp>
-#include <es/fe/types.hpp>
-#include <es/fe/type_traits.hpp>
-#include <es/fe/mesh/halfedge_structure.hpp>
+#include <es_fe/config.hpp>
+#include <es_fe/forward.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/type_traits.hpp>
+#include <es_fe/mesh/halfedge_structure.hpp>
 
 #include <es/geom/point.hpp>
 #include <es/geom/rect.hpp>
@@ -30,14 +30,14 @@
 // 	AFTER_REFINE
 // };
 
-namespace fe
+namespace es_fe
 {
 class Mesh2 : public internal::Halfedge_structure
 {
 	friend class View<Vertex_tag, Mesh2>;
 	friend class View<Edge_tag, Mesh2>;
 	friend class View<Face_tag, Mesh2>;
-	
+
 	friend class View2<Face_tag, Mesh2>;
 
 public:
@@ -79,7 +79,7 @@ public:
 	Halfedge_index halfedge_index_by_vertex(Vertex_index) const;
 
 	Face_index face_index(Halfedge_index index) const
-	{ 
+	{
 		return halfedges_[*index].face;
 	}
 
@@ -89,17 +89,17 @@ public:
 	}
 
 	virtual Vertex_index find_vertex(const geom::Point& point) const
-	{ 
+	{
 		return Base::find_vertex(point);
 	}
 
 	/** Returns index of the cell the half-edge belongs to */
-// 				IndexType cell(IndexType edge) const
-// 				{
-// 					return edges_[edge].cell_;
-// 				}
+	// 				IndexType cell(IndexType edge) const
+	// 				{
+	// 					return edges_[edge].cell_;
+	// 				}
 
-		// Returns global vertex indices on the edge
+	// Returns global vertex indices on the edge
 	std::pair<Index, Index> vertexIndicesOnEdge(Index edge) const
 	{
 		return {*halfedges_[2 * edge].vertex, *halfedges_[2 * edge + 1].vertex};
@@ -119,7 +119,7 @@ public:
 	Halfedge_view view(Halfedge_index) const;
 	Edge_view view(Edge_index) const;
 	Face_view view(Face_index) const;
-	
+
 	//////////////////////////////////////////////////////////////////////////
 	/** Iterators */
 
@@ -143,9 +143,9 @@ public:
 	Cell_iter end_cell() const;
 	es_util::Iterable<Cell_iter> cells() const;
 
-	Boundary_vertex_circ boundary_vertex_circ() const;	   
+	Boundary_vertex_circ boundary_vertex_circ() const;
 	Boundary_halfedge_circ boundary_halfedge_circ() const;
-	Boundary_edge_circ boundary_edge_circ() const;	
+	Boundary_edge_circ boundary_edge_circ() const;
 
 	//////////////////////////////////////////////////////////////////////////
 	geom::Rect bounding_box() const;
@@ -155,8 +155,7 @@ public:
 	Index numberOfAdjacentCells(Vertex_index vertex) const
 	{
 		Index number = 0;
-		for_each(vertices_[*vertex].halfedge,
-			[&number](auto) { ++number; }, Vertex_out_circ_tag{});
+		for_each(vertices_[*vertex].halfedge, [&number](auto) { ++number; }, Vertex_out_circ_tag{});
 
 		number -= is_boundary(vertex);
 
@@ -174,9 +173,9 @@ public:
 
 	void debug_check() const
 	{
-	#ifdef _DEBUG
+#ifdef _DEBUG
 		check().throw_if_error();
-	#endif
+#endif
 	}
 
 	// Clears edges and cells preserving vertices
@@ -186,8 +185,8 @@ public:
 		faces_.clear();
 	}
 
-	using Base::add_vertex;
 	using Base::add_cell;
+	using Base::add_vertex;
 
 	void scale(double scale)
 	{
@@ -198,7 +197,6 @@ public:
 	using Base::_xxx;
 
 protected:
-
 	using Base::first_boundary_halfedge;
 
 private:
@@ -232,4 +230,4 @@ inline Face_index n_elements(const Mesh2& mesh, Face_tag)
 {
 	return mesh.n_faces();
 }
-}
+} // namespace es_fe

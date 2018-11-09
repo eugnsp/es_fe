@@ -8,13 +8,19 @@
 #include <tuple>
 #include <cassert>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 template<class T>
 class Quad_tree
 {
 public:
-	enum class Neighbour_type { NORTH, SOUTH, WEST, EAST };
+	enum class Neighbour_type
+	{
+		NORTH,
+		SOUTH,
+		WEST,
+		EAST
+	};
 
 	class Cell
 	{
@@ -22,9 +28,8 @@ public:
 		using Children = std::array<Cell, 4>;
 
 	public:
-		explicit Cell(const Cell* parent = nullptr)
-			: parent_(parent)
-		{ }
+		explicit Cell(const Cell* parent = nullptr) : parent_(parent)
+		{}
 
 		bool is_in_root() const
 		{
@@ -115,8 +120,8 @@ public:
 		void create_children()
 		{
 			assert(is_leaf());
-			children_ = std::unique_ptr<Children>
-				(new Children{Cell(this), Cell(this), Cell(this), Cell(this)});
+			children_ = std::unique_ptr<Children>(
+				new Children{Cell(this), Cell(this), Cell(this), Cell(this)});
 		}
 
 		/** Data */
@@ -158,11 +163,11 @@ public:
 	};
 
 public:
-	Quad_tree(std::size_t n_cells_x, std::size_t n_cells_y)
-		: n_cells_x_(n_cells_x), n_cells_y_(n_cells_y)
+	Quad_tree(std::size_t n_cells_x, std::size_t n_cells_y) :
+		n_cells_x_(n_cells_x), n_cells_y_(n_cells_y)
 	{
 		assert(n_cells_x > 0 && n_cells_y > 0);
-		forest_.resize(n_cells_x *	n_cells_y);
+		forest_.resize(n_cells_x * n_cells_y);
 	}
 
 	std::size_t n_root_cells() const
@@ -192,9 +197,8 @@ public:
 
 	Neighbouring_cell neighbour_cell(const Cell& cell, Neighbour_type type)
 	{
-		return cell.is_in_root() ? 
-			neighbour_cell_in_root(cell, type) : 
-			neighbour_cell_in_forest(cell, type);
+		return cell.is_in_root() ? neighbour_cell_in_root(cell, type)
+								 : neighbour_cell_in_forest(cell, type);
 	}
 
 	// Returns the neighbouring cell if it has the same depth
@@ -257,10 +261,7 @@ public:
 	void rebalance(Func func)
 	{
 		std::queue<Cell*> splitting_candidates;
-		for_each_leaf([&splitting_candidates](auto& cell)
-			{
-				splitting_candidates.push(&cell);
-			});
+		for_each_leaf([&splitting_candidates](auto& cell) { splitting_candidates.push(&cell); });
 
 		while (!splitting_candidates.empty())
 		{
@@ -289,11 +290,8 @@ public:
 		}
 	}
 
-	static constexpr std::array<Neighbour_type, 4> neighbours =
-	{
-		Neighbour_type::NORTH, Neighbour_type::SOUTH,
-			Neighbour_type::WEST, Neighbour_type::EAST
-	};
+	static constexpr std::array<Neighbour_type, 4> neighbours = {
+		Neighbour_type::NORTH, Neighbour_type::SOUTH, Neighbour_type::WEST, Neighbour_type::EAST};
 
 private:
 	Neighbouring_cell neighbour_cell_in_root(const Cell& cell, Neighbour_type type)
@@ -301,7 +299,7 @@ private:
 		assert(cell.is_in_root());
 
 		const auto it = std::find_if(forest_.begin(), forest_.end(),
-			[&cell](const Cell& c) { return &c == &cell; });
+									 [&cell](const Cell& c) { return &c == &cell; });
 
 		assert(it != forest_.end());
 		const auto pos = static_cast<std::size_t>(it - forest_.begin());
@@ -341,34 +339,34 @@ private:
 	{
 		assert(!cell.is_in_root());
 
-			// When the neighbour is our sibling
+		// When the neighbour is our sibling
 		switch (type)
 		{
 		case Neighbour_type::NORTH:
-			if (cell.is_sw()) 
+			if (cell.is_sw())
 				return {&cell.parent().nw_child(), false};
-			if (cell.is_se()) 
+			if (cell.is_se())
 				return {&cell.parent().ne_child(), false};
 			break;
 
 		case Neighbour_type::SOUTH:
-			if (cell.is_nw()) 
+			if (cell.is_nw())
 				return {&cell.parent().sw_child(), false};
-			if (cell.is_ne()) 
+			if (cell.is_ne())
 				return {&cell.parent().se_child(), false};
 			break;
 
 		case Neighbour_type::WEST:
-			if (cell.is_ne()) 
+			if (cell.is_ne())
 				return {&cell.parent().nw_child(), false};
-			if (cell.is_se()) 
+			if (cell.is_se())
 				return {&cell.parent().sw_child(), false};
 			break;
 
 		case Neighbour_type::EAST:
-			if (cell.is_nw()) 
+			if (cell.is_nw())
 				return {&cell.parent().ne_child(), false};
-			if (cell.is_sw()) 
+			if (cell.is_sw())
 				return {&cell.parent().se_child(), false};
 			break;
 		}
@@ -396,7 +394,7 @@ private:
 
 	bool is_to_be_split(const Cell& cell, Neighbour_type type) const
 	{
-		const auto neighbour = const_cast<Quad_tree*>(this)->neighbour_cell(cell, type);		// Safe
+		const auto neighbour = const_cast<Quad_tree*>(this)->neighbour_cell(cell, type); // Safe
 		if (!neighbour || neighbour->is_leaf())
 			return false;
 
@@ -418,16 +416,18 @@ private:
 
 	bool is_to_be_split(const Cell& cell) const
 	{
-		return !cell.is_leaf() &&
-			(is_to_be_split(cell, Neighbour_type::NORTH) || is_to_be_split(cell, Neighbour_type::SOUTH) ||
-			is_to_be_split(cell, Neighbour_type::WEST) || is_to_be_split(cell, Neighbour_type::EAST));
+		return !cell.is_leaf()
+			   && (is_to_be_split(cell, Neighbour_type::NORTH)
+				   || is_to_be_split(cell, Neighbour_type::SOUTH)
+				   || is_to_be_split(cell, Neighbour_type::WEST)
+				   || is_to_be_split(cell, Neighbour_type::EAST));
 	}
 
 private:
 	std::vector<Cell> forest_;
-	//la::Matrix<Cell, la::dynamic, la::dynamic> forest_;
+	// la::Matrix<Cell, la::dynamic, la::dynamic> forest_;
 
 	const std::size_t n_cells_x_;
 	const std::size_t n_cells_y_;
 };
-}
+} // namespace es_fe::internal

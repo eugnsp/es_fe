@@ -1,12 +1,12 @@
 #pragma once
 #include <es_la/dense.hpp>
-#include <es/fe/types.hpp>
-#include <es/fe/type_traits.hpp>
-#include <es/fe/mesh/base.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/type_traits.hpp>
+#include <es_fe/mesh/base.hpp>
 #include <cstddef>
 #include <tuple>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 template<class Var_list>
 struct Dof_mapper_traits;
@@ -54,4 +54,4 @@ protected:
 	Index n_dofs_ = 0;
 	Index n_free_dofs_ = 0;
 };
-}
+} // namespace es_fe::internal

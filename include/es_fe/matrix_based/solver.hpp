@@ -1,11 +1,12 @@
 #pragma once
-#include <es/fe/matrix_based/seq_assembler.hpp>
+#include <es_fe/matrix_based/seq_assembler.hpp>
 
 #include <memory>
 
-namespace fe
+namespace es_fe
 {
-template<class Derived_solver_, class System_, class Linear_solver_, class Assembler_ = Seq_assembler>
+template<class Derived_solver_, class System_, class Linear_solver_,
+		 class Assembler_ = Seq_assembler>
 class Matrix_based_solver
 {
 public:
@@ -13,9 +14,8 @@ public:
 	using Mesh = typename System::Mesh;
 
 public:
-	Matrix_based_solver(const Mesh& mesh) :
-		system_(mesh)
-	{ }
+	Matrix_based_solver(const Mesh& mesh) : system_(mesh)
+	{}
 
 	template<class... Args>
 	void init(Args&&... args)
@@ -40,7 +40,6 @@ public:
 		set_bnd_values();
 		assembler_.assemble(system_, self());
 		after_assemble();
-
 
 		linear_solver_.analyze_factorize_solve(matrix_, rhs_, solution_);
 
@@ -69,7 +68,8 @@ public:
 
 	std::size_t memory_size() const
 	{
-		//return solution_.memory_size() + rhs_.memory_size() + matrix_.memory_size() + system_.memory_size();
+		// return solution_.memory_size() + rhs_.memory_size() + matrix_.memory_size() +
+		// system_.memory_size();
 		return 0;
 	}
 
@@ -83,13 +83,13 @@ protected:
 	virtual void set_bnd_values() = 0;
 
 	virtual void before_solve()
-	{ }
+	{}
 
 	virtual void after_solve()
-	{ }
+	{}
 
 	virtual void after_assemble()
-	{ }
+	{}
 
 protected:
 	la::Vector_xd solution_;
@@ -100,4 +100,4 @@ protected:
 	Linear_solver_ linear_solver_;
 	System system_;
 };
-}
+} // namespace es_fe

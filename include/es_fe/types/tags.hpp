@@ -12,7 +12,7 @@ struct Edge_tag
 {};
 struct Face_tag
 {};
-struct Cell_tag		// Edge in 1D, Face in 2D
+struct Cell_tag // Edge in 1D, Face in 2D
 {};
 
 /** Circulation type tags */

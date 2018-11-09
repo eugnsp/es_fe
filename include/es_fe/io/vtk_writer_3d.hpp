@@ -1,6 +1,6 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/mesh.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh.hpp>
 #include <es_util/time.hpp>
 #include <cassert>
 #include <fstream>
@@ -8,13 +8,15 @@
 #include <string>
 #include <vector>
 
-namespace fe
+namespace es_fe
 {
 class Vtk_writer_3d
 {
 public:
-	Vtk_writer_3d(const std::string& file_name, const Mesh2& mesh, const std::vector<double>& grid_z, double mesh_scale = 1)
-		: file_(file_name), mesh_(mesh), grid_z_(grid_z)
+	Vtk_writer_3d(const std::string& file_name, const Mesh2& mesh,
+				  const std::vector<double>& grid_z, double mesh_scale = 1) :
+		file_(file_name),
+		mesh_(mesh), grid_z_(grid_z)
 	{
 		if (!file_)
 			throw std::runtime_error("File '" + file_name + "' cannot be opened for writing");
@@ -26,38 +28,38 @@ public:
 	template<class Field>
 	void write_vertex_scalar_field(const std::string& var_name, const Field& field)
 	{
-//		assert(field.size() == mesh_.n_vertices());
+		//		assert(field.size() == mesh_.n_vertices());
 
 		write_ln("POINT_DATA ", *mesh_.n_vertices() * grid_z_.size());
 		write_scalar_field(var_name, field);
 	}
 
-// 	template<class Field>
-// 	void write_vertex_vector_field(const std::string& var_name, const Field& field)
-// 	{
-// 		assert(field.rows() == 2 && field.cols() == mesh_.n_vertices());
-// 
-// 		write_ln("POINT_DATA ", mesh_.n_vertices());
-// 		write_vector_field(var_name, field);
-// 	}
-// 
-// 	template<class Field>
-// 	void write_faces_scalar_field(const std::string& var_name, const Field& field)
-// 	{
-// 		assert(field.size() == mesh_.n_faces());
-// 
-// 		write_ln("CELL_DATA ", mesh_.n_faces());
-// 		write_scalar_field(var_name, field);
-// 	}
-// 
-// 	template<class Field>
-// 	void write_faces_vector_data(const std::string& var_name, const Field& data)
-// 	{
-// 		assert(data.rows() == 2 && data.cols() == mesh_.n_faces());
-// 
-// 		write_ln("CELL_DATA ", mesh_.n_faces());
-// 		write_vector_field(var_name, data);
-// 	}
+	// 	template<class Field>
+	// 	void write_vertex_vector_field(const std::string& var_name, const Field& field)
+	// 	{
+	// 		assert(field.rows() == 2 && field.cols() == mesh_.n_vertices());
+	//
+	// 		write_ln("POINT_DATA ", mesh_.n_vertices());
+	// 		write_vector_field(var_name, field);
+	// 	}
+	//
+	// 	template<class Field>
+	// 	void write_faces_scalar_field(const std::string& var_name, const Field& field)
+	// 	{
+	// 		assert(field.size() == mesh_.n_faces());
+	//
+	// 		write_ln("CELL_DATA ", mesh_.n_faces());
+	// 		write_scalar_field(var_name, field);
+	// 	}
+	//
+	// 	template<class Field>
+	// 	void write_faces_vector_data(const std::string& var_name, const Field& data)
+	// 	{
+	// 		assert(data.rows() == 2 && data.cols() == mesh_.n_faces());
+	//
+	// 		write_ln("CELL_DATA ", mesh_.n_faces());
+	// 		write_vector_field(var_name, data);
+	// 	}
 
 private:
 	template<typename... Ts>
@@ -108,7 +110,7 @@ private:
 		{
 			std::array<Vertex_index, 3> vertices;
 			face.get_indices(vertices);
-			
+
 			for (std::size_t i = 1; i < grid_z_.size(); ++i)
 			{
 				write(6);
@@ -134,8 +136,8 @@ private:
 		write_ln("LOOKUP_TABLE default");
 
 		// TODO : use iterators
-// 		for (std::size_t i = 0; i < field.size(); ++i)
-// 			write_ln(field[i]);
+		// 		for (std::size_t i = 0; i < field.size(); ++i)
+		// 			write_ln(field[i]);
 
 		for (std::size_t i = 0; i < *mesh_.n_vertices(); ++i)
 			for (std::size_t j = 0; j < grid_z_.size(); ++j)
@@ -144,21 +146,21 @@ private:
 		write_ln();
 	}
 
-// 	template<class Field>
-// 	void write_vector_field(const std::string& var_name, const Field& field)
-// 	{
-// 		write_ln("VECTORS ", var_name, " float");
-// 
-// 		// TODO : use iterators
-// 		for (std::size_t i = 0; i < field.cols(); ++i)
-// 			write_ln(field(0, i), ' ', field(1, i), ' ', 0);
-// 
-// 		write_ln();
-// 	}
+	// 	template<class Field>
+	// 	void write_vector_field(const std::string& var_name, const Field& field)
+	// 	{
+	// 		write_ln("VECTORS ", var_name, " float");
+	//
+	// 		// TODO : use iterators
+	// 		for (std::size_t i = 0; i < field.cols(); ++i)
+	// 			write_ln(field(0, i), ' ', field(1, i), ' ', 0);
+	//
+	// 		write_ln();
+	// 	}
 
 private:
 	std::ofstream file_;
 	const Mesh2& mesh_;
 	const std::vector<double>& grid_z_;
 };
-}
+} // namespace es_fe

@@ -1,6 +1,6 @@
 #pragma once
 #include <es/geom/algorithm.hpp>
-#include <es/fe/mesh/mesh2.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 #include <es_util/error.hpp>
 #include <cassert>
 #include <cstddef>
@@ -8,14 +8,13 @@
 
 #include <iostream>
 
-namespace fe
+namespace es_fe
 {
 class Voronoi_data
 {
 public:
-	Voronoi_data(const Mesh2& mesh)
-		: mesh_(mesh)
-	{ }
+	Voronoi_data(const Mesh2& mesh) : mesh_(mesh)
+	{}
 
 	void precompute()
 	{
@@ -34,7 +33,8 @@ public:
 
 				const auto cc = geom::circumcentre(face);
 				const auto side = (k == 0) ? geom::Side::ON_THE_LEFT : geom::Side::ON_THE_RIGHT;
-				const auto sign = 1; throw 0;// (which_side(cc, *edge) == side) ? 1 : -1;
+				const auto sign = 1;
+				throw 0; // (which_side(cc, *edge) == side) ? 1 : -1;
 				const double interface_length = sign * geom::distance(edge_midpoint, cc);
 
 				data_[2 * **edge + k] = {interface_length, interface_length * edge_length / 4};
@@ -43,7 +43,7 @@ public:
 		// TODO : check for negative lengths, set length to zero and correct cell area
 		// (see MATLAB 'voronoi')
 
-//		check().throw_if_error();
+		//		check().throw_if_error();
 	}
 
 	double edge_length(Index edge) const
@@ -66,7 +66,7 @@ public:
 		return data_[half_edge].volume;
 	}
 
-	es::util::Error check() const	
+	es::util::Error check() const
 	{
 		es::util::Error err("Voronoi data check");
 		for (auto edge = mesh_.begin_edge(); edge != mesh_.end_edge(); ++edge)
@@ -76,7 +76,8 @@ public:
 
 			if (edge_length(**edge) < 0)
 			{
-				err << "Negative Voronoi edge length (" << edge_length(**edge) << ") for " << *edge << '\n';
+				err << "Negative Voronoi edge length (" << edge_length(**edge) << ") for " << *edge
+					<< '\n';
 				err.set_error_flag();
 			}
 		}
@@ -93,12 +94,12 @@ public:
 private:
 	struct Data
 	{
-		double lenght = 0;		// Voronoi half-edge length
-		double volume = 0;		// Voronoi half-cell volume
+		double lenght = 0; // Voronoi half-edge length
+		double volume = 0; // Voronoi half-cell volume
 	};
 
 private:
 	std::vector<Data> data_;
 	const Mesh2& mesh_;
 };
-}
+} // namespace es_fe

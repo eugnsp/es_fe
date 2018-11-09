@@ -3,7 +3,7 @@
 
 // TODO : includes
 
-namespace fe
+namespace es_fe
 {
 inline const geom::Point& View<Halfedge_tag, Mesh2>::vertex() const
 {
@@ -77,4 +77,4 @@ inline auto View<Halfedge_tag, Mesh2>::face_view(Local_index index) const -> Fac
 {
 	return {mesh_, face_index(index)};
 }
-}
+} // namespace es_fe

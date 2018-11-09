@@ -1,13 +1,12 @@
 #pragma once
-#include <es/fe/types.hpp>
+#include <es_fe/types.hpp>
 #include <es_la/dense.hpp>
-#include <es_util/array.hpp>
 #include <array>
 
-namespace fe::internal
+namespace es_fe::internal
 {
-// A group of Dunavant quadrature points; a point group contains
-// a weight and 1, 3 or 6 points that are obtained via all possible
+// Class of group of Dunavant quadrature points; a point group contains
+// weight and 1, 3 or 6 points that are obtained via all possible
 // permutations of 1, 2 or 3 barycentric coordinates
 template<Local_index n>
 class Dunavant_points_group
@@ -15,12 +14,12 @@ class Dunavant_points_group
 	static_assert(1 <= n && n <= 3);
 
 public:
- 	template<typename... Coords>
- 	constexpr Dunavant_points_group(double weight, Coords... coords) :
+	template<typename... Coords>
+	constexpr Dunavant_points_group(double weight, Coords... coords) :
 		weight_(weight), coords_{coords...}
- 	{
- 		static_assert(sizeof...(Coords) == n);
- 	}
+	{
+		static_assert(sizeof...(Coords) == n);
+	}
 
 	// Returns the number of points in the group
 	static constexpr Local_index size()
@@ -28,19 +27,21 @@ public:
 		return n * (n + 1) / 2;
 	}
 
- 	constexpr auto points() const
- 	{
+	constexpr auto points() const
+	{
 		using V = la::Vector_2d;
 		using Ret = std::array<V, size()>;
 
 		if constexpr (n == 1)
 			return Ret{V{{coords_[0], coords_[0]}}};
 		else if constexpr (n == 2)
-			return Ret{V{{coords_[0], coords_[1]}}, V{{coords_[1], coords_[0]}}, V{{coords_[1], coords_[1]}}};
- 		else if constexpr (n == 3)
-			return Ret{V{{coords_[0], coords_[1]}}, V{{coords_[0], coords_[2]}}, V{{coords_[1], coords_[2]}},
-				  	   V{{coords_[1], coords_[0]}}, V{{coords_[2], coords_[0]}}, V{{coords_[2], coords_[1]}}};
- 	}
+			return Ret{V{{coords_[0], coords_[1]}}, V{{coords_[1], coords_[0]}},
+					   V{{coords_[1], coords_[1]}}};
+		else if constexpr (n == 3)
+			return Ret{V{{coords_[0], coords_[1]}}, V{{coords_[0], coords_[2]}},
+					   V{{coords_[1], coords_[2]}}, V{{coords_[1], coords_[0]}},
+					   V{{coords_[2], coords_[0]}}, V{{coords_[2], coords_[1]}}};
+	}
 
 	// Computes the sum (weight) * (fn(start_index) + fn(start_index + 1) + ...)
 	// over all points in the group
@@ -64,4 +65,4 @@ private:
 
 template<typename... Coords>
 Dunavant_points_group(double, Coords...) -> Dunavant_points_group<sizeof...(Coords)>;
-}
+} // namespace es_fe::internal

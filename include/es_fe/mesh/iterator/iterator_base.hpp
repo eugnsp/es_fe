@@ -1,11 +1,11 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/forward.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/forward.hpp>
 
 #include <cassert>
 #include <type_traits>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 template<class Element_tag, class Mesh>
 class Iterator_base
@@ -16,13 +16,11 @@ public:
 	using Internal_index = typename View::Internal_index;
 
 public:
-	explicit Iterator_base(const Mesh& mesh) :
-		view_(mesh, Internal_index::invalid)
-	{ }
+	explicit Iterator_base(const Mesh& mesh) : view_(mesh, Internal_index::invalid)
+	{}
 
-	Iterator_base(const Mesh& mesh, Internal_index index) :
-		view_(mesh, index)
-	{ }
+	Iterator_base(const Mesh& mesh, Internal_index index) : view_(mesh, index)
+	{}
 
 	Iterator_base& operator=(const Iterator_base& other)
 	{
@@ -46,7 +44,7 @@ protected:
 
 template<class Element_tag, class Mesh>
 bool operator==(const Iterator_base<Element_tag, Mesh>& it_l,
-	const Iterator_base<Element_tag, Mesh>& it_r)
+				const Iterator_base<Element_tag, Mesh>& it_r)
 {
 	assert(&it_l->mesh() == &it_r->mesh());
 	return **it_l == **it_r;
@@ -54,8 +52,8 @@ bool operator==(const Iterator_base<Element_tag, Mesh>& it_l,
 
 template<class Element_tag, class Mesh>
 bool operator!=(const Iterator_base<Element_tag, Mesh>& it_l,
-	const Iterator_base<Element_tag, Mesh>& it_r)
+				const Iterator_base<Element_tag, Mesh>& it_r)
 {
 	return !(it_l == it_r);
 }
-}
+} // namespace es_fe::internal

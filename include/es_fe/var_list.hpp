@@ -14,7 +14,7 @@ struct Var_list
 	using Vars = std::tuple<Variables...>;
 };
 
-template<std::size_t var, class Var_list> 
+template<std::size_t var, class Var_list>
 using Nth_var_t = typename Var_list::template Nth_var_t<var>;
 
-}
+} // namespace es_fe

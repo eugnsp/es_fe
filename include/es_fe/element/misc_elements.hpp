@@ -13,17 +13,14 @@
 namespace es_fe
 {
 class Edge_el : public internal::Triangular_element<0, 1, 0>
-{
-
-};
+{};
 
 class Exp_df_el : public internal::Triangular_element<1, 0, 0>
 {
 public:
-	
 };
 
 /************************************************************************/
 /* IMPLEMENTATION                                                       */
 /************************************************************************/
-}
+} // namespace es_fe

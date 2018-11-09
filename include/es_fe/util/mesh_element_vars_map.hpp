@@ -28,25 +28,27 @@ public:
 	}
 
 	template<std::size_t var>
-	typename std::vector<T>::reference at(Element_index element, Var_index<var>, Index layer = 0, Index n_layers = 1)
+	typename std::vector<T>::reference at(Element_index element, Var_index<var>, Index layer = 0,
+										  Index n_layers = 1)
 	{
 		return values_[layer + n_layers * pos<var>(element)];
 	}
 
 	template<std::size_t var>
-	typename std::vector<T>::const_reference at(Element_index element, Var_index<var>, Index layer = 0, Index n_layers = 1) const
+	typename std::vector<T>::const_reference at(Element_index element, Var_index<var>,
+												Index layer = 0, Index n_layers = 1) const
 	{
 		return values_[layer + n_layers * pos<var>(element)];
 	}
 
-// 	template<std::size_t var>
-// 	T sum(Var_index<var>) const
-// 	{
-// 		T s{};
-// 		for (std::size_t i = pos<var>(0); i < values_.size(); i += block_size())
-// 			s += values_[i];
-// 		return s;
-// 	}
+	// 	template<std::size_t var>
+	// 	T sum(Var_index<var>) const
+	// 	{
+	// 		T s{};
+	// 		for (std::size_t i = pos<var>(0); i < values_.size(); i += block_size())
+	// 			s += values_[i];
+	// 		return s;
+	// 	}
 
 	template<class Pred>
 	bool all_of(Pred pred) const
@@ -60,7 +62,7 @@ public:
 	}
 
 private:
-	static constexpr auto has_dof_flags = 
+	static constexpr auto has_dof_flags =
 		es_util::make_array(Vars::Element::has_dofs(Element_tag{})...);
 
 	template<std::size_t var>
@@ -85,6 +87,7 @@ template<typename T, class Element_index, class Var_list>
 class Mesh_element_var_map;
 
 template<typename T, class Element_index, class... Vars>
-class Mesh_element_var_map<T, Element_index, Var_list<Vars...>>
-	: public Mesh_element_var_map_impl<T, Element_index, Vars...> { };
-}
+class Mesh_element_var_map<T, Element_index, Var_list<Vars...>> :
+	public Mesh_element_var_map_impl<T, Element_index, Vars...>
+{};
+} // namespace es_fe::internal

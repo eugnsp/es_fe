@@ -1,6 +1,6 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/util/mesh_element_vars_map.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/util/mesh_element_vars_map.hpp>
 
 #include <es_util/algorithm.hpp>
 #include <es_util/tuple.hpp>
@@ -9,7 +9,7 @@
 #include <cstddef>
 #include <tuple>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 // A class that maps a mesh element index, its type (vertex/edge/face)
 // and a variable index into an element of given type:
@@ -52,24 +52,22 @@ public:
 		return std::get<Map_t<Element_index>>(maps_).at(element, v, layer, n_layers_);
 	}
 
-// 	template<class Mesh_el_type, std::size_t var>
-// 	T sum(Mesh_el_type, Var_index<var> v) const
-// 	{
-// 		return std::get<Map_t<Mesh_el_type>>(maps_).sum(v);
-// 	}
+	// 	template<class Mesh_el_type, std::size_t var>
+	// 	T sum(Mesh_el_type, Var_index<var> v) const
+	// 	{
+	// 		return std::get<Map_t<Mesh_el_type>>(maps_).sum(v);
+	// 	}
 
 	template<class Pred>
 	bool all_of(Pred pred) const
 	{
-		return es_util::tuple_all_of(
-			[&pred](auto& list) { return list.all_of(pred); }, maps_);
+		return es_util::tuple_all_of([&pred](auto& list) { return list.all_of(pred); }, maps_);
 	}
 
 	std::size_t memory_size() const
 	{
 		std::size_t size = 0;
-		es_util::tuple_for_each(
-			[&size](auto& list) { size += list.memory_size(); }, maps_);
+		es_util::tuple_for_each([&size](auto& list) { size += list.memory_size(); }, maps_);
 
 		return size;
 	}
@@ -87,10 +85,12 @@ template<class Mesh, class Var_list, typename T>
 class Mesh_var_map;
 
 template<class Var_list, typename T>
-class Mesh_var_map<Mesh1, Var_list, T>
-	: public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index> { };
+class Mesh_var_map<Mesh1, Var_list, T> :
+	public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index>
+{};
 
 template<class Var_list, typename T>
-class Mesh_var_map<Mesh2, Var_list, T>
-	: public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index, Face_index> { };
-}
+class Mesh_var_map<Mesh2, Var_list, T> :
+	public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index, Face_index>
+{};
+} // namespace es_fe::internal

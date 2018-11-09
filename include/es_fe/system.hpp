@@ -32,7 +32,7 @@ private:
 public:
 	static constexpr std::size_t dim = Traits::space_dim;
 	static constexpr std::size_t n_vars = Var_list::size;
-	
+
 	using Mesh = Mesh_t<dim>;
 
 	template<std::size_t var>
@@ -62,13 +62,14 @@ public:
 	using Cell_view = typename Mesh::Cell_view;
 
 private:
-	template<class, std::size_t> friend class Solution_view;
-	template<class, std::size_t, class> friend class Solution_view2;
+	template<class, std::size_t>
+	friend class Solution_view;
+	template<class, std::size_t, class>
+	friend class Solution_view2;
 
 public:
-	System(const Mesh& mesh) :
-		mesh_(mesh)
-	{ }
+	System(const Mesh& mesh) : mesh_(mesh)
+	{}
 
 	Dof_mapper& dof_mapper()
 	{
@@ -105,20 +106,20 @@ public:
 
 	template<typename... Args>
 	auto all_dofs(const Cell_view& cell, Args&&... args) const
- 	{
- 		return dof_mapper_.all_dofs(cell, std::forward<Args>(args)...);
- 	}
+	{
+		return dof_mapper_.all_dofs(cell, std::forward<Args>(args)...);
+	}
 
-// 	template<std::size_t var>
-// 	void vertex_dofs(mesh::Index vertex, Var_vertex_dofs<var>& dofs_list) const
-// 	{
-// 		dof_mapper_.template vertex_dofs<var>(vertex, dofs_list);
-// 	}
+	// 	template<std::size_t var>
+	// 	void vertex_dofs(mesh::Index vertex, Var_vertex_dofs<var>& dofs_list) const
+	// 	{
+	// 		dof_mapper_.template vertex_dofs<var>(vertex, dofs_list);
+	// 	}
 
- 	//Dof_mapper& dof_mapper()
- 	//{
- 	//	return dof_mapper_;
- 	//}
+	// Dof_mapper& dof_mapper()
+	//{
+	//	return dof_mapper_;
+	//}
 
 	Index n_dofs() const
 	{
@@ -164,24 +165,26 @@ public:
 	template<class Symmetry_tag, class... Args>
 	decltype(auto) sparsity_pattern(Args&&... args) const
 	{
-		return dof_mapper_.template sparsity_pattern<Symmetry_tag>(*this, std::forward<Args>(args)...);
+		return dof_mapper_.template sparsity_pattern<Symmetry_tag>(*this,
+																   std::forward<Args>(args)...);
 	}
 
 	template<class Symmetry_tag, class... Args>
 	decltype(auto) sparsity_pattern2(Args&&... args) const
 	{
-		return dof_mapper_.template sparsity_pattern2<Symmetry_tag>(*this, std::forward<Args>(args)...);
+		return dof_mapper_.template sparsity_pattern2<Symmetry_tag>(*this,
+																	std::forward<Args>(args)...);
 	}
 
-// 	la::Vector_xd& raw_solution()
-// 	{
-// 		return solution_;
-// 	}
-// 
-// 	const la::Vector_xd& raw_solution() const
-// 	{
-// 		return solution_;
-// 	}
+	// 	la::Vector_xd& raw_solution()
+	// 	{
+	// 		return solution_;
+	// 	}
+	//
+	// 	const la::Vector_xd& raw_solution() const
+	// 	{
+	// 		return solution_;
+	// 	}
 
 	virtual std::string name() const = 0;
 
@@ -197,69 +200,69 @@ public:
 	}
 
 private:
-// 	template<std::size_t var = 0>
-// 	void set_constraints()
-// 	{
-// 		using Var = Var_t<var>;
-// 		
-// 		if constexpr (Var::has_bnd_cond)
-// 		{
-// 			const Var& v = variable<var>();
-// 			for (auto& bc : v.bnd_conds())
-// 			{
-// 				if constexpr (Var::has_dof(Vertex_tag{}))
-// 					set_constraints_at_vertices<var>(bc);
-// 
-// 				if constexpr (Var::has_dof(Edge_tag{}))
-// 					set_constraints_at_edges<var>(bc);
-// 			}
-// 		}
-// 
-// 		if constexpr (var + 1 < n_vars)
-// 			set_constraints<var + 1>();
-// 	}
+	// 	template<std::size_t var = 0>
+	// 	void set_constraints()
+	// 	{
+	// 		using Var = Var_t<var>;
+	//
+	// 		if constexpr (Var::has_bnd_cond)
+	// 		{
+	// 			const Var& v = variable<var>();
+	// 			for (auto& bc : v.bnd_conds())
+	// 			{
+	// 				if constexpr (Var::has_dof(Vertex_tag{}))
+	// 					set_constraints_at_vertices<var>(bc);
+	//
+	// 				if constexpr (Var::has_dof(Edge_tag{}))
+	// 					set_constraints_at_edges<var>(bc);
+	// 			}
+	// 		}
+	//
+	// 		if constexpr (var + 1 < n_vars)
+	// 			set_constraints<var + 1>();
+	// 	}
 
-// 	template<std::size_t var, class Bnd_cond>
-// 	void set_constraints_at_vertices(const Bnd_cond& bc)
-// 	{
-// 		static_assert(Var_t<var>::has_dof(Vertex_tag{}), "Variable has no DoFs at vertices");
-// 
-// // 		Var_vertex_dofs<var> vertex_dofs;
-// // 	//	la::Matrix_x<Index> vertex_dof_indices;		// TODO : static size
-// // 
-// // 		for (auto vertex = bc->begin_vertex(); vertex != bc->end_vertex(); ++vertex)
-// // 		{
-// // 			dof_mapper_.template vertex_dofs<var>(*vertex, vertex_dofs);
-// // 			//vertex_dof_indices.resize(vertex_dofs.rows(), vertex_dofs.cols());
-// // 			for (std::size_t j = 0; j < vertex_dofs.cols(); ++j)
-// // 				for (std::size_t i = 0; i < vertex_dofs.rows(); ++i)
-// // 				{
-// // 					assert(vertex_dofs(i, j).is_free == false);
-// // //					vertex_dof_indices(i, j) = vertex_dofs(i, j).index;
-// // 				}
-// // 
-// // 			//bc->set_values_at_vertex(*vertex, solution_.view(vertex_dof_indices));
-// // 			bc->set_values_at_vertex(*vertex, solution_[vertex_dofs(0, 0).index]);
-// // 		}
-// 	}
-// 
-// 	template<std::size_t var, class Bnd_cond>
-// 	void set_constraints_at_edges(const Bnd_cond& bc)
-// 	{
-// 		static_assert(Var_t<var>::has_dof(Edge_tag{}), "Variable has no DoFs at edges");
-// //		throw;
-// 
-// 		// TODO : Edge direction???
-// // 				for (auto edge = bc->begin_edge(); edge != bc->end_edge(); ++edge)
-// // 				{
-// // 					Dof_index& dof = indices_.at(Edge_tag{}, Var_index<t_var>{}, *edge);
-// // 					assert(!dof.is_free);
-// // 
-// // 					// TODO : submatrix in v.degree index and n_dofs(Edge_tag{})
-// // 					bc->get_values_at_edge(*edge, solution_[dof.index]);
-// // 				}
-// 
-// 	}
+	// 	template<std::size_t var, class Bnd_cond>
+	// 	void set_constraints_at_vertices(const Bnd_cond& bc)
+	// 	{
+	// 		static_assert(Var_t<var>::has_dof(Vertex_tag{}), "Variable has no DoFs at vertices");
+	//
+	// // 		Var_vertex_dofs<var> vertex_dofs;
+	// // 	//	la::Matrix_x<Index> vertex_dof_indices;		// TODO : static size
+	// //
+	// // 		for (auto vertex = bc->begin_vertex(); vertex != bc->end_vertex(); ++vertex)
+	// // 		{
+	// // 			dof_mapper_.template vertex_dofs<var>(*vertex, vertex_dofs);
+	// // 			//vertex_dof_indices.resize(vertex_dofs.rows(), vertex_dofs.cols());
+	// // 			for (std::size_t j = 0; j < vertex_dofs.cols(); ++j)
+	// // 				for (std::size_t i = 0; i < vertex_dofs.rows(); ++i)
+	// // 				{
+	// // 					assert(vertex_dofs(i, j).is_free == false);
+	// // //					vertex_dof_indices(i, j) = vertex_dofs(i, j).index;
+	// // 				}
+	// //
+	// // 			//bc->set_values_at_vertex(*vertex, solution_.view(vertex_dof_indices));
+	// // 			bc->set_values_at_vertex(*vertex, solution_[vertex_dofs(0, 0).index]);
+	// // 		}
+	// 	}
+	//
+	// 	template<std::size_t var, class Bnd_cond>
+	// 	void set_constraints_at_edges(const Bnd_cond& bc)
+	// 	{
+	// 		static_assert(Var_t<var>::has_dof(Edge_tag{}), "Variable has no DoFs at edges");
+	// //		throw;
+	//
+	// 		// TODO : Edge direction???
+	// // 				for (auto edge = bc->begin_edge(); edge != bc->end_edge(); ++edge)
+	// // 				{
+	// // 					Dof_index& dof = indices_.at(Edge_tag{}, Var_index<t_var>{}, *edge);
+	// // 					assert(!dof.is_free);
+	// //
+	// // 					// TODO : submatrix in v.degree index and n_dofs(Edge_tag{})
+	// // 					bc->get_values_at_edge(*edge, solution_[dof.index]);
+	// // 				}
+	//
+	// 	}
 
 	template<std::size_t var>
 	static void debug_check_var_index()
@@ -280,10 +283,10 @@ std::ostream& operator<<(std::ostream& out, const System<Var_list, T_Dof_mapper>
 {
 	out << system.name() << '\n'
 		<< "Number of variables: " << system.n_vars << '\n'
-		<< "DoFs (free/constrained/total): " << system.n_free_dofs() << '/'
-		<< system.n_const_dofs() << '/' << system.n_dofs() << '\n'
+		<< "DoFs (free/constrained/total): " << system.n_free_dofs() << '/' << system.n_const_dofs()
+		<< '/' << system.n_dofs() << '\n'
 		<< "Memory: " << es::util::size_string(system.memory_size()) << '\n';
 
 	return out;
 }
-}
+} // namespace es_fe

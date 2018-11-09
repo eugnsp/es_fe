@@ -1,7 +1,7 @@
 #pragma once
 #include <cassert>
 
-namespace fe
+namespace es_fe
 {
 inline const geom::Point& View<Edge_tag, Mesh2>::vertex(Local_index index) const
 {
@@ -16,4 +16,4 @@ inline Vertex_index View<Edge_tag, Mesh2>::vertex_index(Local_index index) const
 	else
 		return mesh_.vertex_index(twin(this->index_));
 }
-}
+} // namespace es_fe

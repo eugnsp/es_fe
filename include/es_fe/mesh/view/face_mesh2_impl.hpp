@@ -1,17 +1,17 @@
 #pragma once
-#include <es/fe/mesh/view/face_mesh2.hpp>
+#include <es_fe/mesh/view/face_mesh2.hpp>
 
-#include <es/fe/mesh/mesh2/mesh2.hpp>
-#include <es/fe/mesh/iterator/circulator_vertex_face.hpp>
-#include <es/fe/mesh/iterator/circulator_halfedge_edge.hpp>
-#include <es/fe/types.hpp>
+#include <es_fe/mesh/mesh2/mesh2.hpp>
+#include <es_fe/mesh/iterator/circulator_vertex_face.hpp>
+#include <es_fe/mesh/iterator/circulator_halfedge_edge.hpp>
+#include <es_fe/types.hpp>
 
 //#include <es/geom/point.hpp>
 #include <array>
 #include <cassert>
 #include <utility>
 
-namespace fe
+namespace es_fe
 {
 inline Halfedge_index View<Face_tag, Mesh2>::halfedge() const
 {
@@ -49,7 +49,7 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices) con
 }
 
 inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
-	Halfedge_indices& halfedges) const
+												   Halfedge_indices& halfedges) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -63,7 +63,7 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
 }
 
 inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
-	Edge_indices& edges) const
+												   Edge_indices& edges) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -76,8 +76,8 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
 	assert(++halfedge == halfedge_circ());
 }
 
-inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices, 
-	Edge_with_dir_indices& edges_with_direction) const
+inline void fe::View<Face_tag, Mesh2>::get_indices(
+	Vertex_indices& vertices, Edge_with_dir_indices& edges_with_direction) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -91,10 +91,11 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
 }
 
 inline void fe::View<Face_tag, Mesh2>::get_indices(Halfedge_index first_halfedge,
-	Vertex_indices& vertices, Halfedge_indices& halfedges) const
+												   Vertex_indices& vertices,
+												   Halfedge_indices& halfedges) const
 {
 	assert(mesh_.face_index(first_halfedge) == index_);
-	
+
 	auto halfedge = Halfedge_circ{mesh_, first_halfedge};
 	vertices[0] = halfedge->vertex_index();
 	halfedges[0] = **halfedge;
@@ -105,4 +106,4 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Halfedge_index first_halfedge
 
 	assert(**(++halfedge) == first_halfedge);
 }
-}
+} // namespace es_fe

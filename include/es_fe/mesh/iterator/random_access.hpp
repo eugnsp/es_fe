@@ -1,5 +1,5 @@
 #pragma once
-#include <es/fe/mesh/iterator/iterator_base.hpp>
+#include <es_fe/mesh/iterator/iterator_base.hpp>
 
 #include <es/geom/point.hpp>
 #include <es/geom/abstract_geometry.hpp>
@@ -9,7 +9,7 @@
 #include <iterator>
 #include <type_traits>
 
-namespace fe
+namespace es_fe
 {
 template<class Element_tag, class Mesh>
 class Random_access_iterator : public internal::Iterator_base<Element_tag, Mesh>
@@ -96,7 +96,7 @@ protected:
 
 template<class Element_tag, class Mesh>
 bool operator<(const Random_access_iterator<Element_tag, Mesh>& it_l,
-	const Random_access_iterator<Element_tag, Mesh>& it_r)
+			   const Random_access_iterator<Element_tag, Mesh>& it_r)
 {
 	assert(&it_l.mesh() == &it_r.mesh());
 	return **it_l < **it_r;
@@ -104,21 +104,21 @@ bool operator<(const Random_access_iterator<Element_tag, Mesh>& it_l,
 
 template<class Element_tag, class Mesh>
 bool operator>(const Random_access_iterator<Element_tag, Mesh>& it_l,
-	const Random_access_iterator<Element_tag, Mesh>& it_r)
+			   const Random_access_iterator<Element_tag, Mesh>& it_r)
 {
 	return it_r < it_l;
 }
 
 template<class Element_tag, class Mesh>
 bool operator<=(const Random_access_iterator<Element_tag, Mesh>& it_l,
-	const Random_access_iterator<Element_tag, Mesh>& it_r)
+				const Random_access_iterator<Element_tag, Mesh>& it_r)
 {
 	return !(it_r < it_l);
 }
 
 template<class Element_tag, class Mesh>
 bool operator>=(const Random_access_iterator<Element_tag, Mesh>& it_l,
-	const Random_access_iterator<Element_tag, Mesh>& it_r)
+				const Random_access_iterator<Element_tag, Mesh>& it_r)
 {
 	return it_r <= it_l;
 }
@@ -133,9 +133,9 @@ Random_access_iterator<Element_tag, Mesh> operator+(
 
 template<class Element_tag, class Mesh>
 auto operator-(const Random_access_iterator<Element_tag, Mesh>& it_l,
-	const Random_access_iterator<Element_tag, Mesh>& it_r)
+			   const Random_access_iterator<Element_tag, Mesh>& it_r)
 {
 	using T = typename Random_access_iterator<Element_tag, Mesh>::difference_type;
 	return static_cast<T>(**it_l) - static_cast<T>(**it_r);
 }
-}
+} // namespace es_fe

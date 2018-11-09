@@ -18,8 +18,7 @@ public:
 	// in the matrix of the size (# quadr. points) x (# dofs)
 	static constexpr la::Matrix_d<n_points, n_dofs> basis()
 	{
-		return la::make_matrix<n_points, n_dofs>([](Local_index quadr, Local_index dof) constexpr
-		{
+		return la::make_matrix<n_points, n_dofs>([](Local_index quadr, Local_index dof) constexpr {
 			return Element::basis(dof, Quadr::point(quadr));
 		});
 	}
@@ -28,8 +27,7 @@ public:
 	// in the matrix of the size (# quadr. points) x (# dofs)
 	static constexpr la::Matrix<la::Vector_2d, n_points, n_dofs> basis_grad()
 	{
-		return la::make_matrix<n_points, n_dofs>([](Local_index quadr, Local_index dof) constexpr
-		{
+		return la::make_matrix<n_points, n_dofs>([](Local_index quadr, Local_index dof) constexpr {
 			return Element::basis_grad(dof, Quadr::point(quadr));
 		});
 	}

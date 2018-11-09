@@ -1,5 +1,5 @@
 #pragma once
-#include <es/fe/types.hpp>
+#include <es_fe/types.hpp>
 
 #include <es/geom/point.hpp>
 
@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 // template<class Circ_tag>
 // class Halfedge_circulator;
@@ -22,13 +22,11 @@ public:
 
 	struct Vertex
 	{
-		explicit Vertex(const geom::Point& pt) :
-			point(pt)
-		{ }
+		explicit Vertex(const geom::Point& pt) : point(pt)
+		{}
 
-		Vertex(const geom::Point& pt, Halfedge_index halfedge) :
-			point(pt), halfedge(halfedge)
-		{ }
+		Vertex(const geom::Point& pt, Halfedge_index halfedge) : point(pt), halfedge(halfedge)
+		{}
 
 		geom::Point point;
 
@@ -39,14 +37,12 @@ public:
 
 	struct Halfedge
 	{
-		explicit Halfedge(Vertex_index vertex) :
-			vertex(vertex)
-		{ }
+		explicit Halfedge(Vertex_index vertex) : vertex(vertex)
+		{}
 
-		explicit Halfedge(Vertex_index vertex,
-			Halfedge_index next_halfedge, Face_index face) :
+		explicit Halfedge(Vertex_index vertex, Halfedge_index next_halfedge, Face_index face) :
 			vertex(vertex), next(next_halfedge), face(face)
-		{ }
+		{}
 
 		// Index of the vertex the half-edge points to
 		Vertex_index vertex;
@@ -60,17 +56,16 @@ public:
 
 	struct Face
 	{
-		explicit Face(Halfedge_index halfedge) :
-			halfedge(halfedge)
-		{ }
+		explicit Face(Halfedge_index halfedge) : halfedge(halfedge)
+		{}
 
 		// One of the half-edges bounding the face
 		Halfedge_index halfedge;
 	};
 
 public:
-// 	template<class Circ_tag>
-// 	Halfedge_circulator<Circ_tag> halfedge_circ(Halfedge_index) const;
+	// 	template<class Circ_tag>
+	// 	Halfedge_circulator<Circ_tag> halfedge_circ(Halfedge_index) const;
 
 	//////////////////////////////////////////////////////////////////////////
 	/** Capacity */
@@ -106,7 +101,7 @@ public:
 	Halfedge_index next(Halfedge_index, Vertex_out_circ_tag) const;
 	Halfedge_index next(Halfedge_index, Face_circ_tag) const;
 
-		/** Traverses a half-edge cycle and calls a callback function.
+	/** Traverses a half-edge cycle and calls a callback function.
 	 *  @tparam Circ_tag	Vertex/face-based circulation tag.
 	 *  @param startHalfEdge	The first half-edge.
 	 *  @param callback			The function to call with the signature bool(IndexType).
@@ -161,15 +156,15 @@ public:
 	void adjust_outgoing_halfedge(Vertex_index vertex)
 	{
 		find(vertices_[*vertex].halfedge,
-			[vertex, this](Halfedge_index edge)
-			{
-				if (is_boundary(edge))
-				{
-					vertices_[*vertex].halfedge = edge;
-					return true;
-				}
-				return false;
-			}, Vertex_out_circ_tag{});
+			 [vertex, this](Halfedge_index edge) {
+				 if (is_boundary(edge))
+				 {
+					 vertices_[*vertex].halfedge = edge;
+					 return true;
+				 }
+				 return false;
+			 },
+			 Vertex_out_circ_tag{});
 	}
 
 	// Adds a vertex and returns the index of the newly added vertex
@@ -267,23 +262,23 @@ protected:
 // 	Halfedge_circulator(const Halfedge_structure& str, Halfedge_index halfedge)
 // 		: str_(str), halfedge_(halfedge)
 // 	{ }
-// 
+//
 // 	Halfedge_index operator*() const
 // 	{
 // 		return halfedge_;
 // 	}
-// 
+//
 // 	Halfedge_circulator& operator++()
 // 	{
 // 		halfedge_ = str_.next(halfedge_, Circ_tag{});
 // 		return *this;
 // 	}
-// 
+//
 // 	bool operator!=(const Halfedge_circulator& other) const
 // 	{
 // 		return halfedge_ != other.halfedge_;
 // 	}
-// 
+//
 // private:
 // 	const Halfedge_structure& str_;
 // 	Halfedge_index halfedge_;
@@ -295,4 +290,4 @@ protected:
 // {
 // 	return Halfedge_circulator<Circ_tag>{*this, halfedge};
 // }
-}
+} // namespace es_fe::internal

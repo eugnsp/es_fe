@@ -1,14 +1,14 @@
 #pragma once
-#include <es/fe/mesh/view/vertex_mesh2.hpp>
+#include <es_fe/mesh/view/vertex_mesh2.hpp>
 
-#include <es/fe/mesh/mesh2/mesh2.hpp>
-#include <es/fe/mesh/iterator/circulator_vertex_face.hpp>
-#include <es/fe/mesh/iterator/circulator_halfedge_edge.hpp>
-#include <es/fe/types.hpp>
+#include <es_fe/mesh/mesh2/mesh2.hpp>
+#include <es_fe/mesh/iterator/circulator_vertex_face.hpp>
+#include <es_fe/mesh/iterator/circulator_halfedge_edge.hpp>
+#include <es_fe/types.hpp>
 
 #include <es/geom/point.hpp>
 
-namespace fe
+namespace es_fe
 {
 inline const geom::Point& View<Vertex_tag, Mesh2>::vertex() const
 {
@@ -58,7 +58,7 @@ inline Local_index View<Vertex_tag, Mesh2>::n_faces() const
 	return n_edges() - is_boundary();
 }
 
-	// Returns the number of neighbouring faces
-	//Index n_faces() const;
+// Returns the number of neighbouring faces
+// Index n_faces() const;
 
-}
+} // namespace es_fe

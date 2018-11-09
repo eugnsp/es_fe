@@ -1,10 +1,10 @@
 #pragma once
-#include <es/fe/types.hpp>
+#include <es_fe/types.hpp>
 #include <cstddef>
 #include <type_traits>
 #include <utility>
 
-namespace fe
+namespace es_fe
 {
 namespace internal
 {
@@ -29,7 +29,7 @@ void for_each_var_element_impl2(Function func)
 	if constexpr (var + 1 < Var_list::size)
 		for_each_var_element_impl2<Var_list, var + 1, Element_tags...>(func);
 }
-}
+} // namespace internal
 
 template<class Var_list, class Function>
 void for_each_var(Function func)
@@ -49,27 +49,27 @@ void for_each_var_element(Function func)
 	if constexpr (space_dim == 2)
 		internal::for_each_var_element_impl2<Var_list, 0, Vertex_tag, Edge_tag, Face_tag>(func);
 }
-}
+} // namespace es_fe
 
-//namespace fe
+// namespace es_fe
 //{
-//namespace internal
+// namespace internal
 //{
-//template<std::size_t... vars, class Function>
-//void for_each_var_impl(std::index_sequence<vars...>, Function func)
+// template<std::size_t... vars, class Function>
+// void for_each_var_impl(std::index_sequence<vars...>, Function func)
 //{
 //	(static_cast<void>(func(util::Index_t<vars>{})), ...);
 //}
 //
-//template<class System, std::size_t var, class Tag, class Function>
-//void for_each_var_tag_impl(Function func)
+// template<class System, std::size_t var, class Tag, class Function>
+// void for_each_var_tag_impl(Function func)
 //{
 //	if constexpr (System::template Var_t<var>::has_dof(Tag{}))
 //		func(util::Index_t<var>{}, Tag{});
 //}
 //
-//template<class System, std::size_t var, class... Tags, class Function>
-//void for_each_var_tag_impl2(Function func)
+// template<class System, std::size_t var, class... Tags, class Function>
+// void for_each_var_tag_impl2(Function func)
 //{
 //	(for_each_var_tag_impl<System, var, Tags>(func), ...);
 //
@@ -78,14 +78,14 @@ void for_each_var_element(Function func)
 //}
 //}
 //
-//template<class System, class Function>
-//void for_each_var(Function func)
+// template<class System, class Function>
+// void for_each_var(Function func)
 //{
 //	internal::for_each_var_impl(std::make_index_sequence<System::n_vars>{}, func);
 //}
 //
-//template<class System, class Function>
-//void for_each_var_tag(Function func)
+// template<class System, class Function>
+// void for_each_var_tag(Function func)
 //{
 //	if constexpr (System::dim == 1)
 //		internal::for_each_var_tag_impl2<System, 0, Vertex_tag, Edge_tag>(func);

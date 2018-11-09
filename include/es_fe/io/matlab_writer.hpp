@@ -1,17 +1,17 @@
 #pragma once
 #include <es_la/io/matfile_writer.hpp>
-#include <es/fe/types.hpp>
-#include <es/fe/mesh.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh.hpp>
 #include <cassert>
 #include <string>
 
-namespace fe
+namespace es_fe
 {
 class Matlab_writer
 {
 public:
-	Matlab_writer(const std::string& file_name, const Mesh2& mesh, double mesh_scale = 1)
-		: mat_file_(file_name), mesh_(mesh)
+	Matlab_writer(const std::string& file_name, const Mesh2& mesh, double mesh_scale = 1) :
+		mat_file_(file_name), mesh_(mesh)
 	{
 		write_mesh(mesh_scale);
 	}
@@ -47,8 +47,8 @@ public:
 		write_vertex_field(var_name, vertex_field);
 	}
 
-	//void writeDataOnCells(const std::string&, const la::Vector_xd&, double scale = 1);
-	//void _writeDataOnEdges(const std::string&, const la::Vector_xd&, double scale = 1);
+	// void writeDataOnCells(const std::string&, const la::Vector_xd&, double scale = 1);
+	// void _writeDataOnEdges(const std::string&, const la::Vector_xd&, double scale = 1);
 
 	template<typename T>
 	void write_scalar(const std::string& var_name, T value)
@@ -102,4 +102,4 @@ private:
 	la::Matfile_writer mat_file_;
 	const Mesh2& mesh_;
 };
-}
+} // namespace es_fe

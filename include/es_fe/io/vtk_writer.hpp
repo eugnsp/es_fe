@@ -1,6 +1,6 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/mesh.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh.hpp>
 #include <es_util/time.hpp>
 
 #include <array>
@@ -9,19 +9,21 @@
 #include <stdexcept>
 #include <string>
 
-namespace fe
+namespace es_fe
 {
 class Vtk_writer
 {
 private:
 	enum class Data_section
 	{
-		UNDEF, POINT_DATA, CELL_DATA
+		UNDEF,
+		POINT_DATA,
+		CELL_DATA
 	};
 
 public:
-	Vtk_writer(const std::string& file_name, const Mesh2& mesh, double mesh_scale = 1)
-		: file_(file_name), mesh_(mesh)
+	Vtk_writer(const std::string& file_name, const Mesh2& mesh, double mesh_scale = 1) :
+		file_(file_name), mesh_(mesh)
 	{
 		if (!file_)
 			throw std::runtime_error("File '" + file_name + "' cannot be opened for writing");
@@ -107,7 +109,7 @@ private:
 
 		// Faces
 		std::vector<unsigned int> cell_types(*mesh_.n_faces());
-		auto cell_list_size = *mesh_.n_faces();		// Cells' indices
+		auto cell_list_size = *mesh_.n_faces(); // Cells' indices
 
 		// TODO :: all triangles
 		for (const auto& face : mesh_.faces())
@@ -141,7 +143,7 @@ private:
 	{
 		if (last_section_ == section)
 			return;
-		
+
 		switch (section)
 		{
 		case Data_section::POINT_DATA:
@@ -167,7 +169,7 @@ private:
 
 		// TODO : use iterators
 		for (std::size_t i = 0; i < field.size(); ++i)
-			write_ln(+field[i]);	// "+" to promote to a type printable as number
+			write_ln(+field[i]); // "+" to promote to a type printable as number
 
 		write_ln();
 	}
@@ -202,4 +204,4 @@ private:
 	const Mesh2& mesh_;
 	Data_section last_section_ = Data_section::UNDEF;
 };
-}
+} // namespace es_fe

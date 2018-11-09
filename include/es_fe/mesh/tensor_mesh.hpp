@@ -1,5 +1,5 @@
 #pragma once
-#include <es/fe/mesh.hpp>
+#include <es_fe/mesh.hpp>
 
 #include <es/geom/compare.hpp>
 #include <es/geom/rect.hpp>
@@ -11,7 +11,7 @@
 #include <vector>
 #include <utility>
 
-namespace fe
+namespace es_fe
 {
 namespace internal
 {
@@ -47,11 +47,10 @@ public:
 	}
 
 	//! Refines the mesh
-	//virtual bool refine(const Refine_strategy&) override;
+	// virtual bool refine(const Refine_strategy&) override;
 
 protected:
-	Tensor_mesh(Grid grid_x, Grid grid_y)
-		: grid_x_(std::move(grid_x)), grid_y_(std::move(grid_y))
+	Tensor_mesh(Grid grid_x, Grid grid_y) : grid_x_(std::move(grid_x)), grid_y_(std::move(grid_y))
 	{
 		assert(std::is_sorted(grid_x_.begin(), grid_x_.end()));
 		assert(std::is_sorted(grid_y_.begin(), grid_y_.end()));
@@ -71,7 +70,7 @@ protected:
 	Grid grid_x_;
 	Grid grid_y_;
 };
-}
+} // namespace internal
 
 // A triangular tensor mesh class
 class Tri_tensor_mesh : public internal::Tensor_mesh
@@ -80,16 +79,16 @@ public:
 	// Constructs a triangular tensor mesh from x- and y-gridlines
 	// Each rectangle is bisected using Bisection_strategy predicate.
 	template<class Bisection_strategy>
-	Tri_tensor_mesh(Grid grid_x, Grid grid_y, Bisection_strategy strategy)
-		: Tensor_mesh(std::move(grid_x), std::move(grid_y))
+	Tri_tensor_mesh(Grid grid_x, Grid grid_y, Bisection_strategy strategy) :
+		Tensor_mesh(std::move(grid_x), std::move(grid_y))
 	{
 		create_mesh(strategy);
 	}
 
 	// Constructs a triangular tensor mesh from x- and y-gridlines
-	Tri_tensor_mesh(Grid grid_x, Grid grid_y)
-		: Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), default_bisection)
-	{ }
+	Tri_tensor_mesh(Grid grid_x, Grid grid_y) :
+		Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), default_bisection)
+	{}
 
 	virtual std::string type_string() const override
 	{
@@ -99,7 +98,7 @@ public:
 private:
 	template<class Bisection_strategy>
 	void create_mesh(Bisection_strategy bisection)
-	{ 
+	{
 		const auto nx = static_cast<Index>(grid_x_.size());
 		const auto ny = static_cast<Index>(grid_y_.size());
 		assert(nx > 0 && ny > 0);
@@ -124,15 +123,15 @@ private:
 			{
 				const geom::Rect rect({grid_x_[i], grid_y_[j - 1]}, {grid_x_[i + 1], grid_y_[j]});
 				if (bisection(rect))
-				{													//     *---*  next
-					add_cell(prev[i], prev[i + 1], next[i + 1]);	//     | / |
-					add_cell(prev[i], next[i + 1], next[i]);		//     *---*  prev
-				}													//	   i  i+1
+				{                                                //     *---*  next
+					add_cell(prev[i], prev[i + 1], next[i + 1]); //     | / |
+					add_cell(prev[i], next[i + 1], next[i]);     //     *---*  prev
+				}                                                //	   i  i+1
 				else
-				{													//     *---*  next
-					add_cell(next[i], prev[i], prev[i + 1]);		//     | \ |
-					add_cell(next[i], prev[i + 1], next[i + 1]);	//     *---*  prev
-				}													//	   i  i+1
+				{                                                //     *---*  next
+					add_cell(next[i], prev[i], prev[i + 1]);     //     | \ |
+					add_cell(next[i], prev[i + 1], next[i + 1]); //     *---*  prev
+				}                                                //	   i  i+1
 			}
 
 			swap(prev, next);
@@ -143,7 +142,7 @@ private:
 		assert(*n_cells() == num_cells);
 
 		// HACK
-		//debug_check();
+		// debug_check();
 	}
 
 	static bool default_bisection(const geom::Rect&)
@@ -151,4 +150,4 @@ private:
 		return true;
 	}
 };
-}
+} // namespace es_fe

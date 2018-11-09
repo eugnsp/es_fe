@@ -1,20 +1,20 @@
 #pragma once
-#include <es/fe/mesh/mesh2/mesh2.hpp>
+#include <es_fe/mesh/mesh2/mesh2.hpp>
 
-#include <es/fe/types.hpp>
-#include <es/fe/mesh/view/vertex_mesh2.hpp>
-#include <es/fe/mesh/view/halfedge_mesh2.hpp>
-#include <es/fe/mesh/view/edge_mesh2.hpp>
-#include <es/fe/mesh/view/face_mesh2.hpp>
-#include <es/fe/mesh/iterator/random_access.hpp>
-//#include <es/fe/mesh/iterator/circulator_vertex.hpp>
-//#include <es/fe/mesh/iterator/circulator_halfedge.hpp>
-//#include <es/fe/mesh/iterator/circulator_edge.hpp>
-//#include <es/fe/mesh/iterator/circulator_face.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh/view/vertex_mesh2.hpp>
+#include <es_fe/mesh/view/halfedge_mesh2.hpp>
+#include <es_fe/mesh/view/edge_mesh2.hpp>
+#include <es_fe/mesh/view/face_mesh2.hpp>
+#include <es_fe/mesh/iterator/random_access.hpp>
+//#include <es_fe/mesh/iterator/circulator_vertex.hpp>
+//#include <es_fe/mesh/iterator/circulator_halfedge.hpp>
+//#include <es_fe/mesh/iterator/circulator_edge.hpp>
+//#include <es_fe/mesh/iterator/circulator_face.hpp>
 
 #include <es_util/function.hpp>
 
-namespace fe
+namespace es_fe
 {
 //////////////////////////////////////////////////////////////////////////
 /** Views */
@@ -127,4 +127,4 @@ inline std::ostream& operator<<(std::ostream& ost, const Mesh2& mesh)
 
 	return ost;
 }
-}
+} // namespace es_fe

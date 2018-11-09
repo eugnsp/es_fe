@@ -1,12 +1,12 @@
 #pragma once
-#include <es/fe/mesh/halfedge_structure/halfedge_structure.hpp>
-#include <es/fe/types.hpp>
+#include <es_fe/mesh/halfedge_structure/halfedge_structure.hpp>
+#include <es_fe/types.hpp>
 
 #include <algorithm>
 #include <utility>
 #include <vector>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 inline Face_index Halfedge_structure::add_cell(Vertex_index v1, Vertex_index v2, Vertex_index v3)
 {
@@ -48,14 +48,13 @@ inline Face_index Halfedge_structure::add_cell(Vertex_index v1, Vertex_index v2,
 			{
 				const auto prevOuter = twin(nextInner);
 				// TODO : check
-				//const auto nextOuter = twin(prevInner);
+				// const auto nextOuter = twin(prevInner);
 				auto prevBoundary = prevOuter;
 
 				do
 				{
 					prevBoundary = twin(next(prevBoundary, Face_circ_tag{}));
-				}
-				while (!is_boundary(prevBoundary));
+				} while (!is_boundary(prevBoundary));
 
 				const auto nextBoundary = next(prevBoundary, Face_circ_tag{});
 				assert(prevBoundary != prevInner);
@@ -152,4 +151,4 @@ inline Face_index Halfedge_structure::add_cell(Vertex_index v1, Vertex_index v2,
 
 	return cell;
 }
-}
+} // namespace es_fe::internal

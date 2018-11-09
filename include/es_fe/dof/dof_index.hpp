@@ -1,7 +1,7 @@
 #pragma once
 #include "../types.hpp"
 
-namespace fe
+namespace es_fe
 {
 struct Dof_index
 {
@@ -46,4 +46,4 @@ inline Dof_index operator-(Dof_index index, Local_index delta)
 {
 	return (index -= delta);
 }
-}
+} // namespace es_fe

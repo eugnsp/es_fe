@@ -1,19 +1,18 @@
 #pragma once
-#include <es/fe/forward.hpp>
-#include <es/fe/types.hpp>
-#include <es/fe/mesh/iterator/iterator_base.hpp>
+#include <es_fe/forward.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh/iterator/iterator_base.hpp>
 
 #include <cassert>
 #include <type_traits>
 
-namespace fe
+namespace es_fe
 {
 template<class Element_tag, class Circ_tag>
 class Circulator_vertex_face : public internal::Iterator_base<Element_tag, Mesh2>
 {
 private:
-	static_assert(std::is_same_v<Element_tag, Vertex_tag> ||
-		std::is_same_v<Element_tag, Face_tag>);
+	static_assert(std::is_same_v<Element_tag, Vertex_tag> || std::is_same_v<Element_tag, Face_tag>);
 
 	using Base = internal::Iterator_base<Element_tag, Mesh2>;
 
@@ -71,8 +70,8 @@ private:
 
 	auto get_face_index() const
 	{
-		return view_.mesh().face_index(std::is_same_v<Circ_tag, Face_circ_tag> ?
-			twin(halfedge_) : halfedge_);
+		return view_.mesh().face_index(std::is_same_v<Circ_tag, Face_circ_tag> ? twin(halfedge_)
+																			   : halfedge_);
 	}
 
 private:
@@ -80,4 +79,4 @@ private:
 
 	Halfedge_index halfedge_;
 };
-}
+} // namespace es_fe

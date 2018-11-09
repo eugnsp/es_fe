@@ -1,6 +1,6 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/forward.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/forward.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <array>
@@ -10,7 +10,7 @@
 // Flag indicating that only triangle elements in 2D meshed are used
 #define TRIANGULAR_CELLS_ONLY
 
-namespace fe
+namespace es_fe
 {
 
 template<std::size_t size>
@@ -27,6 +27,4 @@ struct Mesh_selector
 template<std::size_t dim>
 using Mesh_t = typename Mesh_selector<dim>::Type;
 
-
-
-}
+} // namespace es_fe

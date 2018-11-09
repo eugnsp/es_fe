@@ -1,12 +1,12 @@
 #pragma once
-#include <es/fe/forward.hpp>
-#include <es/fe/types.hpp>
-#include <es/fe/type_traits.hpp>
-#include <es/fe/mesh/view/base.hpp>
+#include <es_fe/forward.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/type_traits.hpp>
+#include <es_fe/mesh/view/base.hpp>
 
 #include <es/geom/point.hpp>
 
-namespace fe
+namespace es_fe
 {
 template<>
 class View<Vertex_tag, Mesh2> : public internal::View_base<Vertex_tag, Mesh2>
@@ -34,4 +34,4 @@ public:
 	Local_index n_edges() const;
 	Local_index n_faces() const;
 };
-}
+} // namespace es_fe

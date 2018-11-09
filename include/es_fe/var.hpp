@@ -82,4 +82,4 @@ public:
 private:
 	Local_index dim_ = 1;
 };
-} // namespace fe
+} // namespace es_fe

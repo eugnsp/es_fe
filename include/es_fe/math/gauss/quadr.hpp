@@ -1,10 +1,10 @@
 #pragma once
-#include <es/fe/forward.hpp>
-#include <es/fe/types.hpp>
-#include <es/fe/math/gauss/data.hpp>
+#include <es_fe/forward.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/math/gauss/data.hpp>
 #include <cassert>
 
-namespace fe
+namespace es_fe
 {
 template<Local_index order>
 class Quadr<order, 1>
@@ -19,8 +19,8 @@ public:
 		return static_cast<Local_index>(points.size());
 	}
 
-   // Returns the quadrature point that has index (point) on 
-   // edge (0, 0) - (1, 0) of the reference triangle
+	// Returns the quadrature point that has index (point) on
+	// edge (0, 0) - (1, 0) of the reference triangle
 	static constexpr la::Vector_2d point(Local_index point)
 	{
 		assert(point < size());
@@ -47,4 +47,4 @@ private:
 		return (... + (points[indices].weight * fn(indices)));
 	}
 };
-}
+} // namespace es_fe

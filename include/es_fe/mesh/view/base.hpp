@@ -1,10 +1,10 @@
 #pragma once
-#include <es/fe/type_traits.hpp>
+#include <es_fe/type_traits.hpp>
 
 #include <cassert>
 #include <type_traits>
 
-namespace fe::internal
+namespace es_fe::internal
 {
 template<class Element_tag, class Mesh>
 class View_base
@@ -15,11 +15,10 @@ public:
 	// For all elements, except edges, store index of the corresponding type,
 	// for edges store halfedge index (of either corresponding halfedge)
 	using Internal_index = Decay_element_index<Element_index>;
-	   
+
 public:
-	View_base(const Mesh& mesh, Internal_index index)
-		: index_(index), mesh_(mesh)
-	{ }
+	View_base(const Mesh& mesh, Internal_index index) : index_(index), mesh_(mesh)
+	{}
 
 	View_base& operator=(const View_base& view)
 	{
@@ -62,4 +61,4 @@ protected:
 	Internal_index index_;
 	const Mesh& mesh_;
 };
-}
+} // namespace es_fe::internal

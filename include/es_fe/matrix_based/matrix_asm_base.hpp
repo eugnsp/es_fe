@@ -1,14 +1,13 @@
 #pragma once
 
-namespace fe
+namespace es_fe
 {
 template<class Solver>
 class Matrix_asm_base
 {
 public:
-	Matrix_asm_base(Solver& solver) :
-		solver_(solver)
-	{ }
+	Matrix_asm_base(Solver& solver) : solver_(solver)
+	{}
 
 	virtual ~Matrix_asm_base() = default;
 
@@ -17,4 +16,4 @@ public:
 protected:
 	Solver& solver_;
 };
-}
+} // namespace es_fe

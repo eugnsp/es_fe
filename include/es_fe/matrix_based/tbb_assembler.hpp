@@ -1,9 +1,9 @@
 #pragma once
-#include <es/fe/types.hpp>
-#include <es/fe/mesh/tools/mesh_face_colour_map.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh/tools/mesh_face_colour_map.hpp>
 
 #if _MSC_VER
-#define NOMINMAX
+#	define NOMINMAX
 #endif
 #include <tbb/tbb.h>
 
@@ -12,7 +12,7 @@
 #include <utility>
 #include <vector>
 
-namespace fe
+namespace es_fe
 {
 class Tbb_assembler
 {
@@ -35,21 +35,21 @@ public:
 			colour_map_->get_cells_with_colour(colour, cells);
 
 			tbb::parallel_for(tbb::blocked_range{cells.begin(), cells.end()},
-				[&solver](const auto& range)
-				{
- 					for (auto cell = range.begin(); cell != range.end(); ++cell)
- 						solver.assemble_on_cell(solver.mesh().view(*cell));
-// 					auto cell_view = solver.mesh().view(Face_index{});
-// 					for (auto cell = range.begin(); cell != range.end(); ++cell)
-// 					{
-// 						cell_view.set_at(cell);
-// 						solver.assemble_on_cell(cell_view);
-// 					}
-				});
+							  [&solver](const auto& range) {
+								  for (auto cell = range.begin(); cell != range.end(); ++cell)
+									  solver.assemble_on_cell(solver.mesh().view(*cell));
+								  // 					auto cell_view =
+								  // solver.mesh().view(Face_index{}); 					for (auto cell =
+								  // range.begin(); cell != range.end(); ++cell)
+								  // 					{
+								  // 						cell_view.set_at(cell);
+								  // 						solver.assemble_on_cell(cell_view);
+								  // 					}
+							  });
 		}
 	}
 
 private:
 	std::shared_ptr<Mesh_face_colour_map> colour_map_;
 };
-}
+} // namespace es_fe
