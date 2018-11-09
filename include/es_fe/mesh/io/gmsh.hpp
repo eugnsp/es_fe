@@ -1,6 +1,6 @@
 #pragma once
 #include <es_la/dense.hpp>
-#include <es_fe/forward.hpp>
+#include <es_fe/types.hpp>
 #include <memory>
 #include <string>
 

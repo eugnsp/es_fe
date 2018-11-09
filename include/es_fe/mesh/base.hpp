@@ -1,6 +1,5 @@
 #pragma once
 #include <es_fe/types.hpp>
-#include <es_fe/forward.hpp>
 #include <cstddef>
 #include <cstdint>
 #include <array>

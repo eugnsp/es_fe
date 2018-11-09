@@ -1,5 +1,4 @@
 #pragma once
-#include <es_fe/forward.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/view/base.hpp>
 
@@ -113,9 +112,9 @@ public:
 namespace geom::internal
 {
 template<>
-struct Traits<fe::View<fe::Halfedge_tag, fe::Mesh2>>
+struct Traits<es_fe::View<es_fe::Halfedge_tag, es_fe::Mesh2>>
 {
-	using Index = fe::Local_index;
+	using Index = es_fe::Local_index;
 	using Tag = Segment_tag;
 };
 } // namespace geom::internal

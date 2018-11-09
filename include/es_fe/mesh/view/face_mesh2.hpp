@@ -1,6 +1,5 @@
 #pragma once
 #include <es_fe/config.hpp>
-#include <es_fe/forward.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/view/base.hpp>
@@ -83,9 +82,9 @@ public:
 namespace geom::internal
 {
 template<>
-struct Traits<fe::View<fe::Face_tag, fe::Mesh2>>
+struct Traits<es_fe::View<es_fe::Face_tag, es_fe::Mesh2>>
 {
-	using Index = fe::Local_index;
+	using Index = es_fe::Local_index;
 	using Tag = Triangle_tag;
 };
 } // namespace geom::internal

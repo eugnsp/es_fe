@@ -1,6 +1,6 @@
-#include <es/fe/mesh/io/gmsh.hpp>
-#include <es/fe/mesh.hpp>
-#include <es/fe/mesh/exception.hpp>
+#include <es_fe/mesh/io/gmsh.hpp>
+#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/exception.hpp>
 #include <array>
 #include <cstddef>
 #include <fstream>
@@ -9,7 +9,7 @@
 #include <memory>
 #include <string>
 
-namespace fe
+namespace es_fe
 {
 class Gmsh_file_reader
 {

@@ -31,7 +31,7 @@ private:
 	using Edge_view = typename Mesh::Edge_view;
 	using Cell_view = typename Mesh::Cell_view;
 
-	using System = System<Var_list, fe::Dof_mapper>;
+	using System = System<Var_list, es_fe::Dof_mapper>;
 
 	static constexpr std::size_t n_vars = Traits::n_vars;
 

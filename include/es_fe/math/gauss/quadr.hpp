@@ -1,5 +1,4 @@
 #pragma once
-#include <es_fe/forward.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/math/gauss/data.hpp>
 #include <cassert>

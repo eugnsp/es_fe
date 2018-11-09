@@ -1,6 +1,5 @@
 #pragma once
 #include <es_fe/types.hpp>
-#include <es_fe/forward.hpp>
 #include <es_fe/var_list.hpp>
 
 #include <es_util/type_traits.hpp>

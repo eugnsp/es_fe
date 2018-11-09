@@ -38,7 +38,7 @@ inline auto View<Face_tag, Mesh2>::face_circ() const -> Face_circ
 	return Face_circ{mesh_, halfedge()};
 }
 
-inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices) const
+inline void View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -48,8 +48,8 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices) con
 	assert(++halfedge == halfedge_circ());
 }
 
-inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
-												   Halfedge_indices& halfedges) const
+inline void View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
+											   Halfedge_indices& halfedges) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -62,8 +62,8 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
 	assert(++halfedge == halfedge_circ());
 }
 
-inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
-												   Edge_indices& edges) const
+inline void View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
+											   Edge_indices& edges) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -76,7 +76,7 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
 	assert(++halfedge == halfedge_circ());
 }
 
-inline void fe::View<Face_tag, Mesh2>::get_indices(
+inline void View<Face_tag, Mesh2>::get_indices(
 	Vertex_indices& vertices, Edge_with_dir_indices& edges_with_direction) const
 {
 	auto halfedge = halfedge_circ();
@@ -90,9 +90,9 @@ inline void fe::View<Face_tag, Mesh2>::get_indices(
 	assert(++halfedge == halfedge_circ());
 }
 
-inline void fe::View<Face_tag, Mesh2>::get_indices(Halfedge_index first_halfedge,
-												   Vertex_indices& vertices,
-												   Halfedge_indices& halfedges) const
+inline void View<Face_tag, Mesh2>::get_indices(Halfedge_index first_halfedge,
+											   Vertex_indices& vertices,
+											   Halfedge_indices& halfedges) const
 {
 	assert(mesh_.face_index(first_halfedge) == index_);
 

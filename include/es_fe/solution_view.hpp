@@ -20,7 +20,7 @@ class Solution_view2;
 namespace la::internal
 {
 template<class System, std::size_t var>
-struct Traits_impl<fe::Solution_view<System, var>>
+struct Traits_impl<es_fe::Solution_view<System, var>>
 {
 	using Value = double;
 	using Access_tag = Read_only_tag;
