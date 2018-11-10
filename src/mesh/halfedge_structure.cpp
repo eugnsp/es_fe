@@ -136,8 +136,8 @@ es_util::Error Halfedge_structure::check() const
 		if (pos == vertices.end())
 			break;
 
-		err.append_ln("Vertices #", pos->first, " and #", (pos + 1)->first, " are identical (",
-					  pos->second, ')');
+		err.append_ln("Vertices #", pos->first, " and #", (pos + 1)->first, " are identical, ",
+					  pos->second);
 	}
 
 	// Check for unused nodes
@@ -147,7 +147,7 @@ es_util::Error Halfedge_structure::check() const
 
 	for (Index i = 0; i < *n_vertices(); ++i)
 		if (!seen_nodes[i])
-			err.append_ln("Vertex #", i, " is unused (", vertices_[i].point, ')');
+			err.append_ln("Vertex #", i, " is unused, ", vertices_[i].point);
 
 	return err;
 }

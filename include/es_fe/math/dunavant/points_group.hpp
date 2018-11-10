@@ -5,7 +5,7 @@
 
 namespace es_fe::internal
 {
-// Class of group of Dunavant quadrature points; a point group contains
+// Group of Dunavant quadrature points; a group contains
 // weight and 1, 3 or 6 points that are obtained via all possible
 // permutations of 1, 2 or 3 barycentric coordinates
 template<Local_index n>

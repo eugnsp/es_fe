@@ -5,6 +5,8 @@
 
 #include <es_geom/point.hpp>
 
+#include <iosfwd>
+
 namespace es_fe
 {
 template<>
@@ -32,5 +34,13 @@ public:
 
 	Local_index n_edges() const;
 	Local_index n_faces() const;
+	
+	void print(std::ostream&) const;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Element_view<Vertex_tag, Mesh2>& view)
+{
+	view.print(os);
+	return os;
+}
 } // namespace es_fe

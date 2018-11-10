@@ -146,13 +146,13 @@ template<class Tag>
 constexpr bool is_edge_tag_v = Is_edge_tag<Tag>::value;
 
 template<class Element_index>
-struct Decay_element_index_impl
+struct Decay_element_in_view_index_impl
 {
 	using Type = Element_index;
 };
 
 template<>
-struct Decay_element_index_impl<Edge_index>
+struct Decay_element_in_view_index_impl<Edge_index>
 {
 	using Type = Halfedge_index;
 };
@@ -160,7 +160,7 @@ struct Decay_element_index_impl<Edge_index>
 // For Edge_index returns Halfedge_index,
 // for other index types returns them intact
 template<class Element_index>
-using Decay_element_index = typename Decay_element_index_impl<Element_index>::Type;
+using Decay_element_index_in_view = std::conditional_t<std::is_same_v<Element_index, Edge_index>, Halfedge_index, Element_index>;
 
 //////////////////////////////////////////////////////////////////////////
 

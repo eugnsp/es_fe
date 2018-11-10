@@ -41,7 +41,7 @@ public:
 		explicit Halfedge(Vertex_index vertex) : vertex(vertex)
 		{}
 
-		explicit Halfedge(Vertex_index vertex, Halfedge_index next_halfedge, Face_index face) :
+		Halfedge(Vertex_index vertex, Halfedge_index next_halfedge, Face_index face) :
 			vertex(vertex), next(next_halfedge), face(face)
 		{}
 
@@ -77,10 +77,24 @@ public:
 	Face_index n_faces() const;
 	Cell_index n_cells() const;
 
+	template<class Tag>
+	auto n_elements(Tag) const
+	{
+		if constexpr (std::is_same_v<Tag, Vertex_tag>)
+			return n_vertices();
+		else if constexpr (std::is_same_v<Tag, Halfedge_tag>)
+			return n_halfedges();
+		else if constexpr (std::is_same_v<Tag, Edge_tag>)
+			return n_edges();
+		else if constexpr (std::is_same_v<Tag, Face_tag>)
+			return n_faces();
+		else if constexpr (std::is_same_v<Tag, Cell_tag>)
+			return n_cells();
+	}	
+	
 	void reserve(Index n_vertices, Index n_edges = 0, Index n_faces = 0);
-
-	// Returns approximate total size of memory in bytes
-	// occupied by the data structure
+	
+	// Returns approximate total size of memory in bytes occupied by the data structure
 	std::size_t memory_size() const;
 
 	//////////////////////////////////////////////////////////////////////////
@@ -143,14 +157,20 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	/** Flags */
 
-	// Checks whether the vertex is a boundary one
-	// (the function also returns true if the vertex has an invalid edge index;
-	// this can happen only during mesh construction when the vertex is added,
-	// but the containing element has not yet been created)
+	// Checks whether the vertex is a boundary one (the function also returns true if
+	// the vertex has an invalid edge index; this can happen only during mesh construction
+	// when the vertex is added, but the containing element has not yet been created)
 	bool is_boundary(Vertex_index) const;
 	bool is_boundary(Edge_index) const;
 	bool is_boundary(Halfedge_index) const;
 	bool is_boundary(Face_index) const;
+
+	// Checks whether the halfedge structure is empty
+	// (i.e. if it has either no vertices, or no edges, or no faces)
+	bool is_empty() const
+	{
+		return vertices_.empty() || halfedges_.empty() || faces_.empty();
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -175,9 +195,8 @@ public:
 		return n_vertices() - 1;
 	}
 
-	// Adds a cell and returns the index of the newly added cell
-	// (the function automatically creates the missing edges and
-	// adjusts the data structure properly),
+	// Adds a cell and returns the index of the newly added cell (the function 
+	// automatically creates the missing edges and adjusts the data structure properly),
 	Face_index add_cell(Vertex_index, Vertex_index, Vertex_index);
 
 	Halfedge_index first_boundary_halfedge() const
@@ -235,9 +254,9 @@ public:
 	}
 
 private:
-	// Adds a pair of half-edges without adjusting the data structure,
-	// returns the index of the first half-edge in the newly added pair
-	// (the first (second) half-edge points to the vertex2 (vertex1)
+	// Adds a pair of half-edges without adjusting the data structure, returns
+	// the index of the first half-edge in the newly added pair (the first (second)
+	// half-edge points to the vertex2 (vertex1)
 	Halfedge_index insert_halfedges_raw(Vertex_index vertex1, Vertex_index vertex2)
 	{
 		halfedges_.emplace_back(vertex1);

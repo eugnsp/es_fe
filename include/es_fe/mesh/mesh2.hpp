@@ -107,10 +107,6 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	/** Flags */
 
-	// Checks whether the mesh is empty (mesh is empty if it has either
-	// no vertices, or no edges, or no cells)
-	bool is_empty() const;
-
 	//////////////////////////////////////////////////////////////////////////
 	/** Views */
 
@@ -184,6 +180,9 @@ public:
 	}
 
 	using Base::_xxx;
+	
+	// Outputs human readable information about the mesh
+	void print(std::ostream&) const;
 
 protected:
 	using Base::first_boundary_halfedge;
@@ -201,7 +200,11 @@ private:
 };
 
 // Outputs human readable information about the mesh
-std::ostream& operator<<(std::ostream&, const Mesh2&);
+inline std::ostream& operator<<(std::ostream& os, const Mesh2& mesh)
+{
+	mesh.print(os);
+	return os;
+}
 
 //////////////////////////////////////////////////////////////////////////
 

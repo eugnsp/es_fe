@@ -1,4 +1,4 @@
-#include "construct_mesh.hpp"
+#include "construct_mesh2.hpp"
 
 #include <es_fe/mesh.hpp>
 
@@ -31,7 +31,8 @@ int main()
 	construction_test(mesh);
 	basic_test(mesh);
 	
-	
+	for (auto& f : mesh.faces())
+		std::cout << f << '\n';
 
 	std::cout << "OK.\n";
 	return 0;

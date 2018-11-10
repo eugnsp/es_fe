@@ -10,62 +10,9 @@
 
 namespace fe
 {
-namespace
-{
-template<class Index>
-std::string indexString(Index index)
-{
-	return is_valid(index) ? std::to_string(*index) : "<invalid index>";
-}
-}
 
 //////////////////////////////////////////////////////////////////////////
 /** Low level index-based element access */
-
-Vertex_index Mesh2::vertex_index_by_halfedge(Halfedge_index index) const
-{
-	assert(index < n_halfedges());
-	return halfedges_[*index].vertex;
-}
-
-
-bool Mesh2::is_first_halfedge(Halfedge_index index)
-{
-	return *index % 2 == 0;
-}
-
-bool Mesh2::is_second_halfedge(Halfedge_index index)
-{
-	return !is_first_halfedge(index);
-}
-
-Halfedge_index Mesh2::halfedge_index_by_vertex(Vertex_index index) const
-{
-	assert(index < n_vertices());
-	return vertices_[*index].halfedge;
-}
-
-Face_index Mesh2::face_index_by_halfedge(Halfedge_index index) const
-{
-	assert(index < n_halfedges());
-	return halfedges_[*index].face;
-}
-
-Face_index Mesh2::face_index_by_twin_halfedge(Halfedge_index index) const
-{
-	return face_index_by_halfedge(twin(index));
-}
-
-//////////////////////////////////////////////////////////////////////////
-/** Flags */
-
-bool Mesh2::is_empty() const
-{
-	return vertices_.empty() || halfedges_.empty() || faces_.empty();
-}
-
-//////////////////////////////////////////////////////////////////////////
-
 
 
 geom::Rect Mesh2::bounding_box() const
@@ -88,27 +35,6 @@ geom::Rect Mesh2::bounding_box() const
 	}
 
 	return {{x_min, y_min}, {x_max, y_max}};
-}
-
-//////////////////////////////////////////////////////////////////////////
-/** Views */
-
-auto Mesh2::view(Vertex_index index) const -> Vertex_view
-{
-	assert(index < n_vertices() || !is_valid(index));
-	return Vertex_view{*this, index};
-}
-
-auto Mesh2::view(Edge_index index) const -> Edge_view
-{
-	assert(index < n_edges() || !is_valid(index));
-	return Edge_view{*this, index};
-}
-
-auto Mesh2::view(Face_index index) const -> Face_view
-{
-	assert(index < n_faces() || !is_valid(index));
-	return Face_view{*this, index};
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -30,19 +30,16 @@ inline auto Halfedge_structure::n_cells() const -> Cell_index
 
 inline void Halfedge_structure::reserve(Index n_vertices, Index n_edges, Index n_faces)
 {
-	// TODO
 	vertices_.reserve(n_vertices);
-	// halfedges_.reserve(2 * n_edges);
+	halfedges_.reserve(2 * n_edges);
 	faces_.reserve(n_faces);
 }
 
-// Returns approximate total size of memory in bytes
-// occupied by the data structure
+// Returns approximate total size of memory in bytes occupied by the data structure
 inline std::size_t Halfedge_structure::memory_size() const
 {
-	// TODO
 	return vertices_.capacity() * sizeof(vertices_[0])
-		   //+ halfedges_.capacity() * sizeof(halfedges_[0])
+		   + halfedges_.capacity() * sizeof(halfedges_[0])
 		   + faces_.capacity() * sizeof(faces_[0]);
 }
 } // namespace es_fe::internal

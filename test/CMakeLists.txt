@@ -4,7 +4,7 @@ project(es_fe_test)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-add_compile_options(-Wall -Wextra -Wpedantic -D_DEBUG)
+add_compile_options(-Wall -Wextra -Wpedantic -g -D_DEBUG -m64)
 
 add_library(es_fe STATIC IMPORTED)
 set_target_properties(es_fe PROPERTIES

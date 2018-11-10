@@ -1,5 +1,5 @@
 #pragma once
-#include <es_fe/mesh/mesh2/mesh2.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/view/vertex_mesh2.hpp>
@@ -21,6 +21,7 @@ namespace es_fe
 
 inline auto Mesh2::view(Vertex_index index) const -> Vertex_view
 {
+	// TODO : assert index is valid
 	return {*this, index};
 }
 

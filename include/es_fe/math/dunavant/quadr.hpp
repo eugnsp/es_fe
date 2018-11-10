@@ -9,7 +9,7 @@ namespace es_fe
 {
 namespace internal
 {
-// A class of Dunavant quadrature integration
+// Dunavant quadrature integration
 template<Local_index order, class Group_index_sequence>
 class Dunavant_quadr;
 
@@ -57,7 +57,7 @@ using Dunavant_quadr_t = Dunavant_quadr<
 	order, Make_local_index_sequence<std::tuple_size_v<decltype(Dunavant_data<order>::groups)>>>;
 } // namespace internal
 
-// A class of quadrature integration
+// Quadrature integration
 template<Local_index order>
 class Quadr<order, 2> : public internal::Dunavant_quadr_t<order>
 {

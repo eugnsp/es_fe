@@ -32,7 +32,15 @@ public:
 
 	const geom::Point& vertex(Local_index) const;
 	Vertex_index vertex_index(Local_index) const;
+
+	void print(std::ostream&) const;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Element_view<Edge_tag, Mesh2>& view)
+{
+	view.print(os);
+	return os;
+}
 } // namespace es_fe
 
 namespace geom::internal

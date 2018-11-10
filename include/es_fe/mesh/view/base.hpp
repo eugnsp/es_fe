@@ -14,7 +14,7 @@ public:
 
 	// For all elements, except edges, store index of the corresponding type,
 	// for edges store halfedge index (of either corresponding halfedge)
-	using Internal_index = Decay_element_index<Element_index>;
+	using Internal_index = Decay_element_index_in_view<Element_index>;
 
 public:
 	Element_view_base(const Mesh& mesh, Internal_index index) : index_(index), mesh_(mesh)
@@ -32,7 +32,7 @@ public:
 		return index_;
 	}
 
-	Halfedge_index internal_index() const
+	Internal_index internal_index() const
 	{
 		return index_;
 	}

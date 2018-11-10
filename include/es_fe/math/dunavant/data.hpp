@@ -4,7 +4,7 @@
 
 namespace es_fe::internal
 {
-// Class of Dunavant quadrature rules data - weights and barycentric coordinates
+// Dunavant quadrature rules data - weights and barycentric coordinates
 template<Local_index order>
 struct Dunavant_data;
 

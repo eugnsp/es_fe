@@ -1,7 +1,7 @@
 #pragma once
 #include <es_fe/mesh/view/face_mesh2.hpp>
 
-#include <es_fe/mesh/mesh2/mesh2.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/mesh/iterator/circulator_vertex_face.hpp>
 #include <es_fe/mesh/iterator/circulator_halfedge_edge.hpp>
 #include <es_fe/types.hpp>

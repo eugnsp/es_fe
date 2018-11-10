@@ -76,7 +76,14 @@ public:
 	// 		return vertex(index);
 	// 	}
 	// #endif
+	void print(std::ostream&) const;
 };
+
+inline std::ostream& operator<<(std::ostream& os, const Element_view<Face_tag, Mesh2>& view)
+{
+	view.print(os);
+	return os;
+}
 } // namespace es_fe
 
 namespace geom::internal
