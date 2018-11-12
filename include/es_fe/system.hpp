@@ -169,13 +169,6 @@ public:
 																   std::forward<Args>(args)...);
 	}
 
-	template<class Symmetry_tag, class... Args>
-	decltype(auto) sparsity_pattern2(Args&&... args) const
-	{
-		return dof_mapper_.template sparsity_pattern2<Symmetry_tag>(*this,
-																	std::forward<Args>(args)...);
-	}
-
 	// 	la::Vector_xd& raw_solution()
 	// 	{
 	// 		return solution_;

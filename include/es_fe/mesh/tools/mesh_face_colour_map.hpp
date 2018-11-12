@@ -1,6 +1,5 @@
 #pragma once
-#include <es_fe/mesh/base.hpp>
-#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/mesh/algorithm/colour_cells.hpp>
 
 #include <cassert>

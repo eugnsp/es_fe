@@ -1,5 +1,5 @@
 #pragma once
-#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 
 #include <es_geom/linestring.hpp>
 #include <es_geom/algorithm.hpp>

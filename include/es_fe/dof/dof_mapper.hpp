@@ -149,8 +149,8 @@ public:
 #ifndef NDEBUG
 		assert(pattern.is_each_row_not_empty());
 		auto err = pattern.check();
-		if (!err.is_OK())
-			throw std::runtime_error(err.string());
+		if (err)
+			throw std::runtime_error(err.message());
 #endif
 
 		return pattern;

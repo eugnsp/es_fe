@@ -1,7 +1,7 @@
 #pragma once
 #include <es_la/io/matfile_writer.hpp>
 #include <es_fe/types.hpp>
-#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 #include <cassert>
 #include <string>
 

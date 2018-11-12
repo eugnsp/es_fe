@@ -1,5 +1,4 @@
 #pragma once
-#include <es_fe/config.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/view/base.hpp>

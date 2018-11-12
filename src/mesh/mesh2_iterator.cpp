@@ -77,4 +77,19 @@ auto Mesh2::cells() const -> es_util::Iterable<Cell_iter>
 {
 	return faces();
 }
+
+auto Mesh2::boundary_vertex_circ() const -> Boundary_vertex_circ
+{
+	return {*this, first_boundary_halfedge()};
+}
+
+auto Mesh2::boundary_halfedge_circ() const -> Boundary_halfedge_circ
+{
+	return {*this, first_boundary_halfedge()};
+}
+
+auto Mesh2::boundary_edge_circ() const -> Boundary_edge_circ
+{
+	return {*this, first_boundary_halfedge()};
+}
 } // namespace es_fe

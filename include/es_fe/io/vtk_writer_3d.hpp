@@ -1,6 +1,6 @@
 #pragma once
 #include <es_fe/types.hpp>
-#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 #include <es_util/time.hpp>
 #include <cassert>
 #include <fstream>

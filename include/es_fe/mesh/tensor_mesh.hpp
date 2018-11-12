@@ -1,5 +1,5 @@
 #pragma once
-#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 
 #include <es_geom/compare.hpp>
 #include <es_geom/rect.hpp>
@@ -13,7 +13,7 @@
 namespace es_fe
 {
 // A triangular tensor mesh
-class Tri_tensor_mesh
+class Tri_tensor_mesh : public Mesh2
 {
 public:
 	using Grid = std::vector<double>;

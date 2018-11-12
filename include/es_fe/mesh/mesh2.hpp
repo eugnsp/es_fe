@@ -1,5 +1,4 @@
 #pragma once
-#include <es_fe/config.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
@@ -13,21 +12,15 @@
 
 #include <es_geom/point.hpp>
 #include <es_geom/rect.hpp>
-#include <es_util/array.hpp>
 #include <es_util/error.hpp>
 #include <es_util/iterator.hpp>
 
-#include <array>
 #include <cassert>
 #include <cstddef>
-#include <initializer_list>
 #include <iosfwd>
-#include <list>
-#include <memory>
 #include <string>
 #include <type_traits>
 #include <utility>
-#include <vector>
 
 // enum class MeshObserveCode
 // {

@@ -185,15 +185,15 @@ public:
 				 element < n_elements(system.mesh(), tag); ++element)
 				for (Index layer = 0; layer < n_layers_; ++layer)
 				{
-					if constexpr (std::is_same_v<decltype(tag), fe::Vertex_tag>)
+					if constexpr (std::is_same_v<decltype(tag), Vertex_tag>)
 						if (!is_active_vertex[*element + layer * *mesh.n_vertices()])
 							continue;
 
-					if constexpr (std::is_same_v<decltype(tag), fe::Edge_tag>)
+					if constexpr (std::is_same_v<decltype(tag), Edge_tag>)
 						if (!is_active_edge[*element + layer * *mesh.n_edges()])
 							continue;
 
-					if constexpr (std::is_same_v<decltype(tag), fe::Face_tag>)
+					if constexpr (std::is_same_v<decltype(tag), Face_tag>)
 						if (!is_active_face[*element + layer * *mesh.n_faces()])
 							continue;
 
@@ -211,92 +211,6 @@ public:
 	template<class Symmetry_tag, class Couplig_func>
 	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system,
 														Couplig_func coupling) const
-	{
-		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
-
-		std::vector<std::size_t> cols;
-		for (auto& cell : system.mesh().faces())
-		{
-			std::vector<Vars_dofs> dofs(n_layers_);
-			all_dofs(cell, dofs);
-
-			for_each_var<Var_list>([&](auto var1) {
-				const auto& v1 = system.variable(var1);
-
-				for (Local_index dim1 = 0; dim1 < v1.dim(); ++dim1)
-					for (Index layer1 = 0; layer1 < n_layers_; ++layer1)
-					{
-						const auto& dofs1 = std::get<var1>(dofs[layer1]);
-
-						cols.clear();
-						for_each_var<Var_list>([&](auto var2) {
-							const auto& v2 = system.variable(var2);
-
-							// TODO : O(n^2) -> O(n) with iterators or sparse matrices
-
-							for (Local_index dim2 = 0; dim2 < v2.dim(); ++dim2)
-								for (Index layer2 = 0; layer2 < n_layers_; ++layer2)
-									if (coupling(var1, var2, dim1, dim2, layer1, layer2))
-									{
-										// TODO : break if is_valid() returns false (other dofs are
-										// also invalid)
-
-										const auto& dofs2 = std::get<var2>(dofs[layer2]);
-										for (std::size_t i = 0; i < dofs2.size(); ++i)
-											if (dofs2[i].is_valid() && dofs2[i].is_free)
-												cols.push_back(dofs2[i].index + dim2);
-									}
-						});
-
-						std::sort(cols.begin(), cols.end());
-						for (std::size_t i = 0; i < dofs1.size(); ++i)
-							if (dofs1[i].is_valid() && dofs1[i].is_free)
-							{
-								const auto row = dofs1[i].index + dim1;
-								if constexpr (std::is_same_v<Symmetry_tag, la::Symmetric_upper>)
-								{
-									const auto pos =
-										std::lower_bound(cols.begin(), cols.end(), row);
-									pattern.insert(row, pos, cols.end());
-								}
-								else
-									pattern.insert(row, cols.begin(), cols.end());
-							}
-					}
-			});
-
-			// for_each_var<Var_list>(
-			//	[&](auto var1)
-			//	{
-			//		const auto& v1 = system.variable(var1);
-
-			//		for_each_var<Var_list>(
-			//			[&](auto var2)
-			//			{
-			//				const auto& v2 = system.variable(var2);
-
-			//				for (auto c : coupling(var1, var2))
-			//				{
-			//					// c.first = dimension
-			//					// c.second
-			//				}
-			//			});
-			//	});
-		}
-
-#ifndef NDEBUG
-		assert(pattern.is_each_row_not_empty());
-		auto err = pattern.check();
-		if (!err.is_OK())
-			throw std::runtime_error(err.string());
-#endif
-
-		return pattern;
-	}
-
-	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(const System& system,
-														 Couplig_func coupling) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
 		std::vector<Vars_dofs> dofs(n_layers_);
@@ -343,12 +257,8 @@ public:
 				[&](auto var1) { for_each_var<Var_list>([&](auto var2) { ins(var1, var2); }); });
 		}
 
-#ifndef NDEBUG
 		assert(pattern.is_each_row_not_empty());
-		auto err = pattern.check();
-		if (!err.is_OK())
-			throw std::runtime_error(err.string());
-#endif
+		assert(!pattern.check());
 
 		return pattern;
 	}
