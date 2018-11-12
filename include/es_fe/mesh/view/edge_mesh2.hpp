@@ -25,17 +25,16 @@ public:
 		set_index(first_halfedge(index));
 	}
 
-	bool is_boundary() const
-	{
-		return this->mesh_.is_boundary(**this);
-	}
+	bool is_boundary() const;
 
 	const geom::Point& vertex(Local_index) const;
 	Vertex_index vertex_index(Local_index) const;
 
+	// Outputs human readable information about the view
 	void print(std::ostream&) const;
 };
 
+// Outputs human readable information about the view
 inline std::ostream& operator<<(std::ostream& os, const Element_view<Edge_tag, Mesh2>& view)
 {
 	view.print(os);

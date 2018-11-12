@@ -1,4 +1,5 @@
-#include <es_fe/mesh.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/mesh/halfedge_structure.hpp>
 
 #include <es_geom/algorithm.hpp>
 #include <es_geom/point.hpp>
@@ -79,8 +80,9 @@ es_util::Error Halfedge_structure::check() const
 	{
 		std::set<Index> seen_indices;
 
-		find(faces_[i].halfedge,
-			 [i, &seen_indices, &err](Halfedge_index edge) {
+		find_if(faces_[i].halfedge,
+			 [i, &seen_indices, &err](Halfedge_index edge)
+			 {
 				 if (seen_indices.count(*edge))
 				 {
 					 err.append_ln("The halfedges of the face #", i, " do not form a cycle");
@@ -101,8 +103,9 @@ es_util::Error Halfedge_structure::check() const
 	{
 		std::set<Halfedge_index> seen_indices;
 
-		find(vertices_[i].halfedge,
-			 [i, &seen_indices, &err](Halfedge_index edge) {
+		find_if(vertices_[i].halfedge,
+			 [i, &seen_indices, &err](Halfedge_index edge)
+			 {
 				 if (seen_indices.count(edge))
 				 {
 					 err.append_ln("The halfedges of the vertex #", i, " do not form a cycle");

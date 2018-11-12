@@ -6,21 +6,37 @@
 
 #include <algorithm>
 #include <cassert>
-#include <cstddef>
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 
 namespace es_fe
 {
-namespace internal
-{
-class Tensor_mesh : public Mesh2
+// A triangular tensor mesh
+class Tri_tensor_mesh
 {
 public:
 	using Grid = std::vector<double>;
 
 public:
+	// Constructs a triangular tensor mesh from x- and y-gridlines
+	// bisecting each rectangle using the given predicate
+	template<class Bisection_strategy>
+	Tri_tensor_mesh(Grid grid_x, Grid grid_y, Bisection_strategy strategy) :
+		grid_x_(std::move(grid_x)), grid_y_(std::move(grid_y))
+	{
+		assert(std::is_sorted(grid_x_.begin(), grid_x_.end()));
+		assert(std::is_sorted(grid_y_.begin(), grid_y_.end()));
+
+		create_mesh(strategy);
+	}
+
+	// Constructs a triangular tensor mesh from x- and y-gridlines,
+	// bisecting all rectangles along the same diagonal
+	Tri_tensor_mesh(Grid grid_x, Grid grid_y) :
+		Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), [](auto ...) { return true; })
+	{}
+
 	virtual Vertex_index find_vertex(const geom::Point& point) const override
 	{
 		const auto ix = binary_find(grid_x_, point.x());
@@ -45,50 +61,6 @@ public:
 	{
 		return grid_y_;
 	}
-
-	//! Refines the mesh
-	// virtual bool refine(const Refine_strategy&) override;
-
-protected:
-	Tensor_mesh(Grid grid_x, Grid grid_y) : grid_x_(std::move(grid_x)), grid_y_(std::move(grid_y))
-	{
-		assert(std::is_sorted(grid_x_.begin(), grid_x_.end()));
-		assert(std::is_sorted(grid_y_.begin(), grid_y_.end()));
-	}
-
-private:
-	static Grid::const_iterator binary_find(const Grid& grid, double value)
-	{
-		const auto it = std::lower_bound(grid.begin(), grid.end(), value, geom::Is_less{});
-		if (it == grid.end() || !geom::is_equal(*it, value))
-			return grid.end();
-		else
-			return it;
-	}
-
-protected:
-	Grid grid_x_;
-	Grid grid_y_;
-};
-} // namespace internal
-
-// A triangular tensor mesh class
-class Tri_tensor_mesh : public internal::Tensor_mesh
-{
-public:
-	// Constructs a triangular tensor mesh from x- and y-gridlines
-	// Each rectangle is bisected using Bisection_strategy predicate.
-	template<class Bisection_strategy>
-	Tri_tensor_mesh(Grid grid_x, Grid grid_y, Bisection_strategy strategy) :
-		Tensor_mesh(std::move(grid_x), std::move(grid_y))
-	{
-		create_mesh(strategy);
-	}
-
-	// Constructs a triangular tensor mesh from x- and y-gridlines
-	Tri_tensor_mesh(Grid grid_x, Grid grid_y) :
-		Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), default_bisection)
-	{}
 
 	virtual std::string type_string() const override
 	{
@@ -126,28 +98,35 @@ private:
 				{                                                //     *---*  next
 					add_cell(prev[i], prev[i + 1], next[i + 1]); //     | / |
 					add_cell(prev[i], next[i + 1], next[i]);     //     *---*  prev
-				}                                                //	   i  i+1
+				}                                                //	    i  i+1
 				else
 				{                                                //     *---*  next
 					add_cell(next[i], prev[i], prev[i + 1]);     //     | \ |
 					add_cell(next[i], prev[i + 1], next[i + 1]); //     *---*  prev
-				}                                                //	   i  i+1
+				}                                                //	    i  i+1
 			}
 
-			swap(prev, next);
+			std::swap(prev, next);
 		}
 
 		assert(*n_vertices() == num_vertices);
 		assert(*n_edges() == num_edges);
 		assert(*n_cells() == num_cells);
 
-		// HACK
-		// debug_check();
+		assert(!check());
 	}
 
-	static bool default_bisection(const geom::Rect&)
+	static Grid::const_iterator binary_find(const Grid& grid, double value)
 	{
-		return true;
+		const auto it = std::lower_bound(grid.begin(), grid.end(), value, geom::Is_less{});
+		if (it == grid.end() || !geom::is_equal(*it, value))
+			return grid.end();
+		else
+			return it;
 	}
+
+private:
+	Grid grid_x_;
+	Grid grid_y_;
 };
 } // namespace es_fe

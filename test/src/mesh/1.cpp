@@ -28,13 +28,11 @@ int main()
 {
 	const auto mesh = construct_mesh();	
 
-	construction_test(mesh);
-	basic_test(mesh);
-	
-//	for (auto& f : mesh.faces())
-//		std::cout << f << '\n';
+	int i = 0xABABAB;
 	for (auto f = mesh.begin_face(); f != mesh.end_face(); ++f)
-		std::cout << *f << std::endl;
+		++i;
+		
+	std::cout << i << std::endl;
 
 	std::cout << "OK.\n";
 	return 0;

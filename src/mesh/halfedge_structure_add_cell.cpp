@@ -1,14 +1,14 @@
-#pragma once
-#include <es_fe/mesh/halfedge_structure/halfedge_structure.hpp>
 #include <es_fe/types.hpp>
+#include <es_fe/mesh/halfedge_structure.hpp>
 
 #include <algorithm>
+#include <cassert>
 #include <utility>
 #include <vector>
 
 namespace es_fe::internal
 {
-inline Face_index Halfedge_structure::add_cell(Vertex_index v1, Vertex_index v2, Vertex_index v3)
+Face_index Halfedge_structure::add_cell(Vertex_index v1, Vertex_index v2, Vertex_index v3)
 {
 	assert(v1 < n_vertices() && v2 < n_vertices() && v3 < n_vertices());
 	const std::array<Vertex_index, 3> vertices{v1, v2, v3};

@@ -20,7 +20,9 @@ private:
 public:
 	using typename Base::View;
 
-	// STL member types
+	//////////////////////////////////////////////////////////////////////////
+	/** STL member types */
+	
 	using iterator_category = std::random_access_iterator_tag;
 	using value_type = View;
 	using difference_type = std::make_signed_t<Index>;

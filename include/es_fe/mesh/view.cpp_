@@ -82,43 +82,6 @@ Vertex_index View<Face_tag, Mesh2>::vertex_index(Local_index index) const
 	return mesh_.halfedges_[*halfedge].vertex;
 }
 
-// std::ostream& operator<<(std::ostream& os, const View<Vertex_tag, Mesh1>& vertex)
-// {
-// 	os << "Vertex #" << *vertex << ": (" << vertex.vertex() << ')';
-// 	return os;
-// }
-
-std::ostream& operator<<(std::ostream& os, const View<Vertex_tag, Mesh2>& vertex)
-{
-	os << "Vertex #" << **vertex << ": " << vertex.vertex();
-	return os;
-}
-
-std::ostream& operator<<(std::ostream& os, const View<Edge_tag, Mesh2>& edge)
-{
-	// TODO
-	throw;
-// 	os << "Edge #" << **edge << ": "
-// 		<< edge.vertex_from_index() << ' ' << edge.vertex_from() << " -> "
-// 		<< edge.vertex_to_index() << ' ' << edge.vertex_to();
-
-	return os;
-}
-
-std::ostream& operator<<(std::ostream& os, const View<Face_tag, Mesh2>& cell)
-{
-	// TODO
-	throw;
-
-	std::vector<Vertex_index> vertices;
-	cell.vertex_indices(vertices);
-
-	//os << "Cell #" << **cell << ": [" << es::util::join_as_string(vertices.begin(), vertices.end()) << "]\n";
-// 	for (auto edge = cell.begin_edge(); edge != cell.end_edge(); ++edge)
-// 		os << *edge << '\n';
-
-	return os;
-}
 }
 
 

@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/element/linear_element.hpp>
 #include <es_fe/types.hpp>
+#include <es_fe/element/linear_element.hpp>
 
 namespace es_fe::internal
 {

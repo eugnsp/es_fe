@@ -3,6 +3,13 @@
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
+#include <es_fe/mesh/view/vertex_mesh2.hpp>
+#include <es_fe/mesh/view/halfedge_mesh2.hpp>
+#include <es_fe/mesh/view/edge_mesh2.hpp>
+#include <es_fe/mesh/view/face_mesh2.hpp>
+#include <es_fe/mesh/iterator/circulator_halfedge_edge.hpp>
+#include <es_fe/mesh/iterator/circulator_vertex_face.hpp>
+#include <es_fe/mesh/iterator/random_access.hpp>
 
 #include <es_geom/point.hpp>
 #include <es_geom/rect.hpp>
@@ -143,7 +150,9 @@ public:
 	Boundary_edge_circ boundary_edge_circ() const;
 
 	//////////////////////////////////////////////////////////////////////////
-	geom::Rect bounding_box() const;
+
+	// Returns the smallest rectangle that contains the mesh
+	geom::Rect bounding_rect() const;
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -179,13 +188,8 @@ public:
 			v.point *= scale;
 	}
 
-	using Base::_xxx;
-	
 	// Outputs human readable information about the mesh
 	void print(std::ostream&) const;
-
-protected:
-	using Base::first_boundary_halfedge;
 
 private:
 	Halfedge_index outgoing_halfedge(Vertex_index vertex) const

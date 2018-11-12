@@ -35,9 +35,11 @@ public:
 	Local_index n_edges() const;
 	Local_index n_faces() const;
 	
+	// Outputs human readable information about the view
 	void print(std::ostream&) const;
 };
 
+// Outputs human readable information about the view
 inline std::ostream& operator<<(std::ostream& os, const Element_view<Vertex_tag, Mesh2>& view)
 {
 	view.print(os);

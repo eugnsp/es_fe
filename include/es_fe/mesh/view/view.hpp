@@ -381,13 +381,6 @@ private:
 // private:
 // 	Index bounding_halfedge() const;
 // };
-
-std::ostream& operator<<(std::ostream&, const Element_view<Vertex_tag, Mesh1>&);
-std::ostream& operator<<(std::ostream&, const Element_view<Edge_tag, Mesh1>&);
-
-std::ostream& operator<<(std::ostream&, const Element_view<Vertex_tag, Mesh2>&);
-std::ostream& operator<<(std::ostream&, const Element_view<Edge_tag, Mesh2>&);
-std::ostream& operator<<(std::ostream&, const Element_view<Face_tag, Mesh2>&);
 } // namespace es_fe
 
 namespace geom::internal

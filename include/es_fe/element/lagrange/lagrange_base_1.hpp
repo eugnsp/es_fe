@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/element/lagrange/util.hpp>
 #include <es_fe/types.hpp>
+#include <es_fe/element/lagrange/util.hpp>
 
 #include <array>
 #include <cassert>

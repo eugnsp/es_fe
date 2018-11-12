@@ -76,9 +76,12 @@ public:
 	// 		return vertex(index);
 	// 	}
 	// #endif
+	
+	// Outputs human readable information about the view
 	void print(std::ostream&) const;
 };
 
+// Outputs human readable information about the view
 inline std::ostream& operator<<(std::ostream& os, const Element_view<Face_tag, Mesh2>& view)
 {
 	view.print(os);

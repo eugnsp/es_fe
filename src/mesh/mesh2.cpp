@@ -1,16 +1,43 @@
-#include <es_fe/mesh.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 
 #include <es_geom/algorithm.hpp>
+#include <es_geom/rect.hpp>
 #include <es_util/error.hpp>
 #include <es_util/string.hpp>
 
-#include <string>
+#include <cassert>
 #include <algorithm>
-#include <limits>
 #include <ostream>
 
 namespace es_fe
 {
+// Returns the smallest rectangle that contains the mesh
+geom::Rect Mesh2::bounding_rect() const
+{
+	assert(!is_empty());
+
+	const auto first = boundary_vertex_circ();
+
+	geom::Point bottom_left = first->vertex();
+	geom::Point top_right = first->vertex();
+
+	auto circ = first;
+	do
+	{
+		auto& v = circ->vertex();
+
+		bottom_left.x() = std::min(bottom_left.x(), v.x());
+		bottom_left.y() = std::min(bottom_left.y(), v.y());
+
+		top_right.x() = std::max(top_right.x(), v.x());
+		top_right.y() = std::max(top_right.y(), v.y());
+
+		++circ;
+	} while (circ != first);
+
+	return {bottom_left, top_right};
+}
+
 // Performs some basic checks of mesh data structure consistency
 es_util::Error Mesh2::check() const
 {
@@ -26,7 +53,7 @@ es_util::Error Mesh2::check() const
 	return err;
 }
 
-// Returns human readable information about a mesh
+// Outputs human readable information about the mesh
 void Mesh2::print(std::ostream& os) const
 {
 	os << type_string() << '\n'

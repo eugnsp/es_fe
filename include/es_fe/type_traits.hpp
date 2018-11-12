@@ -8,6 +8,12 @@
 
 namespace es_fe::internal
 {
+template<class T>
+inline constexpr bool is_circulation_tag =
+	std::is_same_v<
+		T,
+		Vertex_in_circ_tag> || std::is_same_v<T, Vertex_out_circ_tag> || std::is_same_v<T, Face_circ_tag>;
+
 //////////////////////////////////////////////////////////////////////////
 // Element tag type by index type, and vice versa
 
@@ -160,7 +166,8 @@ struct Decay_element_in_view_index_impl<Edge_index>
 // For Edge_index returns Halfedge_index,
 // for other index types returns them intact
 template<class Element_index>
-using Decay_element_index_in_view = std::conditional_t<std::is_same_v<Element_index, Edge_index>, Halfedge_index, Element_index>;
+using Decay_element_index_in_view =
+	std::conditional_t<std::is_same_v<Element_index, Edge_index>, Halfedge_index, Element_index>;
 
 //////////////////////////////////////////////////////////////////////////
 
