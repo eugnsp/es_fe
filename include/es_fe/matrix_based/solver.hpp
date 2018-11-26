@@ -5,8 +5,7 @@
 
 namespace es_fe
 {
-template<class Derived_solver_, class System_, class Linear_solver_,
-		 class Assembler_ = Seq_assembler>
+template<class System_, class Linear_solver_>
 class Matrix_based_solver
 {
 public:
@@ -38,17 +37,12 @@ public:
 		before_solve();
 
 		set_bnd_values();
-		assembler_.assemble(system_, self());
+		assemble();
 		after_assemble();
 
 		linear_solver_.analyze_factorize_solve(matrix_, rhs_, solution_);
 
 		after_solve();
-	}
-
-	Assembler_& assembler()
-	{
-		return assembler_;
 	}
 
 	System& system()
@@ -73,11 +67,6 @@ public:
 		return 0;
 	}
 
-private:
-	Derived_solver_& self()
-	{
-		return static_cast<Derived_solver_&>(*this);
-	}
 
 protected:
 	virtual void set_bnd_values() = 0;
@@ -91,12 +80,13 @@ protected:
 	virtual void after_assemble()
 	{}
 
+	virtual void assemble() = 0;
+
 protected:
 	la::Vector_xd solution_;
 	typename Linear_solver_::Sparse_matrix matrix_;
 	la::Vector_xd rhs_;
 
-	Assembler_ assembler_;
 	Linear_solver_ linear_solver_;
 	System system_;
 };
