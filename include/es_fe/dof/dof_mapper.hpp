@@ -147,6 +147,13 @@ public:
 		}
 
 #ifndef NDEBUG
+		for (std::size_t r = 0; r < pattern.n_rows(); ++r)
+		{
+			auto& row = pattern.row(r);
+			if (row.empty())
+				throw std::runtime_error("Row " + std::to_string(r) + " is empty");
+		}
+
 		assert(pattern.is_each_row_not_empty());
 		auto err = pattern.check();
 		if (err)

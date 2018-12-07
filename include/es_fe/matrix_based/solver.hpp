@@ -1,9 +1,10 @@
 #pragma once
 #include <es_fe/matrix_based/seq_assembler.hpp>
-#include <es_fe/solution_view.hpp>
+#include <es_fe/matrix_based/solution_view.hpp>
 
 #include <es_la/dense.hpp>
 
+#include <cstddef>
 #include <memory>
 
 namespace es_fe
@@ -22,6 +23,11 @@ private:
 	// template<std::size_t var, class Mesh_el_tag>
 	// using Solution_view_t2 = Solution_view2<System, var, Mesh_el_tag>;
 
+	template<std::size_t var>
+	using My_solution_view = Solution_view<Matrix_based_solver, var>;
+
+	template<class Solver, std::size_t var>
+	friend class Solution_view;
 
 public:
 	Matrix_based_solver(const Mesh& mesh) : system_(mesh)
@@ -71,9 +77,10 @@ public:
 		return system_.mesh();
 	}
 
-	auto solution_view() const
+	template<std::size_t var = 0>
+	My_solution_view<var> solution_view() const
 	{
-		return Solution_view<Matrix_based_solver>{*this};
+		return My_solution_view<var>{*this};
 	}
 
 	// 	template<std::size_t var>

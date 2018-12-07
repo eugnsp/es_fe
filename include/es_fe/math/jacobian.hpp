@@ -4,7 +4,8 @@
 
 namespace es_fe
 {
-// Returns the Jacobian of the transformation from a given triangle to the reference one
+// Returns the Jacobian of the transformation
+// from a given triangle to the reference one
 template<typename Triangle>
 la::Matrix_2d jacobian(const Triangle& triangle)
 {
@@ -20,8 +21,18 @@ la::Matrix_2d jacobian(const Triangle& triangle)
 	return j;
 }
 
-// Returns the inverted transposed Jacobian of the transformation from a given triangle
-// to the reference one
+// Returns the inverted Jacobian of the transformation
+// from a given triangle to the reference one
+template<typename Triangle>
+la::Matrix_2d inv_jacobian(const Triangle& triangle)
+{
+	auto j = jacobian(triangle);
+	invert(j);
+	return j;
+}
+
+// Returns the inverted transposed Jacobian of the transformation
+// from a given triangle to the reference one
 template<typename Triangle>
 la::Matrix_2d inv_transp_jacobian(const Triangle& triangle)
 {

@@ -1,18 +1,19 @@
 #pragma once
-#include "field.hpp"
-//#include "math/LA/Vector.h"
-//#include "math/LA/VectorX.h"
+#include <es_fe/types.hpp>
+#include <es_fe/math/jacobian.hpp>
 
-#include <es_la/base/expression.hpp>
 #include <es_geom/rect.hpp>
+#include <es_geom/point.hpp>
+#include <es_la/base/expression.hpp>
 #include <es_math/const.hpp>
 #include <es_util/type_traits.hpp>
 
 #include <cstddef>
+#include <utility>
 
 namespace es_fe
 {
-template<class Solver>
+template<class Solver, std::size_t var>
 class Solution_view
 {
 public:
@@ -24,9 +25,34 @@ public:
 		solver_(solver)
 	{ }
 
+	// TODO : vector variables (dim > 1, static / dynamic)
+	template<typename... Args>
+	double operator()(const typename Mesh::Face_view& face, es_geom::Point pt, Args&... args) const
+	{
+		pt = to_ref_triangle(face, pt);
+
+		const auto dofs = solver_.system().template dofs<var>(face, std::forward<Args>(args)...);
+
+		double value = 0;
+		for (Local_index dof = 0; dof < dofs.size(); ++dof)
+			value += System::template Var_t<var>::Element::basis(dof, pt) *
+				solver_.solution_[dofs[dof].index];
+
+		return value;
+	}
+
 	const Mesh& mesh() const
 	{
 		return solver_.mesh();
+	}
+
+private:
+	// Maps a given point on given face to a point in the corresponding reference triangle
+	static es_geom::Point to_ref_triangle(const typename Mesh::Face_view& face, const es_geom::Point& pt)
+	{
+		const auto j = es_fe::inv_jacobian(face);
+		la::Vector_2d p0 = pt - face.vertex_circ()->vertex();
+		return j * p0;
 	}
 
 private:
