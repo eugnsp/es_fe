@@ -24,7 +24,7 @@ public:
 public:
 	using Element_view_base::Element_view_base;
 
-	const geom::Point& vertex() const;
+	const es_geom::Point& vertex() const;
 
 	Vertex_circ vertex_circ() const;
 	Halfedge_in_circ halfedge_in_circ() const;

@@ -12,14 +12,14 @@
 namespace es_fe
 {
 // Returns the smallest rectangle that contains the mesh
-geom::Rect Mesh2::bounding_rect() const
+es_geom::Rect Mesh2::bounding_rect() const
 {
 	assert(!is_empty());
 
 	const auto first = boundary_vertex_circ();
 
-	geom::Point bottom_left = first->vertex();
-	geom::Point top_right = first->vertex();
+	es_geom::Point bottom_left = first->vertex();
+	es_geom::Point top_right = first->vertex();
 
 	auto circ = first;
 	do
@@ -47,7 +47,7 @@ es_util::Error Mesh2::check() const
 
 	// Check for counter-clockwise order of vertices
 	for (auto& face : this->faces())
-		if (geom::area(face) < 0)
+		if (es_geom::area(face) < 0)
 			err.append_ln("face #", **face, " has incorrect vertex order");
 
 	return err;

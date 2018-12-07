@@ -4,7 +4,7 @@
 #include <es_fe/math/quadr.hpp>
 
 #include <es_la/dense.hpp>
-#include <es/math/utility.hpp>
+#include <es_math/utility.hpp>
 
 #include <cstddef>
 #include <type_traits>

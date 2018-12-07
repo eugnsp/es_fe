@@ -37,7 +37,7 @@ public:
 		Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), [](auto ...) { return true; })
 	{}
 
-	virtual Vertex_index find_vertex(const geom::Point& point) const override
+	virtual Vertex_index find_vertex(const es_geom::Point& point) const override
 	{
 		const auto ix = binary_find(grid_x_, point.x());
 		if (ix == grid_x_.end())
@@ -93,7 +93,7 @@ private:
 
 			for (Index i = 0; i < nx - 1; ++i)
 			{
-				const geom::Rect rect({grid_x_[i], grid_y_[j - 1]}, {grid_x_[i + 1], grid_y_[j]});
+				const es_geom::Rect rect({grid_x_[i], grid_y_[j - 1]}, {grid_x_[i + 1], grid_y_[j]});
 				if (bisection(rect))
 				{                                                //     *---*  next
 					add_cell(prev[i], prev[i + 1], next[i + 1]); //     | / |
@@ -118,8 +118,8 @@ private:
 
 	static Grid::const_iterator binary_find(const Grid& grid, double value)
 	{
-		const auto it = std::lower_bound(grid.begin(), grid.end(), value, geom::Is_less{});
-		if (it == grid.end() || !geom::is_equal(*it, value))
+		const auto it = std::lower_bound(grid.begin(), grid.end(), value, es_geom::Is_less{});
+		if (it == grid.end() || !es_geom::is_equal(*it, value))
 			return grid.end();
 		else
 			return it;

@@ -27,7 +27,7 @@ public:
 
 	bool is_boundary() const;
 
-	const geom::Point& vertex(Local_index) const;
+	const es_geom::Point& vertex(Local_index) const;
 	Vertex_index vertex_index(Local_index) const;
 
 	// Outputs human readable information about the view
@@ -42,7 +42,7 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Edge_tag, M
 }
 } // namespace es_fe
 
-namespace geom::internal
+namespace es_geom::internal
 {
 template<>
 struct Traits<es_fe::Element_view<es_fe::Edge_tag, es_fe::Mesh2>>
@@ -50,4 +50,4 @@ struct Traits<es_fe::Element_view<es_fe::Edge_tag, es_fe::Mesh2>>
 	using Index = es_fe::Local_index;
 	using Tag = Segment_tag;
 };
-} // namespace geom::internal
+} // namespace es_geom::internal

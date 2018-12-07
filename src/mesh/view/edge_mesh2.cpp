@@ -12,7 +12,7 @@ bool Element_view<Edge_tag, Mesh2>::is_boundary() const
 	return this->mesh_.is_boundary(**this);
 }
 
-const geom::Point& Element_view<Edge_tag, Mesh2>::vertex(Local_index index) const
+const es_geom::Point& Element_view<Edge_tag, Mesh2>::vertex(Local_index index) const
 {
 	return mesh_.vertex(vertex_index(index));
 }

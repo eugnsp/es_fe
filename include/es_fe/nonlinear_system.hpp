@@ -1,7 +1,7 @@
 #pragma once
-#include "es/la/dense.hpp"
-#include "es/la/dense_function.hpp"
-#include "es/la/sparse.hpp"
+#include "es_la/dense.hpp"
+#include "es_la/dense_function.hpp"
+#include "es_la/sparse.hpp"
 #include "system.hpp"
 // #include "math/LA/VectorX.h"
 // #include "math/LA/VectorFunction.h"

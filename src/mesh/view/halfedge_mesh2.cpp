@@ -7,12 +7,12 @@
 
 namespace es_fe
 {
-const geom::Point& Element_view<Halfedge_tag, Mesh2>::vertex() const
+const es_geom::Point& Element_view<Halfedge_tag, Mesh2>::vertex() const
 {
 	return mesh_.vertex(vertex_index());
 }
 
-const geom::Point& Element_view<Halfedge_tag, Mesh2>::vertex(Local_index vertex) const
+const es_geom::Point& Element_view<Halfedge_tag, Mesh2>::vertex(Local_index vertex) const
 {
 	return mesh_.vertex(vertex_index(vertex));
 }
@@ -31,7 +31,7 @@ Vertex_index Element_view<Halfedge_tag, Mesh2>::vertex_index(Local_index vertex)
 		return mesh_.vertex_index(twin(index_));
 }
 
-geom::Point Element_view<Halfedge_tag, Mesh2>::vector() const
+es_geom::Point Element_view<Halfedge_tag, Mesh2>::vector() const
 {
 	return vertex() - mesh_.vertex(mesh_.vertex_index(twin(index_)));
 }

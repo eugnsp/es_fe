@@ -31,7 +31,7 @@ private:
 	using Edge_view = typename Mesh::Edge_view;
 	using Cell_view = typename Mesh::Cell_view;
 
-	using System = System<Var_list, es_fe::Dof_mapper>;
+	using My_system = System<Var_list, es_fe::Dof_mapper>;
 
 	static constexpr std::size_t n_vars = Traits::n_vars;
 
@@ -52,7 +52,7 @@ public:
 	using Var_edge_dofs = la::Vector<Dof_index, Var_t<var>::Element::n_edge_dofs>;
 
 public:
-	void init(const System& system)
+	void init(const My_system& system)
 	{
 		indices_.init_storage(system.mesh());
 
@@ -107,7 +107,7 @@ public:
 	}
 
 	template<class Symmetry_tag>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system) const
+	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const My_system& system) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
 
@@ -209,7 +209,7 @@ private:
 				dofs(i, j) = first_dof + static_cast<Local_index>(i + j * dofs.rows());
 	}
 
-	void compute_n_dofs(const System& system)
+	void compute_n_dofs(const My_system& system)
 	{
 		n_dofs_ = 0;
 		for_each_var_element<Var_list>([this, &system](auto var, auto element_tag) {
@@ -218,7 +218,7 @@ private:
 		});
 	}
 
-	void mark_const_dofs(const System& system)
+	void mark_const_dofs(const My_system& system)
 	{
 		n_free_dofs_ = n_dofs_;
 		for_each_var<Var_list>([this, &system](auto var) {
@@ -249,7 +249,7 @@ private:
 		});
 	}
 
-	void assign_indices(const System& system)
+	void assign_indices(const My_system& system)
 	{
 		Index free_index = 0;
 		Index const_index = this->n_free_dofs_;

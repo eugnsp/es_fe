@@ -5,7 +5,7 @@
 
 namespace es_fe
 {
-const geom::Point& Element_view<Vertex_tag, Mesh2>::vertex() const
+const es_geom::Point& Element_view<Vertex_tag, Mesh2>::vertex() const
 {
 	return mesh_.vertex(index_);
 }

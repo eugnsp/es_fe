@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 #add_compile_options(-Wall -Wextra -Wpedantic -g -m64 -D_DEBUG)
-add_compile_options(-Wall -Wextra -Wpedantic -m64 -O3 -DNDEBUG -flto -fconcepts)
+add_compile_options(-Wall -Wextra -Wpedantic -m64 -O3 -DNDEBUG -flto)
 
 add_library(es_fe_lib INTERFACE IMPORTED)
 set_target_properties(es_fe_lib PROPERTIES
@@ -24,7 +24,8 @@ set_target_properties(es_geom_lib PROPERTIES
 	IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/../es_geom/build/libes_geom.a"
 	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/../es_geom/include")
 
-include_directories("/opt/intel/compilers_and_libraries_2019.0.117/linux/mkl/include")
+set(MKLROOT $ENV{MKLROOT})
+include_directories(${MKLROOT}/include)
 #link_directories("/opt/intel/compilers_and_libraries_2019.0.117/linux/mkl/lib/intel64")
 
 file(GLOB_RECURSE SRC ${PROJECT_SOURCE_DIR}/src/*.cpp)

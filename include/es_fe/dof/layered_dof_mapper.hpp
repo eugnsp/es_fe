@@ -24,7 +24,7 @@ private:
 	using typename Base::Traits;
 	using Cell_view = typename Mesh::Cell_view;
 
-	using System = System<Var_list, es_fe::Layered_dof_mapper>;
+	using My_system = System<Var_list, es_fe::Layered_dof_mapper>;
 
 public:
 	template<std::size_t var>
@@ -84,7 +84,7 @@ public:
 	}
 
 	template<class Active_cell_predicate>
-	void init(const System& system, Index n_layers, Active_cell_predicate is_active_cell)
+	void init(const My_system& system, Index n_layers, Active_cell_predicate is_active_cell)
 	{
 		n_layers_ = n_layers;
 
@@ -209,7 +209,7 @@ public:
 	}
 
 	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system,
+	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const My_system& system,
 														Couplig_func coupling) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
@@ -295,7 +295,7 @@ public:
 	}
 
 	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(const System& system,
+	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(const My_system& system,
 														Couplig_func coupling) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);

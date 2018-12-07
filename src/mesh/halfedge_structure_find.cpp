@@ -7,7 +7,7 @@
 
 namespace es_fe::internal
 {
-auto Halfedge_structure::find_vertex(const geom::Point& point) const -> Vertex_index
+auto Halfedge_structure::find_vertex(const es_geom::Point& point) const -> Vertex_index
 {
 	const auto pos = std::find_if(vertices_.begin(), vertices_.end(),
 								  [&point](auto& vertex) { return vertex.point == point; });

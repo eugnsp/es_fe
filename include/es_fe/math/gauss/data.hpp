@@ -1,6 +1,6 @@
 #pragma once
 #include <es_fe/types.hpp>
-#include <es/math/const.hpp>
+#include <es_math/const.hpp>
 #include <es_util/array.hpp>
 
 namespace es_fe::internal

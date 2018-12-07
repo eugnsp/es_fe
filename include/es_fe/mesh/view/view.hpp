@@ -79,24 +79,24 @@ public:
 		throw;
 	} // = vertex_index(1)
 
-	const geom::Point& vertex(Local_index) const
+	const es_geom::Point& vertex(Local_index) const
 	{
 		throw;
 	}
 
 	template<Local_index index>
-	const geom::Point& vertex() const
+	const es_geom::Point& vertex() const
 	{
 		static_assert(index < 2, "Index out of bounds");
 		return vertex(index);
 	}
 
-	const geom::Point& vertex_from() const
+	const es_geom::Point& vertex_from() const
 	{
 		return vertex<0>();
 	}
 
-	const geom::Point& vertex_to() const
+	const es_geom::Point& vertex_to() const
 	{
 		return vertex<1>();
 	}
@@ -169,21 +169,21 @@ public:
 		throw;
 	} // = vertex_index(1)
 
-	const geom::Point& vertex(Local_index) const;
+	const es_geom::Point& vertex(Local_index) const;
 
 	template<Local_index index>
-	const geom::Point& vertex() const
+	const es_geom::Point& vertex() const
 	{
 		static_assert(index < 2, "Index out of bounds");
 		return vertex(index);
 	}
 
-	const geom::Point& vertex_from() const
+	const es_geom::Point& vertex_from() const
 	{
 		return vertex<0>();
 	}
 
-	const geom::Point& vertex_to() const
+	const es_geom::Point& vertex_to() const
 	{
 		return vertex<1>();
 	}
@@ -205,12 +205,12 @@ public:
 
 	// Segment concept
 	// TODO : rename??
-	const geom::Point& first() const
+	const es_geom::Point& first() const
 	{
 		return vertex_from();
 	}
 
-	const geom::Point& second() const
+	const es_geom::Point& second() const
 	{
 		return vertex_to();
 	}
@@ -270,11 +270,11 @@ public:
 #endif
 
 	/** Returns a vertex by the local index of the vertex in the cell */
-	const geom::Point& vertex(Local_index index) const;
+	const es_geom::Point& vertex(Local_index index) const;
 
 #ifdef TRIANGULAR_CELLS_ONLY
 	template<Local_index index>
-	const geom::Point& vertex() const
+	const es_geom::Point& vertex() const
 	{
 		static_assert(index < 3, "Index out of bounds");
 		return vertex(index);
@@ -383,7 +383,7 @@ private:
 // };
 } // namespace es_fe
 
-namespace geom::internal
+namespace es_geom::internal
 {
 template<>
 struct Traits<fe::Element_view<fe::Edge_tag, fe::Mesh2>>
@@ -402,4 +402,4 @@ struct Traits<fe::Element_view<fe::Face_tag, fe::Mesh2>>
 	using Tag = Polygon_tag;
 #endif
 };
-} // namespace geom::internal
+} // namespace es_geom::internal

@@ -197,10 +197,24 @@ struct Circulator_type_selector<Edge_tag, Circ_tag>
 {
 	using Type = Circulator_halfedge_edge<Edge_tag, Circ_tag>;
 };
+
+// Mesh type selector based on dimension
+template<std::size_t dim>
+struct Mesh_selector
+{
+	static_assert(dim == 1 || dim == 2, "Bad mesh dimension");
+	using Type = std::conditional_t<dim == 1, Mesh1, Mesh2>;
+};
+
+template<std::size_t dim>
+using Mesh_t = typename Mesh_selector<dim>::Type;
+
 } // namespace es_fe::internal
 
 namespace es_fe
 {
 template<class Element_tag, class Circ_tag>
 using Circulator = typename internal::Circulator_type_selector<Element_tag, Circ_tag>::Type;
+
+
 }

@@ -29,11 +29,11 @@ bool equal_indices(const List& vi1, std::initializer_list<es_fe::Index> vi2)
 
 int main__(int argc, char** argv)
 {
-	geom::Linear_grid lines_x, lines_y;
+	es_geom::Linear_grid lines_x, lines_y;
 
  	lines_x.add_tick(0);
  	lines_x.add_tick(2, 10);
- 
+
  	lines_y.add_tick(0);
  	lines_y.add_tick(2, 10);
 
@@ -52,7 +52,7 @@ int main__(int argc, char** argv)
 	{
 		auto v1 = mesh.begin_vertex() + 3;		
 		assert(***v1 == 3);
-		assert(v1->vertex() == geom::Point(0, 5));
+		assert(v1->vertex() == es_geom::Point(0, 5));
 		assert(v1->is_boundary());
 		assert(v1->n_edges() == 4);
 		assert(v1->n_faces() == 3);
@@ -68,7 +68,7 @@ int main__(int argc, char** argv)
 
 		auto v2 = mesh.begin_vertex() + 4;
 		assert(***v2 == 4);
-		assert(v2->vertex() == geom::Point(5, 5));
+		assert(v2->vertex() == es_geom::Point(5, 5));
 		assert(!v2->is_boundary());
 		assert(v2->n_edges() == 6);
 		assert(v2->n_faces() == 6);
@@ -84,7 +84,7 @@ int main__(int argc, char** argv)
 
 		auto v3 = mesh.begin_vertex() + 8;
 		assert(***v3 == 8);
-		assert(v3->vertex() == geom::Point(10, 10));
+		assert(v3->vertex() == es_geom::Point(10, 10));
 		assert(v3->is_boundary());
 		assert(v3->n_edges() == 3);
 		assert(v3->n_faces() == 2);

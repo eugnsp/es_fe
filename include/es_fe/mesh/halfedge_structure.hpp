@@ -18,13 +18,13 @@ public:
 
 	struct Vertex
 	{
-		explicit Vertex(const geom::Point& pt) : point(pt)
+		explicit Vertex(const es_geom::Point& pt) : point(pt)
 		{}
 
-		Vertex(const geom::Point& pt, Halfedge_index halfedge) : point(pt), halfedge(halfedge)
+		Vertex(const es_geom::Point& pt, Halfedge_index halfedge) : point(pt), halfedge(halfedge)
 		{}
 
-		geom::Point point;
+		es_geom::Point point;
 
 		// An arbitrary halfedge that starts at the vertex (for a boundary
 		// vertex this must always be the outer (boundary) half-edge)
@@ -95,7 +95,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	/** Element access */
 
-	const geom::Point& vertex(Vertex_index vertex) const
+	const es_geom::Point& vertex(Vertex_index vertex) const
 	{
 		return vertices_[*vertex].point;
 	}
@@ -150,7 +150,7 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 
-	Vertex_index find_vertex(const geom::Point& point) const;
+	Vertex_index find_vertex(const es_geom::Point& point) const;
 	Halfedge_index find_halfedge(Vertex_index vertex_from, Vertex_index vertex_to) const;
 
 	Halfedge_index halfedge_index(Vertex_index vertex) const
@@ -209,7 +209,7 @@ public:
 	}
 
 	// Adds a vertex and returns the index of the newly added vertex
-	Vertex_index add_vertex(const geom::Point& point)
+	Vertex_index add_vertex(const es_geom::Point& point)
 	{
 		vertices_.emplace_back(point);
 		return n_vertices() - 1;

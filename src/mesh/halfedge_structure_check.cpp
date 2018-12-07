@@ -122,7 +122,7 @@ es_util::Error Halfedge_structure::check() const
 		return err;
 
 	// Check for duplicated vertices
-	using Vertices = std::vector<std::pair<Index, geom::Point>>;
+	using Vertices = std::vector<std::pair<Index, es_geom::Point>>;
 	Vertices vertices;
 	vertices.reserve(*n_vertices());
 

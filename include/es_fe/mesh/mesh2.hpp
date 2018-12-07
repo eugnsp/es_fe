@@ -87,7 +87,7 @@ public:
 		return faces_[*face].halfedge;
 	}
 
-	virtual Vertex_index find_vertex(const geom::Point& point) const
+	virtual Vertex_index find_vertex(const es_geom::Point& point) const
 	{
 		return Base::find_vertex(point);
 	}
@@ -145,7 +145,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 	// Returns the smallest rectangle that contains the mesh
-	geom::Rect bounding_rect() const;
+	es_geom::Rect bounding_rect() const;
 
 	//////////////////////////////////////////////////////////////////////////
 

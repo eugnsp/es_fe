@@ -1,12 +1,13 @@
 #pragma once
+#include <es_fe/type_traits.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/var.hpp>
+#include <es_fe/dof/dof_mapper.hpp>
+
 #include <es_la/dense.hpp>
-#include "types.hpp"
-#include "var.hpp"
-#include "dof/dof_mapper.hpp"
-#include "type_traits.hpp"
-#include "solution_view.hpp"
+#include <es_util/string.hpp>
 #include <es_util/type_traits.hpp>
-#include <es_util/function.hpp>
+
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
@@ -17,85 +18,61 @@
 
 namespace es_fe
 {
-template<class Var_list_, template<class> class T_Dof_mapper>
+template<class Var_list_, template<class> class Dof_mapper_>
 class System
 {
 public:
 	using Var_list = Var_list_;
 
 private:
-	friend class Dof_tools<System>;
-
+	using My_dof_mapper = Dof_mapper_<Var_list>;
 	using Traits = internal::Vars_traits<Var_list>;
-	using Dof_mapper = T_Dof_mapper<Var_list>;
 
 public:
 	static constexpr std::size_t dim = Traits::space_dim;
 	static constexpr std::size_t n_vars = Var_list::size;
 
-	using Mesh = Mesh_t<dim>;
+public:
+	using Mesh = internal::Mesh_t<dim>;
 
 	template<std::size_t var>
 	using Var_t = typename Var_list::template Var<var>;
 
 	template<std::size_t var>
-	using Var_dofs = typename Dof_mapper::template Var_dofs<var>;
+	using Var_dofs = typename My_dof_mapper::template Var_dofs<var>;
 
-	using Vars_dofs = typename Dof_mapper::Vars_dofs;
-
+	using Vars_dofs = typename My_dof_mapper::Vars_dofs;
 	using Dofs = std::conditional_t<n_vars == 1, Var_dofs<0>, Vars_dofs>;
 
 	template<std::size_t var>
-	using Var_vertex_dofs = typename Dof_mapper::template Var_vertex_dofs<var>;
+	using Var_vertex_dofs = typename My_dof_mapper::template Var_vertex_dofs<var>;
 
 	template<std::size_t var>
-	using Var_edge_dofs = typename Dof_mapper::template Var_edge_dofs<var>;
-
-	template<std::size_t var>
-	using Solution_view_t = Solution_view<System, var>;
-
-	template<std::size_t var, class Mesh_el_tag>
-	using Solution_view_t2 = Solution_view2<System, var, Mesh_el_tag>;
+	using Var_edge_dofs = typename My_dof_mapper::template Var_edge_dofs<var>;
 
 public:
 	using Edge_view = typename Mesh::Edge_view;
 	using Cell_view = typename Mesh::Cell_view;
 
-private:
-	template<class, std::size_t>
-	friend class Solution_view;
-	template<class, std::size_t, class>
-	friend class Solution_view2;
-
 public:
 	System(const Mesh& mesh) : mesh_(mesh)
 	{}
 
-	Dof_mapper& dof_mapper()
+	template<class... Args>
+	void init(Args&&... args)
+	{
+		dof_mapper_.init(*this, std::forward<Args>(args)...);
+	}
+
+	My_dof_mapper& dof_mapper()
 	{
 		return dof_mapper_;
 	}
 
-	const Dof_mapper& dof_mapper() const
+	const My_dof_mapper& dof_mapper() const
 	{
 		return dof_mapper_;
 	}
-
-	template<std::size_t var>
-	Solution_view_t<var> solution_view() const
-	{
-		debug_check_var_index<var>();
-		return {*this};
-	}
-
-	template<std::size_t var, class Mesh_el_tag>
-	auto solution_view2() const
-	{
-		debug_check_var_index<var>();
-		return Solution_view_t2<var, Mesh_el_tag>{*this};
-	}
-
-	//////////////////////////////////////////////////////////////////////////
 
 	template<std::size_t var = 0, class Element_view, typename... Args>
 	auto dofs(const Element_view& element, Args&&... args) const
@@ -115,11 +92,6 @@ public:
 	// 	{
 	// 		dof_mapper_.template vertex_dofs<var>(vertex, dofs_list);
 	// 	}
-
-	// Dof_mapper& dof_mapper()
-	//{
-	//	return dof_mapper_;
-	//}
 
 	Index n_dofs() const
 	{
@@ -176,27 +148,11 @@ public:
 																   std::forward<Args>(args)...);
 	}
 
-	// 	la::Vector_xd& raw_solution()
-	// 	{
-	// 		return solution_;
-	// 	}
-	//
-	// 	const la::Vector_xd& raw_solution() const
-	// 	{
-	// 		return solution_;
-	// 	}
-
 	virtual std::string name() const = 0;
 
 	std::size_t memory_size() const
 	{
 		return dof_mapper_.memory_size();
-	}
-
-	template<class... Args>
-	void init(Args&&... args)
-	{
-		dof_mapper_.init(*this, std::forward<Args>(args)...);
 	}
 
 private:
@@ -272,20 +228,20 @@ private:
 
 protected:
 	const Mesh& mesh_;
-	Dof_mapper dof_mapper_;
+	My_dof_mapper dof_mapper_;
 
 private:
 	typename Var_list::Vars vars_;
 };
 
-template<class Var_list, template<class> class T_Dof_mapper>
-std::ostream& operator<<(std::ostream& out, const System<Var_list, T_Dof_mapper>& system)
+template<class Var_list, template<class> class Dof_mapper>
+std::ostream& operator<<(std::ostream& out, const System<Var_list, Dof_mapper>& system)
 {
 	out << system.name() << '\n'
 		<< "Number of variables: " << system.n_vars << '\n'
 		<< "DoFs (free/constrained/total): " << system.n_free_dofs() << '/' << system.n_const_dofs()
 		<< '/' << system.n_dofs() << '\n'
-		<< "Memory: " << es::util::size_string(system.memory_size()) << '\n';
+		<< "Memory: " << es_util::size_string(system.memory_size()) << '\n';
 
 	return out;
 }
