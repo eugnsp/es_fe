@@ -35,6 +35,20 @@ private:
 	using Bnd_conds_tuple = std::tuple<std::unique_ptr<Bnd_conds>...>;
 
 public:
+	template<std::size_t index = 0>
+	auto& bnd_cond()
+	{
+		assert(std::get<index>(bnd_conds_));
+		return *std::get<index>(bnd_conds_);
+	}
+
+	template<std::size_t index = 0>
+	const auto& bnd_cond() const
+	{
+		assert(std::get<index>(bnd_conds_));
+		return *std::get<index>(bnd_conds_);
+	}
+
 	template<std::size_t index = 0, typename... Args>
 	void set_bnd_cond(Args&&... args)
 	{

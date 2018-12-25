@@ -1,6 +1,8 @@
 #include <es_fe/mesh/io.hpp>
 #include <es_fe/mesh/tensor_mesh.hpp>
 
+#include <es_geom/linear_grid.hpp>
+
 #include <iostream>
 #include <initializer_list>
 
@@ -27,7 +29,7 @@ bool equal_indices(const List& vi1, std::initializer_list<es_fe::Index> vi2)
 		[](auto i1, es_fe::Index i2) { return *i1 == i2; });
 }
 
-int main__(int argc, char** argv)
+int main(int argc, char** argv)
 {
 	es_geom::Linear_grid lines_x, lines_y;
 

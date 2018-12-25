@@ -4,6 +4,7 @@
 #include <es_geom/point.hpp>
 #include <es_util/error.hpp>
 
+#include <array>
 #include <cstddef>
 #include <type_traits>
 #include <vector>
@@ -88,6 +89,8 @@ public:
 	}
 
 	void reserve(Index n_vertices, Index n_edges = 0, Index n_faces = 0);
+
+	void shrink();
 
 	// Returns approximate total size of memory in bytes occupied by the data structure
 	std::size_t memory_size() const;
@@ -217,7 +220,7 @@ public:
 
 	// Adds a cell and returns the index of the newly added cell (the function
 	// automatically creates the missing edges and adjusts the data structure properly),
-	Face_index add_cell(Vertex_index, Vertex_index, Vertex_index);
+	Face_index add_cell(const std::array<Vertex_index, 3>&);
 
 	Halfedge_index first_boundary_halfedge() const
 	{

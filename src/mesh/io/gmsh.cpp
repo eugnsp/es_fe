@@ -2,17 +2,18 @@
 #include <es_fe/mesh/io/gmsh.hpp>
 #include <es_fe/mesh/io/gmsh_file_reader.hpp>
 
-#include <memory>
 #include <string>
 #include <vector>
 
 namespace es_fe
 {
-std::unique_ptr<Mesh2> read_gmsh_mesh(const std::string& file_name, double scale)
+Mesh2 read_gmsh_mesh(const std::string& file_name, double scale)
 {
 	internal::Gmsh_file_reader reader(file_name);
+	
 	auto mesh = reader.read_mesh(scale);
-	assert(!mesh->check());
+	assert(!mesh.check());
+	
 	return mesh;
 }
 

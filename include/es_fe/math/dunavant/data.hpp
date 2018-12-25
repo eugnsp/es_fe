@@ -80,4 +80,17 @@ struct Dunavant_data<8>
 						Dunavant_points_group{.027230314174435, .008394777409958, .263112829634638,
 											  .728492392955404});
 };
+
+template<>
+struct Dunavant_data<9>
+{
+	static constexpr auto groups =
+		std::make_tuple(Dunavant_points_group{.097135796282799, 1. / 3},
+						Dunavant_points_group{.031334700227139, .020634961602525, .489682519198738},
+						Dunavant_points_group{.077827541004774, .125820817014127, .437089591492937},
+						Dunavant_points_group{.079647738927210, .623592928761935, .188203535619033},
+						Dunavant_points_group{.025577675658698, .910540973211095, .044729513394453},
+						Dunavant_points_group{.043283539377289, .036838412054736, .221962989160766,
+											  .741198598784498});
+};
 } // namespace es_fe::internal

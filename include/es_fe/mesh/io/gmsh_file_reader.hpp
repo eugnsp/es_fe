@@ -5,7 +5,6 @@
 #include <fstream>
 #include <ios>
 #include <limits>
-#include <memory>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -17,7 +16,7 @@ class Gmsh_file_reader
 public:
 	Gmsh_file_reader(const std::string& file_name);
 
-	std::unique_ptr<Mesh2> read_mesh(double scale);
+	Mesh2 read_mesh(double scale);
 	std::vector<unsigned int> read_tags(unsigned int tag_index);
 
 private:

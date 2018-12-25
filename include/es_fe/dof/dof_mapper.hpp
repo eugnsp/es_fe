@@ -206,7 +206,7 @@ private:
 	template<std::size_t var, class Dofs>
 	void var_edge_dofs(Edge_index edge, Dofs& dofs) const
 	{
-		static_assert(Var_t<var>::Element::has_dof(Edge_tag{}), "Variable has no DoF of this type");
+		static_assert(Var_t<var>::Element::has_edge_dofs, "Variable has no DoF of this type");
 
 		const Dof_index& first_dof = indices_.at(edge, Var_index<var>{});
 

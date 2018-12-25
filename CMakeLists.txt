@@ -1,11 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 project(es_fe_lib VERSION 1.0 DESCRIPTION "Finite elements library")
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-#add_compile_options(-Wall -Wextra -Wpedantic -g -m64 -D_DEBUG)
-add_compile_options(-Wall -Wextra -Wpedantic -m64 -O3 -DNDEBUG -flto)
+set(CMAKE_CXX_STANDARD 				17)
+set(CMAKE_CXX_STANDARD_REQUIRED 	ON)
+set(CMAKE_CXX_EXTENSIONS 			OFF)
+set(CMAKE_CXX_FLAGS                	"-Wall -Wextra -Wpedantic -Wno-psabi -m64 -march=native")
+set(CMAKE_CXX_FLAGS_DEBUG          	"-O0 -ggdb3 -D_DEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE        	"-O3 -DNDEBUG -flto")
 
 add_library(es_fe_lib INTERFACE IMPORTED)
 set_target_properties(es_fe_lib PROPERTIES

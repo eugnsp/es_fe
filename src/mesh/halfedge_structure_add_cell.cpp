@@ -2,16 +2,17 @@
 #include <es_fe/mesh/halfedge_structure.hpp>
 
 #include <algorithm>
+#include <array>
 #include <cassert>
 #include <utility>
 #include <vector>
 
 namespace es_fe::internal
 {
-Face_index Halfedge_structure::add_cell(Vertex_index v1, Vertex_index v2, Vertex_index v3)
+Face_index Halfedge_structure::add_cell(const std::array<Vertex_index, 3>& vertices)
 {
-	assert(v1 < n_vertices() && v2 < n_vertices() && v3 < n_vertices());
-	const std::array<Vertex_index, 3> vertices{v1, v2, v3};
+	assert(std::all_of(vertices.begin(), vertices.end(),
+		[this](auto vi) { return vi < n_vertices(); }));
 
 	// The code below is borrowed from OpenMesh
 	struct Edges

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
-  <Type Name="fe::View&lt;fe::Vertex_tag,*&gt;">
+  <Type Name="es_fe::Element_view&lt;fe::Vertex_tag,*&gt;">
     <DisplayString>vertex {{index = {index_}}}</DisplayString>
   </Type>
 
-  <Type Name="fe::View&lt;fe::Halfedge_tag,*&gt;">
+  <Type Name="es_fe::Element_view&lt;fe::Halfedge_tag,*&gt;">
     <DisplayString>halfedge {{index = {index_}}} : {mesh_.halfedges_[index_].vertex} -> {mesh_.halfedges_[index_ ^ 1].vertex}</DisplayString>
     <Expand>
       <Item Name="From vertex">mesh_.vertices_[mesh_.halfedges_[index_].vertex].point</Item>
@@ -15,7 +15,7 @@
     </Expand>
   </Type>
 
-  <Type Name="fe::View&lt;fe::Face_tag,*&gt;">
+  <Type Name="es_fe::Element_view&lt;fe::Face_tag,*&gt;">
     <DisplayString>face {{index = {index_}}}</DisplayString>
     <!--<Expand>
       <Item Name="from vertex">mesh_.halfedges_[index_].vertex</Item>
@@ -25,19 +25,19 @@
     </Expand>-->
   </Type>
 
-  <Type Name="fe::Random_access_iterator&lt;fe::Vertex_tag,*&gt;">
+  <Type Name="es_fe::Random_access_iterator&lt;fe::Vertex_tag,*&gt;">
     <DisplayString>vertex {{index = {view_.index_}}}</DisplayString>
   </Type>
 
-  <Type Name="fe::Random_access_iterator&lt;fe::Halfedge_tag,*&gt;">
+  <Type Name="es_fe::Random_access_iterator&lt;fe::Halfedge_tag,*&gt;">
     <DisplayString>halfedge {{index = {view_.index_}}}</DisplayString>
   </Type>
 
-  <Type Name="fe::Random_access_iterator&lt;fe::Edge_tag,*&gt;">
+  <Type Name="es_fe::Random_access_iterator&lt;fe::Edge_tag,*&gt;">
     <DisplayString>edge {{index = {view_.index_ / 2}, halfedge_index = {view_.index_}}}</DisplayString>
   </Type>
 
-  <Type Name="fe::Random_access_iterator&lt;fe::Face_tag,*&gt;">
+  <Type Name="es_fe::Random_access_iterator&lt;fe::Face_tag,*&gt;">
     <DisplayString>face {{index = {view_.index_}}}</DisplayString>
     <Expand>
       <CustomListItems MaxItemsPerView="3">

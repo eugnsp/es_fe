@@ -37,6 +37,13 @@ void Halfedge_structure::reserve(Index n_vertices, Index n_edges, Index n_faces)
 	faces_.reserve(n_faces);
 }
 
+void Halfedge_structure::shrink()
+{
+	vertices_.shrink_to_fit();
+	halfedges_.shrink_to_fit();
+	faces_.shrink_to_fit();
+}
+
 // Returns approximate total size of memory in bytes occupied by the data structure
 std::size_t Halfedge_structure::memory_size() const
 {

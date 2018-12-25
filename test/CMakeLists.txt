@@ -4,8 +4,8 @@ project(es_fe_test)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-#add_compile_options(-Wall -Wextra -Wpedantic -g -D_DEBUG -m64)
-add_compile_options(-Wall -Wextra -Wpedantic -g -DNDEBUG -O3 -m64)
+add_compile_options(-Wall -Wextra -Wpedantic -g -D_DEBUG -m64 -march=native)
+#add_compile_options(-Wall -Wextra -Wpedantic -g -DNDEBUG -O3 -m64)
 
 add_library(es_fe STATIC IMPORTED)
 set_target_properties(es_fe PROPERTIES
@@ -25,9 +25,10 @@ set_target_properties(es_geom PROPERTIES
 	IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/../../es_geom/build/libes_geom.a"
 	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/../../es_geom/include")
 
-include_directories("/opt/intel/compilers_and_libraries_2019.0.117/linux/mkl/include")
-link_directories("/opt/intel/compilers_and_libraries_2019.0.117/linux/mkl/lib/intel64")
-
+set(MKLROOT $ENV{MKLROOT})
+include_directories("${MKLROOT}/include")
+link_directories("${MKLROOT}/lib/intel64")
+add_definitions(-DMKL_ILP64)
 set(MKL_LIBRARIES "-Wl,--start-group" libmkl_intel_ilp64.a libmkl_sequential.a libmkl_core.a "-Wl,--end-group" pthread m dl)
 
 file(GLOB_RECURSE TEST_SRC RELATIVE "${PROJECT_SOURCE_DIR}/src" ${PROJECT_SOURCE_DIR}/src/*.cpp)

@@ -60,9 +60,23 @@ using Make_local_index_sequence = std::make_integer_sequence<Local_index, n>;
 		return index += 1;                                                                         \
 	}                                                                                              \
                                                                                                    \
+	inline Index_name operator++(Index_name& index, int)                                           \
+	{                                                                                              \
+		const auto old = index;                                                                    \
+		++index;                                                                                   \
+		return old;                                                                                \
+	}                                                                                              \
+                                                                                                   \
 	inline Index_name& operator--(Index_name& index)                                               \
 	{                                                                                              \
 		return index -= 1;                                                                         \
+	}                                                                                              \
+                                                                                                   \
+	inline Index_name operator--(Index_name& index, int)                                           \
+	{                                                                                              \
+		const auto old = index;                                                                    \
+		++index;                                                                                   \
+		return old;                                                                                \
 	}                                                                                              \
                                                                                                    \
 	inline bool is_valid(Index_name index)                                                         \

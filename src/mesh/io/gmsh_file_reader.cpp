@@ -15,12 +15,12 @@ Gmsh_file_reader::Gmsh_file_reader(const std::string& file_name) : file_(file_na
 		throw Mesh_io_error("Mesh file '" + file_name + "' cannot be opened for reading");
 }
 
-std::unique_ptr<Mesh2> Gmsh_file_reader::read_mesh(double scale)
+Mesh2 Gmsh_file_reader::read_mesh(double scale)
 {
 	file_.clear();
 	file_.seekg(0, std::ifstream::beg);
 
-	auto mesh = std::make_unique<Mesh2>();
+	Mesh2 mesh;
 
 	std::string line;
 	while (std::getline(file_, line))
@@ -28,11 +28,12 @@ std::unique_ptr<Mesh2> Gmsh_file_reader::read_mesh(double scale)
 		if (line.find("$MeshFormat") == 0)
 			read_mesh_format_section();
 		else if (line.find("$Nodes") == 0)
-			read_nodes_section(*mesh, scale);
+			read_nodes_section(mesh, scale);
 		else if (line.find("$Elements") == 0)
-			read_elements_section(*mesh);
+			read_elements_section(mesh);
 	}
 
+	mesh.shrink();
 	return mesh;
 }
 
@@ -87,8 +88,8 @@ void Gmsh_file_reader::read_nodes_section(Mesh2& mesh, double scale)
 		if (z != 0)
 			throw Mesh_io_error("Not 2D Gmsh mesh file");
 
-		node_indices_map_.insert({index, Vertex_index{i}});
-		mesh.add_vertex({x * scale, y * scale});
+		const auto vertex_index = mesh.add_vertex({x * scale, y * scale});
+		node_indices_map_.insert({index, vertex_index});
 	}
 
 	read_and_check_section_footer("$EndNodes");
@@ -126,7 +127,7 @@ void Gmsh_file_reader::read_elements_section(Mesh2& mesh)
 		const auto vi2 = node_indices_map_.at(v2);
 		const auto vi3 = node_indices_map_.at(v3);
 
-		mesh.add_cell(vi1, vi2, vi3);
+		mesh.add_cell({vi1, vi2, vi3});
 	}
 
 	read_and_check_section_footer("$EndElements");
