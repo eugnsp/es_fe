@@ -235,10 +235,10 @@ private:
 				if constexpr (Element::has_vertex_dofs)
 					for (auto vertex = bc.begin_vertex(); vertex != bc.end_vertex(); ++vertex)
 					{
-						Dof_index& dof = indices_.at(*vertex, var);
+						Dof_index& dof = this->indices_.at(*vertex, var);
 						assert(dof.is_free);
 
-						n_free_dofs_ -= v.n_dofs(Vertex_tag{});
+						this->n_free_dofs_ -= v.n_dofs(Vertex_tag{});
 						dof.is_free = false;
 					}
 
@@ -249,7 +249,7 @@ private:
 						Dof_index& dof = indices_.at(*edge, var);
 						assert(dof.is_free);
 
-						n_free_dofs_ -= v.n_dofs(Edge_tag{});
+						this->n_free_dofs_ -= v.n_dofs(Edge_tag{});
 						dof.is_free = false;
 					}
 			});
@@ -318,7 +318,7 @@ private:
 
 	template<std::size_t var, class Dofs>
 	void var_dofs_impl(const typename Cell_view::Vertex_indices& vertices,
-					   const typename Cell_view::Halfedge_indices& halfedges, Face_index cell,
+					   const typename Cell_view::Halfedge_indices& halfedges, [[maybe_unused]] Face_index cell,
 					   Dofs& dofs) const
 	{
 		using Var = Var_t<var>;

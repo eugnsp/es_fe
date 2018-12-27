@@ -15,7 +15,7 @@ void for_each_var_impl(std::index_sequence<vars...>, Function func)
 }
 
 template<class Var_list, std::size_t var, class Element_tag, class Function>
-void for_each_var_element_impl(Function func)
+void for_each_var_element_impl([[maybe_unused]] Function func)
 {
 	if constexpr (Var_list::template Var<var>::Element::has_dofs(Element_tag{}))
 		func(Var_index<var>{}, Element_tag{});

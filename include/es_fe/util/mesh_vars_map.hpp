@@ -18,6 +18,7 @@ template<class T, class Var_list, class... Element_indices>
 class Mesh_var_map_impl
 {
 public:
+	// TODO : unused value
 	template<class Mesh>
 	void init_storage(const Mesh& mesh, const T& value = T{}, Index n_layers = 1)
 	{
