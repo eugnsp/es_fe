@@ -1,38 +1,28 @@
-cmake_minimum_required(VERSION 3.5)
-project(es_fe_lib VERSION 1.0 DESCRIPTION "Finite elements library")
+cmake_minimum_required(VERSION 3.1)
+project(es_fe VERSION 1.0 DESCRIPTION "Finite elements library")
 
 set(CMAKE_CXX_STANDARD 				17)
 set(CMAKE_CXX_STANDARD_REQUIRED 	ON)
 set(CMAKE_CXX_EXTENSIONS 			OFF)
 set(CMAKE_CXX_FLAGS                	"-Wall -Wextra -Wpedantic -Wno-psabi -m64 -march=native")
-set(CMAKE_CXX_FLAGS_DEBUG          	"-O0 -ggdb3 -D_DEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG          	"-O0 -ggdb3")
 set(CMAKE_CXX_FLAGS_RELEASE        	"-O3 -DNDEBUG -flto")
 
-set(ES_UTIL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/es_util/include")
-add_library(es_util INTERFACE)
-set_target_properties(es_util PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ES_UTIL_INCLUDE_DIR}")
+file(GLOB_RECURSE ES_FE_SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
+add_library(es_fe STATIC "${ES_FE_SRC}")
+target_include_directories(es_fe PUBLIC "include")
 
-set(ES_LA_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/es_la/include")
-add_library(es_la INTERFACE)
-set_target_properties(es_la PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ES_LA_INCLUDE_DIR}")
+if (NOT TARGET es_util)
+	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/es_util")
+endif()
+target_link_libraries(es_fe PUBLIC es_util)
 
-set(ESLIB_ROOT "/data/data1/dev/projects")
+if (NOT TARGET es_la)
+	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/es_la")
+endif()
+target_link_libraries(es_fe PUBLIC es_la)
 
-add_library(es_fe_lib INTERFACE IMPORTED)
-set_target_properties(es_fe_lib PROPERTIES
-	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include")
-
-add_library(es_geom_lib STATIC IMPORTED)
-set_target_properties(es_geom_lib PROPERTIES
-	IMPORTED_LOCATION "${CMAKE_CURRENT_SOURCE_DIR}/../es_geom/build/libes_geom.a"
-	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/../es_geom/include")
-
-set(MKLROOT $ENV{MKLROOT})
-include_directories(${MKLROOT}/include)
-#link_directories("/opt/intel/compilers_and_libraries_2019.0.117/linux/mkl/lib/intel64")
-
-file(GLOB_RECURSE SRC ${PROJECT_SOURCE_DIR}/src/*.cpp)
-
-add_library(es_fe STATIC "${SRC}")
-#set_target_properties(es_fe PROPERTIES VERSION ${PROJECT_PROPERTIES})
-target_link_libraries(es_fe es_util es_la es_geom_lib es_fe_lib)
+if (NOT TARGET es_geom)
+	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/es_geom")
+endif()
+target_link_libraries(es_fe PUBLIC es_geom)
