@@ -8,6 +8,12 @@ set(CMAKE_CXX_FLAGS                	"-Wall -Wextra -Wpedantic -Wno-psabi -m64 -m
 set(CMAKE_CXX_FLAGS_DEBUG          	"-O0 -ggdb3 -D_DEBUG")
 set(CMAKE_CXX_FLAGS_RELEASE        	"-O3 -DNDEBUG -flto")
 
+set(ES_UTIL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/es_util/include")
+add_library(es_util INTERFACE)
+set_target_properties(es_util PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ES_UTIL_INCLUDE_DIR}")
+
+set(ESLIB_ROOT "/data/data1/dev/projects")
+
 add_library(es_fe_lib INTERFACE IMPORTED)
 set_target_properties(es_fe_lib PROPERTIES
 	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include")
