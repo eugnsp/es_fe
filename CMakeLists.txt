@@ -12,19 +12,15 @@ set(ES_UTIL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/es_util/include")
 add_library(es_util INTERFACE)
 set_target_properties(es_util PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ES_UTIL_INCLUDE_DIR}")
 
+set(ES_LA_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/es_la/include")
+add_library(es_la INTERFACE)
+set_target_properties(es_la PROPERTIES INTERFACE_INCLUDE_DIRECTORIES "${ES_LA_INCLUDE_DIR}")
+
 set(ESLIB_ROOT "/data/data1/dev/projects")
 
 add_library(es_fe_lib INTERFACE IMPORTED)
 set_target_properties(es_fe_lib PROPERTIES
 	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/include")
-
-add_library(es_util_lib INTERFACE IMPORTED)
-set_target_properties(es_util_lib PROPERTIES
-	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/../es_util/include")
-
-add_library(es_la_lib INTERFACE IMPORTED)
-set_target_properties(es_la_lib PROPERTIES
-	INTERFACE_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/../es_la/include")
 
 add_library(es_geom_lib STATIC IMPORTED)
 set_target_properties(es_geom_lib PROPERTIES
@@ -39,4 +35,4 @@ file(GLOB_RECURSE SRC ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 add_library(es_fe STATIC "${SRC}")
 #set_target_properties(es_fe PROPERTIES VERSION ${PROJECT_PROPERTIES})
-target_link_libraries(es_fe es_util_lib es_la_lib es_geom_lib es_fe_lib)
+target_link_libraries(es_fe es_util es_la es_geom_lib es_fe_lib)
