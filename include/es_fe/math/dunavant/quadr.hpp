@@ -1,7 +1,9 @@
 #pragma once
 #include <es_fe/types.hpp>
 #include <es_fe/math/dunavant/data.hpp>
+
 #include <es_util/array.hpp>
+
 #include <cassert>
 #include <tuple>
 

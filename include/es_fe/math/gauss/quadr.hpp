@@ -1,6 +1,7 @@
 #pragma once
 #include <es_fe/types.hpp>
 #include <es_fe/math/gauss/data.hpp>
+
 #include <cassert>
 
 namespace es_fe

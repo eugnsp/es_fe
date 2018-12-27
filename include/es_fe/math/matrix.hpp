@@ -4,10 +4,38 @@
 #include <es_fe/math/quadr.hpp>
 
 #include <es_la/dense.hpp>
-#include <es_math/utility.hpp>
 
 #include <cstddef>
 #include <type_traits>
+
+// TODO : remove
+namespace math
+{
+// A function object that takes arbitrary arguments
+// and returns a static constant
+template<auto v>
+struct Constant
+{
+	using Value = decltype(v);
+	static constexpr auto value = v;
+
+	template<typename... Args>
+	constexpr auto operator()(Args...) const noexcept
+	{
+		return value;
+	}
+};
+
+// A function object that takes arbitrary arguments
+// and always returns zero
+template<typename T = int>
+struct Zero : Constant<static_cast<T>(0)> { };
+
+// A function object that takes arbitrary arguments
+// and always returns one
+template<typename T = int>
+struct One : Constant<static_cast<T>(1)> { };
+}
 
 namespace es_fe
 {

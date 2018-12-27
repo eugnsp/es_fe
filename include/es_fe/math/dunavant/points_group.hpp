@@ -1,6 +1,8 @@
 #pragma once
 #include <es_fe/types.hpp>
+
 #include <es_la/dense.hpp>
+
 #include <array>
 
 namespace es_fe::internal

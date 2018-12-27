@@ -1,7 +1,8 @@
 #pragma once
 #include <es_fe/types.hpp>
-#include <es_math/const.hpp>
+
 #include <es_util/array.hpp>
+#include <es_util/numeric.hpp>
 
 namespace es_fe::internal
 {
