@@ -97,7 +97,6 @@ public:
 	// 	return Solution_view_t2<var, Mesh_el_tag>{*this};
 	// }
 
-
 	std::size_t memory_size() const
 	{
 		// return solution_.memory_size() + rhs_.memory_size() + matrix_.memory_size() +

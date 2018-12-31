@@ -13,7 +13,7 @@ public:
 	Edge_chain(const Mesh2& mesh) : mesh_(mesh)
 	{}
 
-	Edge_chain(const Mesh2& mesh, const es_geom::Boundary&);
+	Edge_chain(const Mesh2& mesh, const Boundary&);
 
 	// 			EdgeChainVertexIterator begin_vertex() const
 	// 			{ }

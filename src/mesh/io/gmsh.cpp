@@ -1,6 +1,7 @@
+#include "gmsh_file_reader.hpp"
+
 #include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/mesh/io/gmsh.hpp>
-#include <es_fe/mesh/io/gmsh_file_reader.hpp>
 
 #include <string>
 #include <vector>
@@ -10,10 +11,10 @@ namespace es_fe
 Mesh2 read_gmsh_mesh(const std::string& file_name, double scale)
 {
 	internal::Gmsh_file_reader reader(file_name);
-	
+
 	auto mesh = reader.read_mesh(scale);
 	assert(!mesh.check());
-	
+
 	return mesh;
 }
 

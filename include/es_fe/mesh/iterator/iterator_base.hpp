@@ -2,7 +2,6 @@
 #include <es_fe/types.hpp>
 
 #include <cassert>
-#include <type_traits>
 
 namespace es_fe::internal
 {
@@ -42,17 +41,17 @@ protected:
 };
 
 template<class Element_tag, class Mesh>
-bool operator==(const Iterator_base<Element_tag, Mesh>& it_l,
-				const Iterator_base<Element_tag, Mesh>& it_r)
+bool operator==(const Iterator_base<Element_tag, Mesh>& it1,
+				const Iterator_base<Element_tag, Mesh>& it2)
 {
-	assert(&it_l->mesh() == &it_r->mesh());
-	return **it_l == **it_r;
+	assert(&it1->mesh() == &it2->mesh());
+	return **it1 == **it2;
 }
 
 template<class Element_tag, class Mesh>
-bool operator!=(const Iterator_base<Element_tag, Mesh>& it_l,
-				const Iterator_base<Element_tag, Mesh>& it_r)
+bool operator!=(const Iterator_base<Element_tag, Mesh>& it1,
+				const Iterator_base<Element_tag, Mesh>& it2)
 {
-	return !(it_l == it_r);
+	return !(it1 == it2);
 }
 } // namespace es_fe::internal

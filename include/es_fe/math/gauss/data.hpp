@@ -29,8 +29,9 @@ struct Gauss_data<1> : Gauss_data<0>
 template<>
 struct Gauss_data<2>
 {
-	static constexpr auto points = es_util::make_array(Gauss_point{1, -es_util::math::sqrt_three / 3},
-													   Gauss_point{1, es_util::math::sqrt_three / 3});
+	static constexpr auto points =
+		es_util::make_array(Gauss_point{1, -es_util::math::sqrt_three / 3},
+							Gauss_point{1, es_util::math::sqrt_three / 3});
 };
 
 template<>

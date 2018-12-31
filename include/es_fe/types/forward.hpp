@@ -25,9 +25,6 @@ class Circulator_halfedge_edge;
 template<class Element_tag, class Mesh>
 class Element_view;
 
-template<class Element_tag, class Mesh>
-class Element_view2;
-
 //////////////////////////////////////////////////////////////////////////
 template<class Element, Local_index dim, class... Bnd_conds>
 class Var;

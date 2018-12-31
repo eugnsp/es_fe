@@ -28,14 +28,14 @@ public:
 					continue;
 
 				// TODO
-				const double edge_length = es_geom::length(*edge);
-				const auto edge_midpoint = es_geom::center(*edge);
+				const double edge_length = length(*edge);
+				const auto edge_midpoint = center(*edge);
 
-				const auto cc = es_geom::circumcentre(face);
-				const auto side = (k == 0) ? es_geom::Side::ON_THE_LEFT : es_geom::Side::ON_THE_RIGHT;
+				const auto cc = circumcentre(face);
+				const auto side = (k == 0) ? Side::ON_THE_LEFT : Side::ON_THE_RIGHT;
 				const auto sign = 1;
 				throw 0; // (which_side(cc, *edge) == side) ? 1 : -1;
-				const double interface_length = sign * es_geom::distance(edge_midpoint, cc);
+				const double interface_length = sign * distance(edge_midpoint, cc);
 
 				data_[2 * **edge + k] = {interface_length, interface_length * edge_length / 4};
 			}

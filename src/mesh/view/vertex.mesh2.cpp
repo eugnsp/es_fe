@@ -1,11 +1,10 @@
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/mesh2.hpp>
-
-#include <es_geom/point.hpp>
+#include <es_fe/geom/point.hpp>
 
 namespace es_fe
 {
-const es_geom::Point& Element_view<Vertex_tag, Mesh2>::vertex() const
+const Point& Element_view<Vertex_tag, Mesh2>::vertex() const
 {
 	return mesh_.vertex(index_);
 }

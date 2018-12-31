@@ -1,7 +1,7 @@
 #include <es_fe/mesh/mesh2.hpp>
+#include <es_fe/geom/algorithm.hpp>
+#include <es_fe/geom/rect.hpp>
 
-#include <es_geom/algorithm.hpp>
-#include <es_geom/rect.hpp>
 #include <es_util/error.hpp>
 #include <es_util/string.hpp>
 
@@ -12,14 +12,14 @@
 namespace es_fe
 {
 // Returns the smallest rectangle that contains the mesh
-es_geom::Rect Mesh2::bounding_rect() const
+Rect Mesh2::bounding_rect() const
 {
 	assert(!is_empty());
 
 	const auto first = boundary_vertex_circ();
 
-	es_geom::Point bottom_left = first->vertex();
-	es_geom::Point top_right = first->vertex();
+	Point bottom_left = first->vertex();
+	Point top_right = first->vertex();
 
 	auto circ = first;
 	do
@@ -47,7 +47,7 @@ es_util::Error Mesh2::check() const
 
 	// Check for counter-clockwise order of vertices
 	for (auto& face : this->faces())
-		if (es_geom::area(face) < 0)
+		if (area(face) < 0)
 			err.append_ln("face #", **face, " has incorrect vertex order");
 
 	return err;

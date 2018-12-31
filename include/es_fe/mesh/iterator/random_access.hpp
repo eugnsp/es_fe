@@ -1,11 +1,8 @@
 #pragma once
+#include <es_fe/types.hpp>
 #include <es_fe/mesh/iterator/iterator_base.hpp>
 
-#include <es_geom/point.hpp>
-#include <es_geom/abstract_geometry.hpp>
-
 #include <cassert>
-#include <cstddef>
 #include <iterator>
 #include <type_traits>
 
@@ -22,7 +19,7 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	/** STL member types */
-	
+
 	using iterator_category = std::random_access_iterator_tag;
 	using value_type = View;
 	using difference_type = std::make_signed_t<Index>;
@@ -97,32 +94,32 @@ protected:
 /** Random access iterator free functions */
 
 template<class Element_tag, class Mesh>
-bool operator<(const Random_access_iterator<Element_tag, Mesh>& it_l,
-			   const Random_access_iterator<Element_tag, Mesh>& it_r)
+bool operator<(const Random_access_iterator<Element_tag, Mesh>& it1,
+			   const Random_access_iterator<Element_tag, Mesh>& it2)
 {
-	assert(&it_l.mesh() == &it_r.mesh());
-	return **it_l < **it_r;
+	assert(&it1.mesh() == &it2.mesh());
+	return **it1 < **it2;
 }
 
 template<class Element_tag, class Mesh>
-bool operator>(const Random_access_iterator<Element_tag, Mesh>& it_l,
-			   const Random_access_iterator<Element_tag, Mesh>& it_r)
+bool operator>(const Random_access_iterator<Element_tag, Mesh>& it1,
+			   const Random_access_iterator<Element_tag, Mesh>& it2)
 {
-	return it_r < it_l;
+	return it2 < it1;
 }
 
 template<class Element_tag, class Mesh>
-bool operator<=(const Random_access_iterator<Element_tag, Mesh>& it_l,
-				const Random_access_iterator<Element_tag, Mesh>& it_r)
+bool operator<=(const Random_access_iterator<Element_tag, Mesh>& it1,
+				const Random_access_iterator<Element_tag, Mesh>& it2)
 {
-	return !(it_r < it_l);
+	return !(it2 < it1);
 }
 
 template<class Element_tag, class Mesh>
-bool operator>=(const Random_access_iterator<Element_tag, Mesh>& it_l,
-				const Random_access_iterator<Element_tag, Mesh>& it_r)
+bool operator>=(const Random_access_iterator<Element_tag, Mesh>& it1,
+				const Random_access_iterator<Element_tag, Mesh>& it2)
 {
-	return it_r <= it_l;
+	return it2 <= it1;
 }
 
 template<class Element_tag, class Mesh>
@@ -134,10 +131,10 @@ Random_access_iterator<Element_tag, Mesh> operator+(
 }
 
 template<class Element_tag, class Mesh>
-auto operator-(const Random_access_iterator<Element_tag, Mesh>& it_l,
-			   const Random_access_iterator<Element_tag, Mesh>& it_r)
+auto operator-(const Random_access_iterator<Element_tag, Mesh>& it1,
+			   const Random_access_iterator<Element_tag, Mesh>& it2)
 {
 	using T = typename Random_access_iterator<Element_tag, Mesh>::difference_type;
-	return static_cast<T>(**it_l) - static_cast<T>(**it_r);
+	return static_cast<T>(**it1) - static_cast<T>(**it2);
 }
 } // namespace es_fe

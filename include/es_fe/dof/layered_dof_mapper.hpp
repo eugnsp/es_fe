@@ -296,7 +296,7 @@ public:
 
 	template<class Symmetry_tag, class Couplig_func>
 	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(const My_system& system,
-														Couplig_func coupling) const
+														 Couplig_func coupling) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
 		std::vector<Vars_dofs> dofs(n_layers_);

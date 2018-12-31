@@ -8,7 +8,6 @@
 #include <es_fe/dof/dof_mapper_base.hpp>
 #include <es_util/type_traits.hpp>
 #include <es_la/dense.hpp>
-#include <es_fe/mesh/base.hpp>
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
@@ -318,8 +317,8 @@ private:
 
 	template<std::size_t var, class Dofs>
 	void var_dofs_impl(const typename Cell_view::Vertex_indices& vertices,
-					   const typename Cell_view::Halfedge_indices& halfedges, [[maybe_unused]] Face_index cell,
-					   Dofs& dofs) const
+					   const typename Cell_view::Halfedge_indices& halfedges,
+					   [[maybe_unused]] Face_index cell, Dofs& dofs) const
 	{
 		using Var = Var_t<var>;
 

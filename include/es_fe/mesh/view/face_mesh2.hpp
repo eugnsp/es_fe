@@ -1,11 +1,7 @@
 #pragma once
+#include <es_fe/mesh/view/base.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
-#include <es_fe/mesh/view/base.hpp>
-
-//#include <es_geom/point.hpp>
-#include <es_geom/tags.hpp>
-#include <es_geom/traits.hpp>
 
 #include <array>
 #include <utility>
@@ -16,6 +12,8 @@ template<>
 class Element_view<Face_tag, Mesh2> : public internal::Element_view_base<Face_tag, Mesh2>
 {
 public:
+	using Geometry_tag = Triangle_tag;
+
 	using Vertex_indices = std::array<Vertex_index, 3>;
 	using Halfedge_indices = std::array<Halfedge_index, 3>;
 	using Edge_indices = std::array<Edge_index, 3>;
@@ -87,13 +85,3 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Face_tag, M
 	return os;
 }
 } // namespace es_fe
-
-namespace es_geom::internal
-{
-template<>
-struct Traits<es_fe::Element_view<es_fe::Face_tag, es_fe::Mesh2>>
-{
-	using Index = es_fe::Local_index;
-	using Tag = Triangle_tag;
-};
-} // namespace es_geom::internal

@@ -1,8 +1,8 @@
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
+#include <es_fe/geom/algorithm.hpp>
+#include <es_fe/geom/point.hpp>
 
-#include <es_geom/algorithm.hpp>
-#include <es_geom/point.hpp>
 #include <es_util/error.hpp>
 
 #include <algorithm>
@@ -81,18 +81,17 @@ es_util::Error Halfedge_structure::check() const
 		std::set<Index> seen_indices;
 
 		find_if(faces_[i].halfedge,
-			 [i, &seen_indices, &err](Halfedge_index edge)
-			 {
-				 if (seen_indices.count(*edge))
-				 {
-					 err.append_ln("The halfedges of the face #", i, " do not form a cycle");
-					 return true;
-				 }
+				[i, &seen_indices, &err](Halfedge_index edge) {
+					if (seen_indices.count(*edge))
+					{
+						err.append_ln("The halfedges of the face #", i, " do not form a cycle");
+						return true;
+					}
 
-				 seen_indices.insert(*edge);
-				 return false;
-			 },
-			 Face_circ_tag{});
+					seen_indices.insert(*edge);
+					return false;
+				},
+				Face_circ_tag{});
 	}
 
 	if (err)
@@ -104,25 +103,24 @@ es_util::Error Halfedge_structure::check() const
 		std::set<Halfedge_index> seen_indices;
 
 		find_if(vertices_[i].halfedge,
-			 [i, &seen_indices, &err](Halfedge_index edge)
-			 {
-				 if (seen_indices.count(edge))
-				 {
-					 err.append_ln("The halfedges of the vertex #", i, " do not form a cycle");
-					 return true;
-				 }
+				[i, &seen_indices, &err](Halfedge_index edge) {
+					if (seen_indices.count(edge))
+					{
+						err.append_ln("The halfedges of the vertex #", i, " do not form a cycle");
+						return true;
+					}
 
-				 seen_indices.insert(edge);
-				 return false;
-			 },
-			 Vertex_out_circ_tag{});
+					seen_indices.insert(edge);
+					return false;
+				},
+				Vertex_out_circ_tag{});
 	}
 
 	if (err)
 		return err;
 
 	// Check for duplicated vertices
-	using Vertices = std::vector<std::pair<Index, es_geom::Point>>;
+	using Vertices = std::vector<std::pair<Index, Point>>;
 	Vertices vertices;
 	vertices.reserve(*n_vertices());
 

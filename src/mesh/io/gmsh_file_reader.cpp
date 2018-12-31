@@ -1,4 +1,5 @@
-#include <es_fe/mesh/io/gmsh_file_reader.hpp>
+#include "gmsh_file_reader.hpp"
+
 #include <es_fe/mesh/exception.hpp>
 #include <es_fe/mesh/mesh2.hpp>
 

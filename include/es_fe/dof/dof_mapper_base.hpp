@@ -2,7 +2,6 @@
 #include <es_la/dense.hpp>
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
-#include <es_fe/mesh/base.hpp>
 #include <cstddef>
 #include <tuple>
 

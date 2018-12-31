@@ -1,8 +1,7 @@
 #pragma once
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/view/base.hpp>
-
-#include <es_geom/point.hpp>
+#include <es_fe/geom/point.hpp>
 
 namespace es_fe
 {
@@ -10,20 +9,19 @@ namespace es_fe
 template<>
 class Element_view<Halfedge_tag, Mesh2> : public internal::Element_view_base<Halfedge_tag, Mesh2>
 {
-	// 	friend class Circular_iterator<Edge_tag, Vertex_out_circ_tag>;
-	// 	friend class Circular_iterator<Edge_tag, Face_circ_tag>;
-
 public:
+	using Geometry_tag = Segment_tag;
+
 	using Vertex_view = Element_view<Vertex_tag, Mesh2>;
 	using Face_view = Element_view<Face_tag, Mesh2>;
 
 public:
 	using Element_view_base::Element_view_base;
 
-	const es_geom::Point& vertex() const;
-	const es_geom::Point& vertex(Local_index) const;
+	const Point& vertex() const;
+	const Point& vertex(Local_index) const;
 
-	es_geom::Point vector() const;
+	Point vector() const;
 
 	Vertex_index vertex_index() const;
 	Vertex_index vertex_index(Local_index) const;
@@ -118,13 +116,3 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Halfedge_ta
 	return os;
 }
 } // namespace es_fe
-
-namespace es_geom::internal
-{
-template<>
-struct Traits<es_fe::Element_view<es_fe::Halfedge_tag, es_fe::Mesh2>>
-{
-	using Index = es_fe::Local_index;
-	using Tag = Segment_tag;
-};
-} // namespace es_geom::internal

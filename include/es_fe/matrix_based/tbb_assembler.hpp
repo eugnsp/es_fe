@@ -39,8 +39,8 @@ public:
 								  for (auto cell = range.begin(); cell != range.end(); ++cell)
 									  solver.assemble_on_cell(solver.mesh().view(*cell));
 								  // 					auto cell_view =
-								  // solver.mesh().view(Face_index{}); 					for (auto cell =
-								  // range.begin(); cell != range.end(); ++cell)
+								  // solver.mesh().view(Face_index{}); 					for (auto
+								  // cell = range.begin(); cell != range.end(); ++cell)
 								  // 					{
 								  // 						cell_view.set_at(cell);
 								  // 						solver.assemble_on_cell(cell_view);

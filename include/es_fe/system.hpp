@@ -145,7 +145,7 @@ public:
 	decltype(auto) sparsity_pattern2(Args&&... args) const
 	{
 		return dof_mapper_.template sparsity_pattern2<Symmetry_tag>(*this,
-																   std::forward<Args>(args)...);
+																	std::forward<Args>(args)...);
 	}
 
 	virtual std::string name() const = 0;

@@ -10,9 +10,8 @@ namespace es_fe::internal
 {
 template<class T>
 inline constexpr bool is_circulation_tag =
-	std::is_same_v<
-		T,
-		Vertex_in_circ_tag> || std::is_same_v<T, Vertex_out_circ_tag> || std::is_same_v<T, Face_circ_tag>;
+	std::is_same_v<T, Vertex_in_circ_tag> || std::is_same_v<T, Vertex_out_circ_tag> ||
+	std::is_same_v<T, Face_circ_tag>;
 
 //////////////////////////////////////////////////////////////////////////
 // Element tag type by index type, and vice versa
@@ -215,6 +214,5 @@ namespace es_fe
 {
 template<class Element_tag, class Circ_tag>
 using Circulator = typename internal::Circulator_type_selector<Element_tag, Circ_tag>::Type;
-
 
 }

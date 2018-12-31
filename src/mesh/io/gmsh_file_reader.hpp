@@ -1,9 +1,7 @@
 #include <es_fe/mesh/exception.hpp>
 #include <es_fe/mesh/mesh2.hpp>
-#include <es_fe/mesh/io/gmsh.hpp>
 
 #include <fstream>
-#include <ios>
 #include <limits>
 #include <string>
 #include <unordered_map>

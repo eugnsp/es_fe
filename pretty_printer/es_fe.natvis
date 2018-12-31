@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?> 
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
+  <Type Name="es_fe::Point">
+    <DisplayString>{{ ({data_.data_[0]}, {data_.data_[1]}) }}</DisplayString>
+    <Expand>
+      <Item Name="x">data_.data_[0]</Item>
+      <Item Name="y">data_.data_[1]</Item>
+    </Expand>
+  </Type>
+
   <Type Name="es_fe::Element_view&lt;fe::Vertex_tag,*&gt;">
     <DisplayString>vertex {{index = {index_}}}</DisplayString>
   </Type>

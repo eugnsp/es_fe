@@ -47,7 +47,7 @@ void Halfedge_structure::shrink()
 // Returns approximate total size of memory in bytes occupied by the data structure
 std::size_t Halfedge_structure::memory_size() const
 {
-	return vertices_.capacity() * sizeof(vertices_[0])
-		   + halfedges_.capacity() * sizeof(halfedges_[0]) + faces_.capacity() * sizeof(faces_[0]);
+	return vertices_.capacity() * sizeof(vertices_[0]) +
+		   halfedges_.capacity() * sizeof(halfedges_[0]) + faces_.capacity() * sizeof(faces_[0]);
 }
 } // namespace es_fe::internal

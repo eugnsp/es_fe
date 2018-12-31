@@ -1,8 +1,7 @@
 #pragma once
 #include <es_fe/mesh/mesh2.hpp>
-
-#include <es_geom/linestring.hpp>
-#include <es_geom/algorithm.hpp>
+#include <es_fe/geom/linestring.hpp>
+#include <es_fe/geom/algorithm.hpp>
 
 #include <stdexcept>
 #include <vector>
@@ -13,7 +12,7 @@ namespace es_fe
 namespace internal
 {
 template<class Vertex_fn, class Halfedge_fn>
-void enumerate_elements_in_linestrip(const es_geom::Linestring& linestring, const Mesh2& mesh,
+void enumerate_elements_in_linestrip(const Linestring& linestring, const Mesh2& mesh,
 									 Vertex_fn vertex_fn, Halfedge_fn halfedge_fn)
 {
 	auto vertex_view = mesh.view(mesh.find_vertex(linestring.first()));
@@ -36,8 +35,7 @@ void enumerate_elements_in_linestrip(const es_geom::Linestring& linestring, cons
 		do
 		{
 			const auto vertex_from = halfedge_circ->vertex_index();
-			if (vertex_from == prev_vertex
-				|| !es_geom::contains(linestring, halfedge_circ->vertex()))
+			if (vertex_from == prev_vertex || !contains(linestring, halfedge_circ->vertex()))
 				continue;
 
 			if (vertex_from == first_vertex)
@@ -59,19 +57,20 @@ void enumerate_elements_in_linestrip(const es_geom::Linestring& linestring, cons
 }
 } // namespace internal
 
-inline std::vector<Vertex_index> vertices_in_linestrip(const es_geom::Linestring& linestring, const Mesh2& mesh)
+inline std::vector<Vertex_index> vertices_in_linestrip(const Linestring& linestring,
+													   const Mesh2& mesh)
 {
 	std::vector<Vertex_index> vertices;
 
 	enumerate_elements_in_linestrip(
 		linestring, mesh, [&vertices](const auto& vertex) { vertices.push_back(*vertex); },
-		[](const auto&) { });
+		[](const auto&) {});
 
 	return vertices;
 }
 
 inline std::pair<std::vector<Vertex_index>, std::vector<Halfedge_index>>
-vertices_and_halfedges_in_linestrip(const es_geom::Linestring& linestring, const Mesh2& mesh)
+vertices_and_halfedges_in_linestrip(const Linestring& linestring, const Mesh2& mesh)
 {
 	std::vector<Vertex_index> vertices;
 	std::vector<Halfedge_index> halfedges;
@@ -83,8 +82,7 @@ vertices_and_halfedges_in_linestrip(const es_geom::Linestring& linestring, const
 	return {vertices, halfedges};
 }
 
-
-inline std::vector<Halfedge_index> halfedges_in_linestrip(const es_geom::Linestring& linestring,
+inline std::vector<Halfedge_index> halfedges_in_linestrip(const Linestring& linestring,
 														  const Mesh2& mesh)
 {
 	std::vector<Halfedge_index> halfedges;
@@ -97,7 +95,7 @@ inline std::vector<Halfedge_index> halfedges_in_linestrip(const es_geom::Linestr
 }
 
 inline std::pair<std::vector<Vertex_index>, std::vector<Edge_index>>
-vertices_and_edges_in_linestrip(const es_geom::Linestring& linestring, const Mesh2& mesh)
+vertices_and_edges_in_linestrip(const Linestring& linestring, const Mesh2& mesh)
 {
 	std::vector<Vertex_index> vertices;
 	std::vector<Edge_index> edges;

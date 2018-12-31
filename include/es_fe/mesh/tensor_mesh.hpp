@@ -1,8 +1,8 @@
 #pragma once
 #include <es_fe/mesh/mesh2.hpp>
-
-#include <es_geom/compare.hpp>
-#include <es_geom/rect.hpp>
+#include <es_fe/geom/compare.hpp>
+#include <es_fe/geom/rect.hpp>
+#include <es_fe/geom/point.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -34,10 +34,10 @@ public:
 	// Constructs a triangular tensor mesh from x- and y-gridlines,
 	// bisecting all rectangles along the same diagonal
 	Tri_tensor_mesh(Grid grid_x, Grid grid_y) :
-		Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), [](auto ...) { return true; })
+		Tri_tensor_mesh(std::move(grid_x), std::move(grid_y), [](auto...) { return true; })
 	{}
 
-	virtual Vertex_index find_vertex(const es_geom::Point& point) const override
+	virtual Vertex_index find_vertex(const Point& point) const override
 	{
 		const auto ix = binary_find(grid_x_, point.x());
 		if (ix == grid_x_.end())
@@ -93,17 +93,17 @@ private:
 
 			for (Index i = 0; i < nx - 1; ++i)
 			{
-				const es_geom::Rect rect({grid_x_[i], grid_y_[j - 1]}, {grid_x_[i + 1], grid_y_[j]});
+				const Rect rect({grid_x_[i], grid_y_[j - 1]}, {grid_x_[i + 1], grid_y_[j]});
 				if (bisection(rect))
-				{                                                	//     *---*  next
-					add_cell({prev[i], prev[i + 1], next[i + 1]}); 	//     | / |
-					add_cell({prev[i], next[i + 1], next[i]});     	//     *---*  prev
-				}                                               	//	    i  i+1
+				{                                                  //     *---*  next
+					add_cell({prev[i], prev[i + 1], next[i + 1]}); //     | / |
+					add_cell({prev[i], next[i + 1], next[i]});     //     *---*  prev
+				}                                                  //	    i  i+1
 				else
-				{                                                	//     *---*  next
-					add_cell({next[i], prev[i], prev[i + 1]});     	//     | \ |
-					add_cell({next[i], prev[i + 1], next[i + 1]}); 	//     *---*  prev
-				}                                                	//	    i  i+1
+				{                                                  //     *---*  next
+					add_cell({next[i], prev[i], prev[i + 1]});     //     | \ |
+					add_cell({next[i], prev[i + 1], next[i + 1]}); //     *---*  prev
+				}                                                  //	    i  i+1
 			}
 
 			std::swap(prev, next);

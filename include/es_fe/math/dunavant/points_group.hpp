@@ -66,5 +66,5 @@ private:
 };
 
 template<typename... Coords>
-Dunavant_points_group(double, Coords...) -> Dunavant_points_group<sizeof...(Coords)>;
+Dunavant_points_group(double, Coords...)->Dunavant_points_group<sizeof...(Coords)>;
 } // namespace es_fe::internal

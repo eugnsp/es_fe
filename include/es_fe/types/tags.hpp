@@ -2,6 +2,24 @@
 
 namespace es_fe
 {
+//////////////////////////////////////////////////////////////////////
+/** Geometry tags */
+struct Polygon_tag
+{};
+struct Linestring_tag
+{};
+struct Rect_tag
+{};
+struct Triangle_tag : Polygon_tag
+{};
+struct Segment_tag
+{};
+struct Points_tag
+{};
+struct Point_tag
+{};
+
+//////////////////////////////////////////////////////////////////////
 /** Mesh element tags */
 
 struct Vertex_tag
@@ -15,6 +33,7 @@ struct Face_tag
 struct Cell_tag // Edge in 1D, Face in 2D
 {};
 
+//////////////////////////////////////////////////////////////////////
 /** Circulation type tags */
 
 struct Vertex_out_circ_tag

@@ -2,8 +2,7 @@
 #include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
 #include <es_fe/mesh/view/base.hpp>
-
-#include <es_geom/point.hpp>
+#include <es_fe/geom/point.hpp>
 
 #include <iosfwd>
 
@@ -24,7 +23,7 @@ public:
 public:
 	using Element_view_base::Element_view_base;
 
-	const es_geom::Point& vertex() const;
+	const Point& vertex() const;
 
 	Vertex_circ vertex_circ() const;
 	Halfedge_in_circ halfedge_in_circ() const;
@@ -34,7 +33,7 @@ public:
 
 	Local_index n_edges() const;
 	Local_index n_faces() const;
-	
+
 	// Outputs human readable information about the view
 	void print(std::ostream&) const;
 };

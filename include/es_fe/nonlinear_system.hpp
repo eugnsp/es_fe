@@ -119,8 +119,8 @@ private:
 
 			const double residual_norm = residual_norm2();
 
-			if (iteration > 10
-				&& residual_norm > residual_norm_old * (1 - armijoConstant * reduction_factor))
+			if (iteration > 10 &&
+				residual_norm > residual_norm_old * (1 - armijoConstant * reduction_factor))
 			{
 				reduction_factor /= 2;
 				step_ /= 2;
@@ -203,8 +203,9 @@ private:
 //
 //					const double linearStepSupNorm = normSup(step_);
 //
-//					LOG(LogLevel::INFO, "%4u                %11.3e         %11.3e", numberOfIterations + 1,
-//residualNorm, linearStepSupNorm);
+//					LOG(LogLevel::INFO, "%4u                %11.3e         %11.3e",
+//numberOfIterations
+//+ 1, residualNorm, linearStepSupNorm);
 //
 //					if (numberOfIterations > 0 && linearStepSupNorm < 1e-10)
 //					{
@@ -379,11 +380,11 @@ private:
 //			// 	{
 //			// 		FeMATFileOutput<MESH> mo("pc0.mat", mesh, Length::nm(1));
 //			// 		if (hasVariable("phi")) mo.PutScalarDataOnNodes("phi", GetSolutionView("phi"),
-//Energy::eV(1));
-//			// 		if (hasVariable("fermi")) mo.PutScalarDataOnNodes("fermi", GetSolutionView("fermi"),
-//Energy::eV(1));
+// Energy::eV(1));
+//			// 		if (hasVariable("fermi")) mo.PutScalarDataOnNodes("fermi",
+// GetSolutionView("fermi"), Energy::eV(1));
 //			// 		if (hasVariable("n")) mo.PutScalarDataOnNodes("n", GetSolutionView("n"),
-//Concentration::ONE_OVER_cm3(1));
+// Concentration::ONE_OVER_cm3(1));
 //			// 	}
 //			// 	#endif
 //			//
@@ -431,7 +432,7 @@ private:
 //				// 		{
 //				// 			MATFile m("j.mat");
 //				// 			m.write("J",
-//dynamic_cast<Math::LA::CSRSparseMatrix<double>&>(*jacobian));
+// dynamic_cast<Math::LA::CSRSparseMatrix<double>&>(*jacobian));
 //				// 		}
 //				// 		#endif
 //				//
@@ -446,7 +447,8 @@ private:
 //				}
 //
 //				// Armijo line-search
-//				// 		if (numberOfIterations > 0 && residualNorm > residualNormOld * (1 - armijoConstant
+//				// 		if (numberOfIterations > 0 && residualNorm > residualNormOld * (1 -
+// armijoConstant
 //* reductionFactor))
 //				// 		{
 //				// 			//AfterLineSearchFail(lineSearchIter);
@@ -470,7 +472,7 @@ private:
 //				//
 //				// 			++lineSearchIter;
 //				// 			LOG_INFO(" * %3u   %6.4f     %11.3e", lineSearchIter, reductionFactor,
-//residualNorm);
+// residualNorm);
 //				//
 //				// 			continue;
 //				// 		}
@@ -522,8 +524,8 @@ private:
 //
 //				linearStepSupNorm = normSup(linearStep_);
 //
-//				LOG(LogLevel::INFO, "%4u                %11.3e         %11.3e", numberOfIterations_ + 1,
-//residualNorm, linearStepSupNorm);
+//				LOG(LogLevel::INFO, "%4u                %11.3e         %11.3e", numberOfIterations_
+//+ 1, residualNorm, linearStepSupNorm);
 //
 //				if (std::isnan(linearStepSupNorm))
 //				{
@@ -571,56 +573,56 @@ private:
 //				//
 //				// 			//{
 //				// 			//	FeMATFileOutput<Math::mesh::Mesh2> mo("system.mat", mesh,
-//Length::nm(1));
+// Length::nm(1));
 //				// 			//	mo.PutScalarDataOnNodes("phi", GetSolutionView("phi"));
 //				// 			//	//mo.PutScalarDataOnNodes("psi", GetSolutionView("psi"),
-//Energy::eV(1));
+// Energy::eV(1));
 //				// 			//	//mo.PutScalarDataOnNodes("fermi", GetSolutionView("psi") -
-//GetSolutionView("phi"), Energy::eV(1));
+// GetSolutionView("phi"), Energy::eV(1));
 //				// 			//	//mo.PutScalarDataOnNodes("fermi", GetSolutionView("fermi"),
-//Energy::eV(1));
+// Energy::eV(1));
 //				// 			//	if (HasVariable("n")) mo.PutScalarDataOnNodes("n",
-//GetSolutionView("n"));
+// GetSolutionView("n"));
 //				// 			//	if (HasVariable("F")) mo.PutScalarDataOnNodes("F",
-//GetSolutionView("F"));
+// GetSolutionView("F"));
 //				// 			//	//mo.GetMATFile().PutVar("J",
-//dynamic_cast<CSRSparseMatrix<double>&>(*jacobian));
+// dynamic_cast<CSRSparseMatrix<double>&>(*jacobian));
 //				//
 //				// 			//	solution.zero();
 //				// 			//	solution.GetView(residual.GetSize()) = residual;
 //				//
 //				// 			//	mo.PutScalarDataOnNodes("r_phi", GetSolutionView("phi"));
 //				// 			//	//mo.PutScalarDataOnNodes("r_psi", GetSolutionView("psi"),
-//Energy::eV(1));
+// Energy::eV(1));
 //				// 			//	if (HasVariable("n")) mo.PutScalarDataOnNodes("r_n",
-//GetSolutionView("n"));
+// GetSolutionView("n"));
 //				//
 //				// 			//	solution.zero();
 //				// 			//	solution.GetView(linearStep.GetSize()) = linearStep;
 //				//
 //				// 			//	mo.PutScalarDataOnNodes("d_phi", GetSolutionView("phi"));
 //				// 			//	//mo.PutScalarDataOnNodes("d_psi", GetSolutionView("psi"),
-//Energy::eV(1));
+// Energy::eV(1));
 //				// 			//	//mo.PutScalarDataOnNodes("d_fermi", GetSolutionView("psi") -
-//GetSolutionView("phi"), Energy::eV(1));
+// GetSolutionView("phi"), Energy::eV(1));
 //				// 			//	//mo.PutScalarDataOnNodes("d_fermi", GetSolutionView("fermi"),
-//Energy::eV(1));
+// Energy::eV(1));
 //				// 			//	if (HasVariable("n")) mo.PutScalarDataOnNodes("d_n",
-//GetSolutionView("n"));
+// GetSolutionView("n"));
 //				// 			//	if (HasVariable("F")) mo.PutScalarDataOnNodes("d_F",
-//GetSolutionView("F"));
+// GetSolutionView("F"));
 //				// 			//}
 //				//
 //				// 			//solution = temp;
 //				//
 //				// 			//std::cout << solution[dofMap.GetDOFIndex(827, 0)] << ' ' <<
-//solution[dofMap.GetDOFIndex(827, 1)] << '\n';
+// solution[dofMap.GetDOFIndex(827, 1)] << '\n';
 //				// 			//std::cout << solution[dofMap.GetDOFIndex(776, 0)] << ' ' <<
-//solution[dofMap.GetDOFIndex(776, 1)] << '\n' << "----------------\n";
+// solution[dofMap.GetDOFIndex(776, 1)] << '\n' << "----------------\n";
 //				// 			//std::cout << residual[dofMap.GetDOFIndex(827, 0)] << ' ' <<
-//residual[dofMap.GetDOFIndex(827, 1)] << '\n';
+// residual[dofMap.GetDOFIndex(827, 1)] << '\n';
 //				// 			//std::cout << residual[dofMap.GetDOFIndex(776, 0)] << ' ' <<
-//residual[dofMap.GetDOFIndex(776, 1)] << '\n';
+// residual[dofMap.GetDOFIndex(776, 1)] << '\n';
 //				// 		}
 //				// 		#endif
 //				//
@@ -633,9 +635,9 @@ private:
 //				// 		//		solution.GetView(linearStep.GetSize()) -= (i / 12.) * linearStep;
 //				// 		//		AssembleResidualAndJacobian();
 //				// 		//		std::cout << residual[dofMap.GetDOFIndex(827, 0)] << " | " <<
-//residual[dofMap.GetDOFIndex(827, 1)] << " | " <<
+// residual[dofMap.GetDOFIndex(827, 1)] << " | " <<
 //				// 		//				     residual[dofMap.GetDOFIndex(776, 0)] << " | " <<
-//residual[dofMap.GetDOFIndex(776, 1)] << '\n';
+// residual[dofMap.GetDOFIndex(776, 1)] << '\n';
 //				// 		//	}
 //				// 		//}
 //				//
@@ -702,7 +704,8 @@ private:
 //		 		for (unsigned int row = 0; row < size; ++row)
 //		 			if (jc[row] != 0 || dr[row] != 0)
 //		 				LOG_INFO("(%4u, %4u)     %11.3e     %11.3e     %9.1e", row, col, dr[row],
-//jc[row], 		 					std::abs(dr[row] - jc[row]) / std::max(std::abs(dr[row]), std::abs(jc[row])));
+// jc[row], 		 					std::abs(dr[row] - jc[row]) / std::max(std::abs(dr[row]),
+// std::abs(jc[row])));
 //
 //		 		solution_ = oldSolution;
 //		 	}

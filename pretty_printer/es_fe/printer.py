@@ -10,6 +10,15 @@ def get_vector_element(vec, index):
 	type = gdb.types.get_basic_type(vec.type)
 	return gdb.parse_and_eval('(*(%s*)(%s))[%d]' % (type, vec.address, index))
 
+class Point_printer(object):
+	def __init__(self, val):
+		self.val = val
+
+	def to_string(self):
+		x = get_vector_element(self.val['data_']['data_'], 0)
+		y = get_vector_element(self.val['data_']['data_'], 1)
+		return '(%s, %s)' % (x, y)
+
 class Index_printer(object):
 	def __init__(self, val):
 		self.val = val
@@ -47,6 +56,7 @@ class Mesh2_halfedge_view_printer(object):
 def build_pretty_printer():
 	printer = gdb.printing.RegexpCollectionPrettyPrinter('es_fe')
 
+	printer.add_printer('Point', '^es_fe::Point$', Point_printer)
 	printer.add_printer('Element_index', '^es_fe::(Vertex|Halfedge|Edge|Face)_index$', Index_printer)
 	printer.add_printer('Mesh2::Vertex_view', '^es_fe::Element_view<es_fe::Vertex_tag, es_fe::Mesh2>$', Mesh2_vertex_view_printer)
 	printer.add_printer('Mesh2::Halfedge_view', '^es_fe::Element_view<es_fe::Halfedge_tag, es_fe::Mesh2>$', Mesh2_halfedge_view_printer)

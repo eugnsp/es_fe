@@ -1,7 +1,6 @@
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/mesh2.hpp>
-
-#include <es_geom/point.hpp>
+#include <es_fe/geom/point.hpp>
 
 #include <cassert>
 
@@ -12,7 +11,7 @@ bool Element_view<Edge_tag, Mesh2>::is_boundary() const
 	return this->mesh_.is_boundary(**this);
 }
 
-const es_geom::Point& Element_view<Edge_tag, Mesh2>::vertex(Local_index index) const
+const Point& Element_view<Edge_tag, Mesh2>::vertex(Local_index index) const
 {
 	return mesh_.vertex(vertex_index(index));
 }

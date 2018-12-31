@@ -1,18 +1,17 @@
 #include <es_fe/types.hpp>
 #include <es_fe/mesh/mesh2.hpp>
-
-#include <es_geom/point.hpp>
+#include <es_fe/geom/point.hpp>
 
 #include <cassert>
 
 namespace es_fe
 {
-const es_geom::Point& Element_view<Halfedge_tag, Mesh2>::vertex() const
+const Point& Element_view<Halfedge_tag, Mesh2>::vertex() const
 {
 	return mesh_.vertex(vertex_index());
 }
 
-const es_geom::Point& Element_view<Halfedge_tag, Mesh2>::vertex(Local_index vertex) const
+const Point& Element_view<Halfedge_tag, Mesh2>::vertex(Local_index vertex) const
 {
 	return mesh_.vertex(vertex_index(vertex));
 }
@@ -31,7 +30,7 @@ Vertex_index Element_view<Halfedge_tag, Mesh2>::vertex_index(Local_index vertex)
 		return mesh_.vertex_index(twin(index_));
 }
 
-es_geom::Point Element_view<Halfedge_tag, Mesh2>::vector() const
+Point Element_view<Halfedge_tag, Mesh2>::vector() const
 {
 	return vertex() - mesh_.vertex(mesh_.vertex_index(twin(index_)));
 }

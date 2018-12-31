@@ -1,9 +1,9 @@
 #pragma once
 #include <es_fe/types.hpp>
 #include <es_fe/math/jacobian.hpp>
+#include <es_fe/geom/rect.hpp>
+#include <es_fe/geom/point.hpp>
 
-#include <es_geom/rect.hpp>
-#include <es_geom/point.hpp>
 #include <es_la/base/expression.hpp>
 #include <es_util/type_traits.hpp>
 
@@ -20,13 +20,12 @@ public:
 	using Mesh = typename Solver::Mesh;
 
 public:
-	Solution_view(const Solver& solver) :
-		solver_(solver)
-	{ }
+	Solution_view(const Solver& solver) : solver_(solver)
+	{}
 
 	// TODO : vector variables (dim > 1, static / dynamic)
 	template<typename... Args>
-	double operator()(const typename Mesh::Face_view& face, es_geom::Point pt, Args&... args) const
+	double operator()(const typename Mesh::Face_view& face, Point pt, Args&... args) const
 	{
 		pt = to_ref_triangle(face, pt);
 
@@ -35,7 +34,7 @@ public:
 		double value = 0;
 		for (Local_index dof = 0; dof < dofs.size(); ++dof)
 			value += System::template Var_t<var>::Element::basis(dof, pt) *
-				solver_.solution_[dofs[dof].index];
+					 solver_.solution_[dofs[dof].index];
 
 		return value;
 	}
@@ -47,7 +46,7 @@ public:
 
 private:
 	// Maps a given point on given face to a point in the corresponding reference triangle
-	static es_geom::Point to_ref_triangle(const typename Mesh::Face_view& face, const es_geom::Point& pt)
+	static Point to_ref_triangle(const typename Mesh::Face_view& face, const Point& pt)
 	{
 		const auto j = es_fe::inv_jacobian(face);
 		la::Vector_2d p0 = pt - face.vertex_circ()->vertex();
@@ -109,7 +108,8 @@ private:
 // 	// 		{
 // 	//  			auto dof = view_.system_.template
 // 	//  vertexDofs<t_var>(static_cast<mesh::Index>(vertex)); 			return dof.is_valid() &&
-// 	//  dof.is_active() ? 				view_.system_.solution_[dof.index + index_] : 0/*Const::nan*/;
+// 	//  dof.is_active() ? 				view_.system_.solution_[dof.index + index_] :
+// 0/*Const::nan*/;
 // 	// 			throw;
 // 	// 		}
 // 	//

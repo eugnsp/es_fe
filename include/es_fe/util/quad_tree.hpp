@@ -416,11 +416,10 @@ private:
 
 	bool is_to_be_split(const Cell& cell) const
 	{
-		return !cell.is_leaf()
-			   && (is_to_be_split(cell, Neighbour_type::NORTH)
-				   || is_to_be_split(cell, Neighbour_type::SOUTH)
-				   || is_to_be_split(cell, Neighbour_type::WEST)
-				   || is_to_be_split(cell, Neighbour_type::EAST));
+		return !cell.is_leaf() && (is_to_be_split(cell, Neighbour_type::NORTH) ||
+								   is_to_be_split(cell, Neighbour_type::SOUTH) ||
+								   is_to_be_split(cell, Neighbour_type::WEST) ||
+								   is_to_be_split(cell, Neighbour_type::EAST));
 	}
 
 private:

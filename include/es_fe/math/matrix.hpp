@@ -1,6 +1,5 @@
 #pragma once
 #include <es_fe/types.hpp>
-#include <es_fe/mesh/base.hpp>
 #include <es_fe/math/quadr.hpp>
 
 #include <es_la/dense.hpp>
@@ -29,13 +28,15 @@ struct Constant
 // A function object that takes arbitrary arguments
 // and always returns zero
 template<typename T = int>
-struct Zero : Constant<static_cast<T>(0)> { };
+struct Zero : Constant<static_cast<T>(0)>
+{};
 
 // A function object that takes arbitrary arguments
 // and always returns one
 template<typename T = int>
-struct One : Constant<static_cast<T>(1)> { };
-}
+struct One : Constant<static_cast<T>(1)>
+{};
+} // namespace math
 
 namespace es_fe
 {
