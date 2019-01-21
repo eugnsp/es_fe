@@ -7,7 +7,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wpedantic -Wno-psabi -m64 -march=native")
 set(CMAKE_CXX_FLAGS_DEBUG "-O0 -ggdb3")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG -flto")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 file(GLOB_RECURSE ES_FE_SRC "${PROJECT_SOURCE_DIR}/src/*.cpp")
 add_library(es_fe STATIC "${ES_FE_SRC}")

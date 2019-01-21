@@ -34,7 +34,7 @@ public:
 };
 
 template<Local_index order, class Quadr>
-struct Element_quadr<Discontinuous_lagrange<order, 2>, Quadr> :
+class Element_quadr<Discontinuous_lagrange<order, 2>, Quadr> :
 	Element_quadr<Lagrange<order, 2>, Quadr>
 {};
 } // namespace es_fe

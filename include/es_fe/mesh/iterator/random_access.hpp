@@ -94,30 +94,34 @@ protected:
 /** Random access iterator free functions */
 
 template<class Element_tag, class Mesh>
-bool operator<(const Random_access_iterator<Element_tag, Mesh>& it1,
-			   const Random_access_iterator<Element_tag, Mesh>& it2)
+bool operator<(
+	const Random_access_iterator<Element_tag, Mesh>& it1,
+	const Random_access_iterator<Element_tag, Mesh>& it2)
 {
 	assert(&it1.mesh() == &it2.mesh());
 	return **it1 < **it2;
 }
 
 template<class Element_tag, class Mesh>
-bool operator>(const Random_access_iterator<Element_tag, Mesh>& it1,
-			   const Random_access_iterator<Element_tag, Mesh>& it2)
+bool operator>(
+	const Random_access_iterator<Element_tag, Mesh>& it1,
+	const Random_access_iterator<Element_tag, Mesh>& it2)
 {
 	return it2 < it1;
 }
 
 template<class Element_tag, class Mesh>
-bool operator<=(const Random_access_iterator<Element_tag, Mesh>& it1,
-				const Random_access_iterator<Element_tag, Mesh>& it2)
+bool operator<=(
+	const Random_access_iterator<Element_tag, Mesh>& it1,
+	const Random_access_iterator<Element_tag, Mesh>& it2)
 {
 	return !(it2 < it1);
 }
 
 template<class Element_tag, class Mesh>
-bool operator>=(const Random_access_iterator<Element_tag, Mesh>& it1,
-				const Random_access_iterator<Element_tag, Mesh>& it2)
+bool operator>=(
+	const Random_access_iterator<Element_tag, Mesh>& it1,
+	const Random_access_iterator<Element_tag, Mesh>& it2)
 {
 	return it2 <= it1;
 }
@@ -131,8 +135,9 @@ Random_access_iterator<Element_tag, Mesh> operator+(
 }
 
 template<class Element_tag, class Mesh>
-auto operator-(const Random_access_iterator<Element_tag, Mesh>& it1,
-			   const Random_access_iterator<Element_tag, Mesh>& it2)
+auto operator-(
+	const Random_access_iterator<Element_tag, Mesh>& it1,
+	const Random_access_iterator<Element_tag, Mesh>& it2)
 {
 	using T = typename Random_access_iterator<Element_tag, Mesh>::difference_type;
 	return static_cast<T>(**it1) - static_cast<T>(**it2);

@@ -38,8 +38,8 @@ Side which_side(const Point&, const Point& a, const Point& b);
 
 // Computes the intersection point between the line segment [x1, x2] and
 // the line passing through points (y1) and (y2)
-Point GetSegmentAndLineIntersectionPoint(const Point& _x1, const Point& _x2, const Point& _y1,
-										 const Point& _y2);
+Point GetSegmentAndLineIntersectionPoint(
+	const Point& _x1, const Point& _x2, const Point& _y1, const Point& _y2);
 
 // Clips simple by the line passing through points (y1) and (y2)
 // void ClipSimpleByLine(SimplePolygon& _out, const SimplePolygon& _in, const Point& _y1, const

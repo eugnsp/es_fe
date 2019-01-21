@@ -33,8 +33,8 @@ public:
 
 		faces.clear();
 		const auto range = map_.equal_range(colour);
-		std::transform(range.first, range.second, std::back_inserter(faces),
-					   [](auto& p) { return p.second; });
+		std::transform(
+			range.first, range.second, std::back_inserter(faces), [](auto& p) { return p.second; });
 	}
 
 	const auto& map() const

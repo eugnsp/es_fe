@@ -13,8 +13,11 @@ namespace es_fe
 class Vtk_writer_3d
 {
 public:
-	Vtk_writer_3d(const std::string& file_name, const Mesh2& mesh,
-				  const std::vector<double>& grid_z, double mesh_scale = 1) :
+	Vtk_writer_3d(
+		const std::string& file_name,
+		const Mesh2& mesh,
+		const std::vector<double>& grid_z,
+		double mesh_scale = 1) :
 		file_(file_name),
 		mesh_(mesh), grid_z_(grid_z)
 	{

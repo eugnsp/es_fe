@@ -1,7 +1,11 @@
 #pragma once
-#include <es_la/dense.hpp>
-#include <es_fe/types.hpp>
+#include <es_fe/dof/dof_index.hpp>
 #include <es_fe/type_traits.hpp>
+#include <es_fe/types.hpp>
+#include <es_fe/util/mesh_vars_map.hpp>
+
+#include <es_la/dense.hpp>
+
 #include <cstddef>
 #include <tuple>
 
@@ -27,8 +31,7 @@ template<class Var_list>
 class Dof_mapper_base
 {
 protected:
-	using Traits = internal::Vars_traits<Var_list>;
-	using Mesh = Mesh_t<Traits::space_dim>;
+	using Mesh = Mesh_t<Var_list::space_dim>;
 	using Cell_view = typename Mesh::Cell_view;
 
 public:

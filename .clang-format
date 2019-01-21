@@ -1,16 +1,17 @@
 BasedOnStyle: LLVM
 AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
+AlignAfterOpenBracket: AlwaysBreak
+AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortFunctionsOnASingleLine: None
 AlwaysBreakTemplateDeclarations: true
-BinPackParameters: true
+BinPackArguments: false
+BinPackParameters: false
 BraceWrapping:
  AfterClass: true
  AfterControlStatement: true
  AfterEnum: true
  AfterFunction: true
  AfterNamespace: true
- AfterObjCDeclaration: true
  AfterStruct: true
  AfterUnion: true
  AfterExternBlock: true
@@ -33,4 +34,3 @@ SpaceAfterTemplateKeyword: false
 SortIncludes: false
 TabWidth: 4
 UseTab: ForContinuationAndIndentation
-

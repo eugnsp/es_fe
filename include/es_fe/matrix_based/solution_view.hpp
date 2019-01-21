@@ -19,13 +19,15 @@ public:
 	using System = typename Solver::System;
 	using Mesh = typename Solver::Mesh;
 
+	using Value = double;
+
 public:
 	Solution_view(const Solver& solver) : solver_(solver)
 	{}
 
 	// TODO : vector variables (dim > 1, static / dynamic)
 	template<typename... Args>
-	double operator()(const typename Mesh::Face_view& face, Point pt, Args&... args) const
+	Value operator()(const typename Mesh::Face_view& face, Point pt, Args&... args) const
 	{
 		pt = to_ref_triangle(face, pt);
 

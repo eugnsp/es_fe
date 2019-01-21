@@ -1,7 +1,6 @@
 #pragma once
 #include <es_fe/type_traits.hpp>
 #include <es_fe/types.hpp>
-#include <es_fe/var.hpp>
 #include <es_fe/dof/dof_mapper.hpp>
 
 #include <es_la/dense.hpp>
@@ -15,6 +14,7 @@
 #include <string>
 #include <tuple>
 #include <type_traits>
+#include <utility>
 
 namespace es_fe
 {
@@ -23,25 +23,23 @@ class System
 {
 public:
 	using Var_list = Var_list_;
+	static constexpr std::size_t space_dim = Var_list::space_dim;
+	static constexpr std::size_t n_vars = Var_list::size;
+
+	using Mesh = internal::Mesh_t<space_dim>;
 
 private:
 	using My_dof_mapper = Dof_mapper_<Var_list>;
-	using Traits = internal::Vars_traits<Var_list>;
 
 public:
-	static constexpr std::size_t dim = Traits::space_dim;
-	static constexpr std::size_t n_vars = Var_list::size;
-
-public:
-	using Mesh = internal::Mesh_t<dim>;
-
 	template<std::size_t var>
-	using Var_t = typename Var_list::template Var<var>;
+	using Var_t = typename Var_list::template Nth<var>;
 
 	template<std::size_t var>
 	using Var_dofs = typename My_dof_mapper::template Var_dofs<var>;
 
 	using Vars_dofs = typename My_dof_mapper::Vars_dofs;
+
 	using Dofs = std::conditional_t<n_vars == 1, Var_dofs<0>, Vars_dofs>;
 
 	template<std::size_t var>
@@ -49,10 +47,6 @@ public:
 
 	template<std::size_t var>
 	using Var_edge_dofs = typename My_dof_mapper::template Var_edge_dofs<var>;
-
-public:
-	using Edge_view = typename Mesh::Edge_view;
-	using Cell_view = typename Mesh::Cell_view;
 
 public:
 	System(const Mesh& mesh) : mesh_(mesh)
@@ -64,34 +58,8 @@ public:
 		dof_mapper_.init(*this, std::forward<Args>(args)...);
 	}
 
-	My_dof_mapper& dof_mapper()
-	{
-		return dof_mapper_;
-	}
-
-	const My_dof_mapper& dof_mapper() const
-	{
-		return dof_mapper_;
-	}
-
-	template<std::size_t var = 0, class Element_view, typename... Args>
-	auto dofs(const Element_view& element, Args&&... args) const
-	{
-		debug_check_var_index<var>();
-		return dof_mapper_.template dofs<var>(element, std::forward<Args>(args)...);
-	}
-
-	template<typename... Args>
-	auto all_dofs(const Cell_view& cell, Args&&... args) const
-	{
-		return dof_mapper_.all_dofs(cell, std::forward<Args>(args)...);
-	}
-
-	// 	template<std::size_t var>
-	// 	void vertex_dofs(mesh::Index vertex, Var_vertex_dofs<var>& dofs_list) const
-	// 	{
-	// 		dof_mapper_.template vertex_dofs<var>(vertex, dofs_list);
-	// 	}
+	//////////////////////////////////////////////////////////////////////
+	//* Degrees of freedom */
 
 	Index n_dofs() const
 	{
@@ -108,26 +76,53 @@ public:
 		return n_dofs() - n_free_dofs();
 	}
 
-	//////////////////////////////////////////////////////////////////////////
+	const My_dof_mapper& dof_mapper() const
+	{
+		return dof_mapper_;
+	}
+
+	template<std::size_t var_index = 0, class Element_view, typename... Args>
+	auto dofs(const Element_view& element, Args&&... args) const
+	{
+		debug_check_var_index<var_index>();
+		return dof_mapper_.template dofs<var_index>(element, std::forward<Args>(args)...);
+	}
+
+	template<typename... Args>
+	auto all_dofs(const typename Mesh::Cell_view& cell, Args&&... args) const
+	{
+		return dof_mapper_.all_dofs(cell, std::forward<Args>(args)...);
+	}
+
+	// 	template<std::size_t var>
+	// 	void vertex_dofs(mesh::Index vertex, Var_vertex_dofs<var>& dofs_list) const
+	// 	{
+	// 		dof_mapper_.template vertex_dofs<var>(vertex, dofs_list);
+	// 	}
+
+	//////////////////////////////////////////////////////////////////////
+	//* Variables */
 
 	template<std::size_t var = 0>
-	auto& variable(es_util::Index<var> = es_util::Index<var>{})
+	auto& variable(es_util::Index<var> = {})
 	{
 		debug_check_var_index<var>();
 		return std::get<var>(vars_);
 	}
 
 	template<std::size_t var = 0>
-	auto& variable(es_util::Index<var> = es_util::Index<var>{}) const
+	auto& variable(es_util::Index<var> = {}) const
 	{
 		debug_check_var_index<var>();
 		return std::get<var>(vars_);
 	}
 
-	const typename Var_list::Vars& variables() const
+	auto& variables() const
 	{
 		return vars_;
 	}
+
+	///////////////////////////////////////////////////////////////////////
 
 	const Mesh& mesh() const
 	{
@@ -137,18 +132,21 @@ public:
 	template<class Symmetry_tag, class... Args>
 	decltype(auto) sparsity_pattern(Args&&... args) const
 	{
-		return dof_mapper_.template sparsity_pattern<Symmetry_tag>(*this,
-																   std::forward<Args>(args)...);
+		return dof_mapper_.template sparsity_pattern<Symmetry_tag>(
+			*this, std::forward<Args>(args)...);
 	}
 
 	template<class Symmetry_tag, class... Args>
 	decltype(auto) sparsity_pattern2(Args&&... args) const
 	{
-		return dof_mapper_.template sparsity_pattern2<Symmetry_tag>(*this,
-																	std::forward<Args>(args)...);
+		return dof_mapper_.template sparsity_pattern2<Symmetry_tag>(
+			*this, std::forward<Args>(args)...);
 	}
 
-	virtual std::string name() const = 0;
+	virtual std::string name() const
+	{
+		return "Unnamed system";
+	}
 
 	std::size_t memory_size() const
 	{
@@ -220,18 +218,16 @@ private:
 	//
 	// 	}
 
-	template<std::size_t var>
+	template<std::size_t var_index>
 	static void debug_check_var_index()
 	{
-		static_assert(var < n_vars, "Variable index out of bounds");
+		static_assert(var_index < n_vars, "Variable index out of bounds");
 	}
 
-protected:
-	const Mesh& mesh_;
-	My_dof_mapper dof_mapper_;
-
 private:
-	typename Var_list::Vars vars_;
+	My_dof_mapper dof_mapper_;
+	typename Var_list::Tuple vars_;
+	const Mesh& mesh_;
 };
 
 template<class Var_list, template<class> class Dof_mapper>

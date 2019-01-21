@@ -56,7 +56,8 @@ private:
 
 template<Local_index order>
 using Dunavant_quadr_t = Dunavant_quadr<
-	order, Make_local_index_sequence<std::tuple_size_v<decltype(Dunavant_data<order>::groups)>>>;
+	order,
+	Make_local_index_sequence<std::tuple_size_v<decltype(Dunavant_data<order>::groups)>>>;
 } // namespace internal
 
 // Quadrature integration

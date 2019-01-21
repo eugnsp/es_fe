@@ -1,20 +1,28 @@
 #pragma once
 #include <es_util/type_traits.hpp>
 
+#include <cstddef>
+#include <tuple>
+
 namespace es_fe
 {
+// A variables list class used to represent a collection of variables as a single type
 template<class... Variables>
 struct Var_list
 {
+	static_assert(es_util::all_same<Variables::space_dim...>);
+
+	// Returns the number of variables in the list
 	static constexpr std::size_t size = sizeof...(Variables);
 
-	template<std::size_t var>
-	using Var = es_util::Nth<var, Variables...>;
+	// Returns the space dimension of variables
+	static constexpr auto space_dim = es_util::Head<Variables...>::space_dim;
 
-	using Vars = std::tuple<Variables...>;
+	// Returns the type of a variable in the list with the given index
+	template<std::size_t var_index>
+	using Nth = es_util::Nth<var_index, Variables...>;
+
+	// Returns the list of variables as an `std::tuple`
+	using Tuple = std::tuple<Variables...>;
 };
-
-template<std::size_t var, class Var_list>
-using Nth_var_t = typename Var_list::template Nth_var_t<var>;
-
 } // namespace es_fe

@@ -47,8 +47,8 @@ private:
 		const double bowing;
 	};
 
-	static void make_grid_on_interval(std::vector<double>& grid, const Tick& left,
-									  const Tick& right)
+	static void make_grid_on_interval(
+		std::vector<double>& grid, const Tick& left, const Tick& right)
 	{
 		if (right.bowing == 0)
 		{

@@ -209,8 +209,8 @@ public:
 	}
 
 	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const My_system& system,
-														Couplig_func coupling) const
+	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(
+		const My_system& system, Couplig_func coupling) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
 
@@ -295,8 +295,8 @@ public:
 	}
 
 	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(const My_system& system,
-														 Couplig_func coupling) const
+	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(
+		const My_system& system, Couplig_func coupling) const
 	{
 		la::Sparsity_pattern<Symmetry_tag> pattern(n_free_dofs_);
 		std::vector<Vars_dofs> dofs(n_layers_);
@@ -370,8 +370,11 @@ private:
 	}
 
 	template<class Dofs, std::size_t... vars>
-	void dofs_impl(const typename Mesh::Cell_view& cell, Index layer, Dofs& dofs,
-				   std::index_sequence<vars...>) const
+	void dofs_impl(
+		const typename Mesh::Cell_view& cell,
+		Index layer,
+		Dofs& dofs,
+		std::index_sequence<vars...>) const
 	{
 		typename Cell_view::Vertex_indices vertices;
 		typename Cell_view::Edge_with_dir_indices edges;
@@ -381,9 +384,12 @@ private:
 	}
 
 	template<std::size_t var, class Dofs>
-	void var_dofs_impl(const typename Cell_view::Vertex_indices& vertices,
-					   const typename Cell_view::Edge_with_dir_indices& edges, Face_index cell,
-					   Index layer, Dofs& dofs) const // TODO Cell_index
+	void var_dofs_impl(
+		const typename Cell_view::Vertex_indices& vertices,
+		const typename Cell_view::Edge_with_dir_indices& edges,
+		Face_index cell,
+		Index layer,
+		Dofs& dofs) const // TODO Cell_index
 	{
 		using Var = Var_t<var>;
 
@@ -409,8 +415,12 @@ private:
 	}
 
 	template<class T_Tag, std::size_t var, class Dofs>
-	void var_dofs_impl2(Index layer, internal::Element_index_by_tag<T_Tag> element, Dofs& dofs,
-						std::size_t& i, bool reversed = false) const
+	void var_dofs_impl2(
+		Index layer,
+		internal::Element_index_by_tag<T_Tag> element,
+		Dofs& dofs,
+		std::size_t& i,
+		bool reversed = false) const
 	{
 		using Var = Var_t<var>;
 
@@ -431,8 +441,8 @@ private:
 	template<std::size_t var, class Dofs>
 	void var_vertex_dofs(Vertex_index vertex, Index layer, Dofs& dofs) const
 	{
-		static_assert(Var_t<var>::Element::has_dofs(Vertex_tag{}),
-					  "Variable has no DoF of this type");
+		static_assert(
+			Var_t<var>::Element::has_dofs(Vertex_tag{}), "Variable has no DoF of this type");
 
 		const Dof_index& first_dof = indices_.at(layer, vertex, Var_index<var>{});
 
@@ -445,8 +455,8 @@ private:
 	template<std::size_t var, class Dofs>
 	void var_edge_dofs(Edge_index edge, Index layer, Dofs& dofs) const
 	{
-		static_assert(Var_t<var>::Element::has_dofs(Edge_tag{}),
-					  "Variable has no DoF of this type");
+		static_assert(
+			Var_t<var>::Element::has_dofs(Edge_tag{}), "Variable has no DoF of this type");
 
 		const Dof_index& first_dof = indices_.at(layer, edge, Var_index<var>{});
 

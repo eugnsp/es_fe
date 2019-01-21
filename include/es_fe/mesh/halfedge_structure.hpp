@@ -198,16 +198,17 @@ public:
 
 	void adjust_outgoing_halfedge(Vertex_index vertex)
 	{
-		find_if(vertices_[*vertex].halfedge,
-				[vertex, this](Halfedge_index edge) {
-					if (is_boundary(edge))
-					{
-						vertices_[*vertex].halfedge = edge;
-						return true;
-					}
-					return false;
-				},
-				Vertex_out_circ_tag{});
+		find_if(
+			vertices_[*vertex].halfedge,
+			[vertex, this](Halfedge_index edge) {
+				if (is_boundary(edge))
+				{
+					vertices_[*vertex].halfedge = edge;
+					return true;
+				}
+				return false;
+			},
+			Vertex_out_circ_tag{});
 	}
 
 	// Adds a vertex and returns the index of the newly added vertex
@@ -242,22 +243,22 @@ public:
 	es_util::Error check() const;
 
 	// TODO : generic
-	void debug_check_index(Vertex_index index) const
+	void debug_check_index([[maybe_unused]] Vertex_index index) const
 	{
 		assert(index < n_vertices() || !is_valid(index));
 	}
 
-	void debug_check_index(Edge_index index) const
+	void debug_check_index([[maybe_unused]] Edge_index index) const
 	{
 		assert(index < n_edges() || !is_valid(index));
 	}
 
-	void debug_check_index(Halfedge_index index) const
+	void debug_check_index([[maybe_unused]] Halfedge_index index) const
 	{
 		assert(index < n_halfedges() || !is_valid(index));
 	}
 
-	void debug_check_index(Face_index index) const
+	void debug_check_index([[maybe_unused]] Face_index index) const
 	{
 		assert(index < n_faces() || !is_valid(index));
 	}

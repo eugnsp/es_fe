@@ -17,7 +17,7 @@ void for_each_var_impl(std::index_sequence<vars...>, Function func)
 template<class Var_list, std::size_t var, class Element_tag, class Function>
 void for_each_var_element_impl([[maybe_unused]] Function func)
 {
-	if constexpr (Var_list::template Var<var>::Element::has_dofs(Element_tag{}))
+	if constexpr (Var_list::template Nth<var>::Element::has_dofs(Element_tag{}))
 		func(Var_index<var>{}, Element_tag{});
 }
 
@@ -40,7 +40,7 @@ void for_each_var(Function func)
 template<class Var_list, class Function>
 void for_each_var_element(Function func)
 {
-	constexpr auto space_dim = internal::Vars_traits<Var_list>::space_dim;
+	constexpr auto space_dim = Var_list::space_dim;
 	static_assert(space_dim == 1 || space_dim == 2, "Bad dimension");
 
 	if constexpr (space_dim == 1)

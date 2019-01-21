@@ -12,8 +12,8 @@ namespace es_fe
 namespace internal
 {
 template<class Vertex_fn, class Halfedge_fn>
-void enumerate_elements_in_linestrip(const Linestring& linestring, const Mesh2& mesh,
-									 Vertex_fn vertex_fn, Halfedge_fn halfedge_fn)
+void enumerate_elements_in_linestrip(
+	const Linestring& linestring, const Mesh2& mesh, Vertex_fn vertex_fn, Halfedge_fn halfedge_fn)
 {
 	auto vertex_view = mesh.view(mesh.find_vertex(linestring.first()));
 	if (!is_valid(*vertex_view))
@@ -57,8 +57,8 @@ void enumerate_elements_in_linestrip(const Linestring& linestring, const Mesh2& 
 }
 } // namespace internal
 
-inline std::vector<Vertex_index> vertices_in_linestrip(const Linestring& linestring,
-													   const Mesh2& mesh)
+inline std::vector<Vertex_index> vertices_in_linestrip(
+	const Linestring& linestring, const Mesh2& mesh)
 {
 	std::vector<Vertex_index> vertices;
 
@@ -82,8 +82,8 @@ vertices_and_halfedges_in_linestrip(const Linestring& linestring, const Mesh2& m
 	return {vertices, halfedges};
 }
 
-inline std::vector<Halfedge_index> halfedges_in_linestrip(const Linestring& linestring,
-														  const Mesh2& mesh)
+inline std::vector<Halfedge_index> halfedges_in_linestrip(
+	const Linestring& linestring, const Mesh2& mesh)
 {
 	std::vector<Halfedge_index> halfedges;
 

@@ -28,15 +28,15 @@ public:
 	}
 
 	template<std::size_t var>
-	typename std::vector<T>::reference at(Element_index element, Var_index<var>, Index layer = 0,
-										  Index n_layers = 1)
+	typename std::vector<T>::reference at(
+		Element_index element, Var_index<var>, Index layer = 0, Index n_layers = 1)
 	{
 		return values_[layer + n_layers * pos<var>(element)];
 	}
 
 	template<std::size_t var>
-	typename std::vector<T>::const_reference at(Element_index element, Var_index<var>,
-												Index layer = 0, Index n_layers = 1) const
+	typename std::vector<T>::const_reference at(
+		Element_index element, Var_index<var>, Index layer = 0, Index n_layers = 1) const
 	{
 		return values_[layer + n_layers * pos<var>(element)];
 	}

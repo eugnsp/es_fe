@@ -298,8 +298,8 @@ private:
 	{
 		assert(cell.is_in_root());
 
-		const auto it = std::find_if(forest_.begin(), forest_.end(),
-									 [&cell](const Cell& c) { return &c == &cell; });
+		const auto it = std::find_if(
+			forest_.begin(), forest_.end(), [&cell](const Cell& c) { return &c == &cell; });
 
 		assert(it != forest_.end());
 		const auto pos = static_cast<std::size_t>(it - forest_.begin());

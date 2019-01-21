@@ -8,7 +8,9 @@
 #include <es_fe/dof/dof_mapper_base.hpp>
 #include <es_util/type_traits.hpp>
 #include <es_la/dense.hpp>
+
 #include <algorithm>
+#include <functional>
 #include <cassert>
 #include <cstddef>
 #include <tuple>
@@ -24,7 +26,6 @@ private:
 	using Base = internal::Dof_mapper_base<Var_list>;
 
 	using typename Base::Mesh;
-	using typename Base::Traits;
 
 	using Halfedge_view = typename Mesh::Halfedge_view;
 	using Edge_view = typename Mesh::Edge_view;
@@ -32,16 +33,15 @@ private:
 
 	using My_system = System<Var_list, es_fe::Dof_mapper>;
 
-	static constexpr std::size_t n_vars = Traits::n_vars;
+	static constexpr std::size_t n_vars = Var_list::size;
 
 public:
 	template<std::size_t var>
-	using Var_t = typename Var_list::template Var<var>;
+	using Var_t = typename Var_list::template Nth<var>;
 
 	template<std::size_t var>
 	using Var_dofs = la::Vector<Dof_index, Var_t<var>::Element::n_total_cell_dofs>;
 
-	// Use Matrix<..., 1> instead of Vector<...> due to MSVC bug
 	using Vars_dofs = typename internal::Dof_mapper_traits<Var_list>::Vars_dofs;
 
 	template<std::size_t var>
@@ -59,7 +59,7 @@ public:
 		mark_const_dofs(system);
 		assign_indices(system);
 
-		assert(indices_.all_of([](auto& dof_index) { return dof_index.is_valid(); }));
+		assert(indices_.all_of(std::mem_fn(&Dof_index::is_valid)));
 	}
 
 	// 	template<std::size_t var>
@@ -276,8 +276,8 @@ private:
 	}
 
 	template<class Dofs, std::size_t... vars>
-	void dofs_impl(const typename Mesh::Cell_view& cell, Dofs& dofs,
-				   std::index_sequence<vars...>) const
+	void dofs_impl(
+		const typename Mesh::Cell_view& cell, Dofs& dofs, std::index_sequence<vars...>) const
 	{
 		typename Cell_view::Vertex_indices vertices;
 		typename Cell_view::Halfedge_indices halfedges;
@@ -316,9 +316,11 @@ private:
 	//}
 
 	template<std::size_t var, class Dofs>
-	void var_dofs_impl(const typename Cell_view::Vertex_indices& vertices,
-					   const typename Cell_view::Halfedge_indices& halfedges,
-					   [[maybe_unused]] Face_index cell, Dofs& dofs) const
+	void var_dofs_impl(
+		const typename Cell_view::Vertex_indices& vertices,
+		const typename Cell_view::Halfedge_indices& halfedges,
+		[[maybe_unused]] Face_index cell,
+		Dofs& dofs) const
 	{
 		using Var = Var_t<var>;
 
@@ -331,8 +333,8 @@ private:
 
 		if constexpr (Var::Element::has_edge_dofs)
 			for (const auto& halfedge : halfedges)
-				var_dofs_impl2<var>(edge(halfedge), first_degree_dofs, i,
-									is_first_halfedge(halfedge));
+				var_dofs_impl2<var>(
+					edge(halfedge), first_degree_dofs, i, is_first_halfedge(halfedge));
 
 		if constexpr (Var::Element::has_face_dofs)
 			var_dofs_impl2<var>(cell, first_degree_dofs, i);
@@ -345,8 +347,8 @@ private:
 	}
 
 	template<std::size_t var, class Element_index, class Dofs>
-	void var_dofs_impl2(Element_index element, Dofs& dofs, std::size_t& i,
-						bool reversed = false) const
+	void var_dofs_impl2(
+		Element_index element, Dofs& dofs, std::size_t& i, bool reversed = false) const
 	{
 		using Var = Var_t<var>;
 

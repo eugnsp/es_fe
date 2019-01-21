@@ -34,18 +34,18 @@ public:
 		{
 			colour_map_->get_cells_with_colour(colour, cells);
 
-			tbb::parallel_for(tbb::blocked_range{cells.begin(), cells.end()},
-							  [&solver](const auto& range) {
-								  for (auto cell = range.begin(); cell != range.end(); ++cell)
-									  solver.assemble_on_cell(solver.mesh().view(*cell));
-								  // 					auto cell_view =
-								  // solver.mesh().view(Face_index{}); 					for (auto
-								  // cell = range.begin(); cell != range.end(); ++cell)
-								  // 					{
-								  // 						cell_view.set_at(cell);
-								  // 						solver.assemble_on_cell(cell_view);
-								  // 					}
-							  });
+			tbb::parallel_for(
+				tbb::blocked_range{cells.begin(), cells.end()}, [&solver](const auto& range) {
+					for (auto cell = range.begin(); cell != range.end(); ++cell)
+						solver.assemble_on_cell(solver.mesh().view(*cell));
+					// 					auto cell_view =
+					// solver.mesh().view(Face_index{}); 					for (auto
+					// cell = range.begin(); cell != range.end(); ++cell)
+					// 					{
+					// 						cell_view.set_at(cell);
+					// 						solver.assemble_on_cell(cell_view);
+					// 					}
+				});
 		}
 	}
 

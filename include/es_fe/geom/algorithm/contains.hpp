@@ -71,7 +71,8 @@ bool contains(const Polygon& poly, const Point& point, Polygon_tag, Point_tag)
 template<class Geometry1, class Geometry2>
 bool contains(const Geometry1& geometry1, const Geometry2& geometry2)
 {
-	return internal::contains(geometry1, geometry2, typename Geometry1::Geometry_tag{},
-							  typename Geometry2::Geometry_tag{});
+	return internal::contains(
+		geometry1, geometry2, typename Geometry1::Geometry_tag{},
+		typename Geometry2::Geometry_tag{});
 }
 } // namespace es_fe

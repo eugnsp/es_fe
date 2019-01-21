@@ -8,8 +8,9 @@ namespace es_fe::internal
 {
 auto Halfedge_structure::find_vertex(const Point& point) const -> Vertex_index
 {
-	const auto pos = std::find_if(vertices_.begin(), vertices_.end(),
-								  [&point](auto& vertex) { return vertex.point == point; });
+	const auto pos = std::find_if(vertices_.begin(), vertices_.end(), [&point](auto& vertex) {
+		return vertex.point == point;
+	});
 
 	if (pos != vertices_.end())
 		return Vertex_index{static_cast<Index>(pos - vertices_.begin())};

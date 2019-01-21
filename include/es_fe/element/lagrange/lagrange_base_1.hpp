@@ -46,7 +46,7 @@ public:
 private:
 	static constexpr std::array<Local_index, 2> ij_by_dof_index(Local_index dof)
 	{
-		const auto n_total_dofs = order + 1;
+		[[maybe_unused]] const auto n_total_dofs = order + 1;
 		assert(dof < n_total_dofs);
 
 		if (dof == 0)

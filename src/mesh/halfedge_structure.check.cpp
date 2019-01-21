@@ -38,8 +38,9 @@ es_util::Error Halfedge_structure::check() const
 	// Check vertices
 	for (Index i = 0; i < *n_vertices(); ++i)
 		if (vertices_[i].halfedge >= n_halfedges())
-			err.append_ln("The vertex #", i, " has bad halfedge index (",
-						  index_string(vertices_[i].halfedge), ')');
+			err.append_ln(
+				"The vertex #", i, " has bad halfedge index (", index_string(vertices_[i].halfedge),
+				')');
 
 	if (err)
 		return err;
@@ -50,17 +51,18 @@ es_util::Error Halfedge_structure::check() const
 		auto& halfedge = halfedges_[i];
 
 		if (halfedge.vertex >= n_vertices())
-			err.append_ln("The halfedge #", i, " has bad vertex index (",
-						  index_string(halfedge.vertex), ')');
+			err.append_ln(
+				"The halfedge #", i, " has bad vertex index (", index_string(halfedge.vertex), ')');
 
 		if (halfedge.next >= n_halfedges())
-			err.append_ln("The halfedge #", i, " has bad next halfedge index (",
-						  index_string(halfedge.next), ')');
+			err.append_ln(
+				"The halfedge #", i, " has bad next halfedge index (", index_string(halfedge.next),
+				')');
 
 		// halfedge.face is invalid for outter halfedges
 		if (is_valid(halfedge.face) && halfedge.face >= n_cells())
-			err.append_ln("The halfedge #", i, " has bad cell index (", index_string(halfedge.face),
-						  ')');
+			err.append_ln(
+				"The halfedge #", i, " has bad cell index (", index_string(halfedge.face), ')');
 	}
 
 	if (err)
@@ -69,8 +71,9 @@ es_util::Error Halfedge_structure::check() const
 	// Check faces
 	for (Index i = 0; i < *n_cells(); ++i)
 		if (faces_[i].halfedge >= n_halfedges())
-			err.append_ln("The face #", i, " has bad halfedge index (",
-						  index_string(faces_[i].halfedge), ')');
+			err.append_ln(
+				"The face #", i, " has bad halfedge index (", index_string(faces_[i].halfedge),
+				')');
 
 	if (err)
 		return err;
@@ -80,18 +83,19 @@ es_util::Error Halfedge_structure::check() const
 	{
 		std::set<Index> seen_indices;
 
-		find_if(faces_[i].halfedge,
-				[i, &seen_indices, &err](Halfedge_index edge) {
-					if (seen_indices.count(*edge))
-					{
-						err.append_ln("The halfedges of the face #", i, " do not form a cycle");
-						return true;
-					}
+		find_if(
+			faces_[i].halfedge,
+			[i, &seen_indices, &err](Halfedge_index edge) {
+				if (seen_indices.count(*edge))
+				{
+					err.append_ln("The halfedges of the face #", i, " do not form a cycle");
+					return true;
+				}
 
-					seen_indices.insert(*edge);
-					return false;
-				},
-				Face_circ_tag{});
+				seen_indices.insert(*edge);
+				return false;
+			},
+			Face_circ_tag{});
 	}
 
 	if (err)
@@ -102,18 +106,19 @@ es_util::Error Halfedge_structure::check() const
 	{
 		std::set<Halfedge_index> seen_indices;
 
-		find_if(vertices_[i].halfedge,
-				[i, &seen_indices, &err](Halfedge_index edge) {
-					if (seen_indices.count(edge))
-					{
-						err.append_ln("The halfedges of the vertex #", i, " do not form a cycle");
-						return true;
-					}
+		find_if(
+			vertices_[i].halfedge,
+			[i, &seen_indices, &err](Halfedge_index edge) {
+				if (seen_indices.count(edge))
+				{
+					err.append_ln("The halfedges of the vertex #", i, " do not form a cycle");
+					return true;
+				}
 
-					seen_indices.insert(edge);
-					return false;
-				},
-				Vertex_out_circ_tag{});
+				seen_indices.insert(edge);
+				return false;
+			},
+			Vertex_out_circ_tag{});
 	}
 
 	if (err)
@@ -127,8 +132,8 @@ es_util::Error Halfedge_structure::check() const
 	for (Index i = 0; i < *n_vertices(); ++i)
 		vertices.emplace_back(i, vertices_[i].point);
 
-	std::sort(vertices.begin(), vertices.end(),
-			  [](auto& v1, auto& v2) { return v1.second < v2.second; });
+	std::sort(
+		vertices.begin(), vertices.end(), [](auto& v1, auto& v2) { return v1.second < v2.second; });
 
 	for (auto pos = vertices.begin(); pos != vertices.end(); ++pos)
 	{
@@ -137,14 +142,15 @@ es_util::Error Halfedge_structure::check() const
 		if (pos == vertices.end())
 			break;
 
-		err.append_ln("Vertices #", pos->first, " and #", (pos + 1)->first, " are identical, ",
-					  pos->second);
+		err.append_ln(
+			"Vertices #", pos->first, " and #", (pos + 1)->first, " are identical, ", pos->second);
 	}
 
 	// Check for unused nodes
 	std::vector<bool> seen_nodes(*n_vertices(), false);
-	std::for_each(halfedges_.begin(), halfedges_.end(),
-				  [&seen_nodes](auto& edge) { seen_nodes[*edge.vertex] = true; });
+	std::for_each(halfedges_.begin(), halfedges_.end(), [&seen_nodes](auto& edge) {
+		seen_nodes[*edge.vertex] = true;
+	});
 
 	for (Index i = 0; i < *n_vertices(); ++i)
 		if (!seen_nodes[i])

@@ -1,4 +1,6 @@
 #pragma once
+#include <es_util/enum_class_index.hpp>
+
 #include <cassert>
 #include <cstdint>
 #include <utility>
@@ -18,66 +20,7 @@ template<Local_index n>
 using Make_local_index_sequence = std::make_integer_sequence<Local_index, n>;
 
 #define ES_FE_DEFINE_INDEX_TYPE(Index_name, Literal_name)                                          \
-	enum class Index_name : Index                                                                  \
-	{                                                                                              \
-		invalid = invalid_index                                                                    \
-	};                                                                                             \
-                                                                                                   \
-	inline Index operator*(Index_name index)                                                       \
-	{                                                                                              \
-		assert(index != Index_name::invalid);                                                      \
-		return static_cast<Index>(index);                                                          \
-	}                                                                                              \
-                                                                                                   \
-	template<typename N>                                                                           \
-	inline Index_name& operator+=(Index_name& index, N n)                                          \
-	{                                                                                              \
-		index = Index_name{*index + static_cast<Index>(n)};                                        \
-		return index;                                                                              \
-	}                                                                                              \
-                                                                                                   \
-	template<typename N>                                                                           \
-	inline Index_name& operator-=(Index_name& index, N n)                                          \
-	{                                                                                              \
-		index = Index_name{*index - static_cast<Index>(n)};                                        \
-		return index;                                                                              \
-	}                                                                                              \
-                                                                                                   \
-	template<typename N>                                                                           \
-	inline Index_name operator+(Index_name index, N n)                                             \
-	{                                                                                              \
-		return index += n;                                                                         \
-	}                                                                                              \
-                                                                                                   \
-	template<typename N>                                                                           \
-	inline Index_name operator-(Index_name index, N n)                                             \
-	{                                                                                              \
-		return index -= n;                                                                         \
-	}                                                                                              \
-                                                                                                   \
-	inline Index_name& operator++(Index_name& index)                                               \
-	{                                                                                              \
-		return index += 1;                                                                         \
-	}                                                                                              \
-                                                                                                   \
-	inline Index_name operator++(Index_name& index, int)                                           \
-	{                                                                                              \
-		const auto old = index;                                                                    \
-		++index;                                                                                   \
-		return old;                                                                                \
-	}                                                                                              \
-                                                                                                   \
-	inline Index_name& operator--(Index_name& index)                                               \
-	{                                                                                              \
-		return index -= 1;                                                                         \
-	}                                                                                              \
-                                                                                                   \
-	inline Index_name operator--(Index_name& index, int)                                           \
-	{                                                                                              \
-		const auto old = index;                                                                    \
-		++index;                                                                                   \
-		return old;                                                                                \
-	}                                                                                              \
+	ES_UTIL_ENUM_CLASS_INDEX_TYPE(Index, Index_name, invalid = invalid_index)                      \
                                                                                                    \
 	inline bool is_valid(Index_name index)                                                         \
 	{                                                                                              \

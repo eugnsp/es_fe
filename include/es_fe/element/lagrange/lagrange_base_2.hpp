@@ -58,10 +58,10 @@ public:
 	}
 
 private:
-	static constexpr std::array<Local_index, 3> ijk_by_dof_index(Local_index dof,
-																 Local_index order = order_)
+	static constexpr std::array<Local_index, 3> ijk_by_dof_index(
+		Local_index dof, Local_index order = order_)
 	{
-		const auto n_total_dofs = (order + 1) * (order + 2) / 2;
+		[[maybe_unused]] const auto n_total_dofs = (order + 1) * (order + 2) / 2;
 		assert(dof < n_total_dofs && order <= order_);
 
 		if (dof == 0) // Vertex (0, 0)

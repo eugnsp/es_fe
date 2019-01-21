@@ -11,8 +11,8 @@ namespace es_fe::internal
 {
 Face_index Halfedge_structure::add_cell(const std::array<Vertex_index, 3>& vertices)
 {
-	assert(std::all_of(vertices.begin(), vertices.end(),
-					   [this](auto vi) { return vi < n_vertices(); }));
+	assert(std::all_of(
+		vertices.begin(), vertices.end(), [this](auto vi) { return vi < n_vertices(); }));
 
 	// The code below is borrowed from OpenMesh
 	struct Edges

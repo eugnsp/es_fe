@@ -90,7 +90,7 @@ struct Var_by_var_index_impl;
 template<class Var_list, std::size_t index>
 struct Var_by_var_index_impl<Var_list, Var_index<index>>
 {
-	using Type = typename Var_list::template Var<index>;
+	using Type = typename Var_list::template Nth<index>;
 };
 
 template<class Var_list, class Var_index>
@@ -110,22 +110,8 @@ struct Is_var_list<Var_list<Vars...>> : std::true_type
 {};
 
 template<class Var_or_var_list>
-using Wrap_into_var_list_t = std::conditional_t<Is_var_list<Var_or_var_list>::value,
-												Var_or_var_list, Var_list<Var_or_var_list>>;
-
-template<class Var_list>
-struct Vars_traits;
-
-template<class Var, class... Vars>
-struct Vars_traits<Var_list<Var, Vars...>>
-{
-	// TODO : enforce_same_dim
-	static_assert(es_util::all_same<Var::space_dim, Vars::space_dim...>,
-				  "Incompatible dimensions of variables");
-
-	static constexpr auto n_vars = 1 + sizeof...(Vars);
-	static constexpr auto space_dim = Var::space_dim;
-};
+using Wrap_into_var_list_t = std::
+	conditional_t<Is_var_list<Var_or_var_list>::value, Var_or_var_list, Var_list<Var_or_var_list>>;
 
 template<class System>
 struct System_traits;

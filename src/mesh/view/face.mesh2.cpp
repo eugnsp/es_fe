@@ -40,8 +40,8 @@ void Element_view<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices) const
 	assert(++halfedge == halfedge_circ());
 }
 
-void Element_view<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
-												Halfedge_indices& halfedges) const
+void Element_view<Face_tag, Mesh2>::get_indices(
+	Vertex_indices& vertices, Halfedge_indices& halfedges) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -67,8 +67,8 @@ void Element_view<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices, Edge_i
 	assert(++halfedge == halfedge_circ());
 }
 
-void Element_view<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
-												Edge_with_dir_indices& edges_with_direction) const
+void Element_view<Face_tag, Mesh2>::get_indices(
+	Vertex_indices& vertices, Edge_with_dir_indices& edges_with_direction) const
 {
 	auto halfedge = halfedge_circ();
 	vertices[0] = halfedge->vertex_index();
@@ -81,9 +81,8 @@ void Element_view<Face_tag, Mesh2>::get_indices(Vertex_indices& vertices,
 	assert(++halfedge == halfedge_circ());
 }
 
-void Element_view<Face_tag, Mesh2>::get_indices(Halfedge_index first_halfedge,
-												Vertex_indices& vertices,
-												Halfedge_indices& halfedges) const
+void Element_view<Face_tag, Mesh2>::get_indices(
+	Halfedge_index first_halfedge, Vertex_indices& vertices, Halfedge_indices& halfedges) const
 {
 	assert(mesh_.face_index(first_halfedge) == index_);
 

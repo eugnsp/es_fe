@@ -65,7 +65,8 @@ protected:
 	}
 
 private:
-	using List = std::conditional_t<n == invalid_local_index, std::vector<Point>, std::array<Point, n>>;
+	using List =
+		std::conditional_t<n == invalid_local_index, std::vector<Point>, std::array<Point, n>>;
 
 protected:
 	List vertices_;
