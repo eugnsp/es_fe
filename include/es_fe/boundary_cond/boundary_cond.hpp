@@ -11,7 +11,7 @@
 
 namespace es_fe
 {
-template<class Element, bool is_essential_>
+template<class Element, bool is_essential_ = true>
 class Boundary_cond
 {
 public:

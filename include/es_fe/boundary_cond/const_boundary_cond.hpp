@@ -3,7 +3,7 @@
 
 namespace es_fe
 {
-template<class Element, bool is_essential_>
+template<class Element, bool is_essential_ = true>
 class Const_boundary_cond : public Boundary_cond<Element, is_essential_>
 {
 private:
@@ -26,7 +26,7 @@ public:
 	
 	void set_value(double value)
 	{
-		value = value_;
+		value_ = value;
 	}
 
 private:
