@@ -19,10 +19,13 @@ struct Var_list
 	static constexpr auto space_dim = es_util::Head<Variables...>::space_dim;
 
 	// Returns the type of a variable in the list with the given index
-	template<std::size_t var_index>
-	using Nth = es_util::Nth<var_index, Variables...>;
+	template<std::size_t var>
+	using Nth = es_util::Nth<var, Variables...>;
+
+	template<template<class Variable> class Fn>
+	using Tuple_map = std::tuple<Fn<Variables>...>;
 
 	// Returns the list of variables as an `std::tuple`
-	using Tuple = std::tuple<Variables...>;
+	using Tuple = Tuple_map<es_util::Identity>;
 };
 } // namespace es_fe

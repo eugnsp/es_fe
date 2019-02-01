@@ -12,27 +12,37 @@
 namespace es_fe::internal
 {
 template<class Var_list>
-struct Dof_mapper_traits;
-
-template<class... Vars>
-struct Dof_mapper_traits<Var_list<Vars...>>
+class Dof_mapper_base
 {
 private:
-	// TODO : make public ?
 	template<std::size_t size>
 	using Dof_index_vector = la::Vector<Dof_index, size>;
 
-public:
-	// TODO
-	using Vars_dofs = std::tuple<Dof_index_vector<Vars::Element::n_total_cell_dofs>...>;
-};
+	template<class Var>
+	using Vars_dofs_fn = Dof_index_vector<Var::Element::n_total_cell_dofs>;
 
-template<class Var_list>
-class Dof_mapper_base
-{
-protected:
+	template<class Var>
+	using Vars_vertex_dofs_fn = Dof_index_vector<Var::Element::n_vertex_dofs>;
+
+	template<class Var>
+	using Vars_edge_dofs_fn = Dof_index_vector<Var::Element::n_edge_dofs>;
+
+	template<std::size_t vi>
+	using Var = typename Var_list::template Nth<vi>;
+
 	using Mesh = Mesh_t<Var_list::space_dim>;
-	using Cell_view = typename Mesh::Cell_view;
+
+public:
+	template<std::size_t vi>
+	using Var_dofs = Vars_dofs_fn<Var<vi>>;
+
+	using Vars_dofs = typename Var_list::template Tuple_map<Vars_dofs_fn>;
+
+	template<std::size_t vi>
+	using Var_vertex_dofs = Dof_index_vector<Var<vi>::Element::n_vertex_dofs>;
+
+	template<std::size_t vi>
+	using Var_edge_dofs = Dof_index_vector<Var<vi>::Element::n_edge_dofs>;
 
 public:
 	Index n_dofs() const

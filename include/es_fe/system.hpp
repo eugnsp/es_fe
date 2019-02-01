@@ -21,17 +21,17 @@ namespace es_fe
 template<class Var_list_, template<class> class Dof_mapper_>
 class System
 {
-public:
-	using Var_list = Var_list_;
-	static constexpr std::size_t space_dim = Var_list::space_dim;
-	static constexpr std::size_t n_vars = Var_list::size;
-
-	using Mesh = internal::Mesh_t<space_dim>;
-
 private:
+	using Var_list = Var_list_;
 	using My_dof_mapper = Dof_mapper_<Var_list>;
 
 public:
+	static constexpr std::size_t space_dim = Var_list::space_dim;
+	static constexpr std::size_t n_vars = Var_list::size;
+
+public:
+	using Mesh = internal::Mesh_t<space_dim>;
+
 	template<std::size_t var>
 	using Var_t = typename Var_list::template Nth<var>;
 

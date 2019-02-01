@@ -65,7 +65,8 @@ auto mass_matrix(Func func, double scale = 1)
 	for (Local_index s = 0; s < n_dofs; ++s)
 		for (Local_index r = 0; r < n_dofs; ++r)
 			m(r, s) = scale * Quadr::sum([r, s, &func](auto iq) {
-						  auto constexpr basis = Element_quadr<Element, Quadr>::basis();
+					// TODO : constexpr, GCC internal compiler error
+						  auto const/*expr*/ basis = Element_quadr<Element, Quadr>::basis();
 						  return func(iq) * basis(iq, r) * basis(iq, s);
 					  });
 
@@ -80,7 +81,8 @@ constexpr auto mass_matrix(double scale = 1)
 
 	return la::make_matrix<n_dofs, n_dofs>([scale](auto i, auto j) {
 		return scale * Quadr::sum([i, j](auto q) {
-				   auto constexpr basis = Element_quadr<Element, Quadr>::basis();
+					// TODO : constexpr, GCC internal compiler error
+				   auto const/*expr*/ basis = Element_quadr<Element, Quadr>::basis();
 				   return basis(q, i) * basis(q, j);
 			   });
 	});
@@ -146,7 +148,8 @@ auto load_vector(Func func = math::One<int>{}, double scale = 1)
 
 	return la::make_vector<n_dofs>([&func, scale](auto i) {
 		return scale * Quadr::sum([i, &func](Local_index q) {
-				   constexpr auto basis = Element_quadr<Element, Quadr>::basis();
+					// TODO : constexpr, GCC internal compiler error
+				   const/*expr*/ auto basis = Element_quadr<Element, Quadr>::basis();
 				   return func(q) * basis(q, i);
 			   });
 	});

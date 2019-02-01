@@ -30,6 +30,31 @@ auto Halfedge_structure::n_cells() const -> Cell_index
 	return n_faces();
 }
 
+Vertex_index Halfedge_structure::n_elements(Vertex_tag) const
+{
+	return n_vertices();
+}
+
+Halfedge_index Halfedge_structure::n_elements(Halfedge_tag) const
+{
+	return n_halfedges();
+}
+
+Edge_index Halfedge_structure::n_elements(Edge_tag) const
+{
+	return n_edges();
+}
+
+Face_index Halfedge_structure::n_elements(Face_tag) const
+{
+	return n_faces();
+}
+
+auto Halfedge_structure::n_elements(Cell_tag) const -> Cell_index
+{
+	return n_cells();
+}
+
 void Halfedge_structure::reserve(Index n_vertices, Index n_edges, Index n_faces)
 {
 	vertices_.reserve(n_vertices);

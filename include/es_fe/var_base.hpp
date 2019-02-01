@@ -65,7 +65,7 @@ public:
 				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);
-				if constexpr (Bnd_cond::is_essential())
+				if constexpr (Bnd_cond::is_essential)
 					func(*bnd_cond);
 			},
 			bnd_conds_);
@@ -80,7 +80,7 @@ public:
 				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);
-				if constexpr (!Bnd_cond::is_essential())
+				if constexpr (!Bnd_cond::is_essential)
 					func(*bnd_cond);
 			},
 			bnd_conds_);

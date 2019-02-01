@@ -22,9 +22,9 @@ private:
 
 public:
 	template<class Mesh>
-	void init_storage(const Mesh& mesh, Index n_layers)
+	void init_storage(const Mesh& mesh, Index n_layers, const T& value)
 	{
-		values_.assign(n_layers * block_size() * *n_elements(mesh, Element_tag{}), T{});
+		values_.assign(n_layers * block_size() * *mesh.n_elements(Element_tag{}), value);
 	}
 
 	template<std::size_t var>
@@ -40,15 +40,6 @@ public:
 	{
 		return values_[layer + n_layers * pos<var>(element)];
 	}
-
-	// 	template<std::size_t var>
-	// 	T sum(Var_index<var>) const
-	// 	{
-	// 		T s{};
-	// 		for (std::size_t i = pos<var>(0); i < values_.size(); i += block_size())
-	// 			s += values_[i];
-	// 		return s;
-	// 	}
 
 	template<class Pred>
 	bool all_of(Pred pred) const

@@ -33,10 +33,6 @@ namespace es_fe
 {
 class Mesh2 : public internal::Halfedge_structure
 {
-	friend class Element_view<Vertex_tag, Mesh2>;
-	friend class Element_view<Edge_tag, Mesh2>;
-	friend class Element_view<Face_tag, Mesh2>;
-
 public:
 	static constexpr std::size_t dim = 2;
 
@@ -199,22 +195,5 @@ inline std::ostream& operator<<(std::ostream& os, const Mesh2& mesh)
 {
 	mesh.print(os);
 	return os;
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-inline Vertex_index n_elements(const Mesh2& mesh, Vertex_tag)
-{
-	return mesh.n_vertices();
-}
-
-inline Edge_index n_elements(const Mesh2& mesh, Edge_tag)
-{
-	return mesh.n_edges();
-}
-
-inline Face_index n_elements(const Mesh2& mesh, Face_tag)
-{
-	return mesh.n_faces();
 }
 } // namespace es_fe

@@ -1,8 +1,6 @@
 #pragma once
 #include <es_fe/mesh/mesh2.hpp>
-#include <es_fe/geom/compare.hpp>
-#include <es_fe/geom/rect.hpp>
-#include <es_fe/geom/point.hpp>
+#include <es_fe/geom.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -118,8 +116,8 @@ private:
 
 	static Grid::const_iterator binary_find(const Grid& grid, double value)
 	{
-		const auto it = std::lower_bound(grid.begin(), grid.end(), value, es_geom::Is_less{});
-		if (it == grid.end() || !es_geom::is_equal(*it, value))
+		const auto it = std::lower_bound(grid.begin(), grid.end(), value, Is_geom_less{});
+		if (it == grid.end() || !is_geom_equal(*it, value))
 			return grid.end();
 		else
 			return it;

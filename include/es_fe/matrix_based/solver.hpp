@@ -1,5 +1,4 @@
 #pragma once
-#include <es_fe/matrix_based/seq_assembler.hpp>
 #include <es_fe/matrix_based/solution_view.hpp>
 
 #include <es_la/dense.hpp>

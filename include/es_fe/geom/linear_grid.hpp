@@ -1,4 +1,5 @@
 #pragma once
+#include <es_fe/geom/compare.hpp>
 #include <es_util/algorithm.hpp>
 
 #include <cassert>
@@ -53,7 +54,7 @@ private:
 		if (right.bowing == 0)
 		{
 			const double d = (right.coord - left.coord) / (right.n - left.n);
-			assert(!is_equal(d, 0));
+			assert(!is_geom_equal(d, 0));
 
 			for (unsigned int j = left.n + 1; j <= right.n; ++j)
 				grid[j] = left.coord + d * (j - left.n);
@@ -62,7 +63,7 @@ private:
 		{
 			const double c = (1 + right.bowing) / (1 - right.bowing);
 			const double d = (right.coord - left.coord) / (c - 1);
-			assert(!is_equal(d, 0));
+			assert(!is_geom_equal(d, 0));
 
 			for (unsigned int j = left.n + 1; j <= right.n; ++j)
 			{

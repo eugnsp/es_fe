@@ -61,9 +61,6 @@ public:
 	};
 
 public:
-	// 	template<class Circ_tag>
-	// 	Halfedge_circulator<Circ_tag> halfedge_circ(Halfedge_index) const;
-
 	//////////////////////////////////////////////////////////////////////////
 	/** Capacity */
 
@@ -73,20 +70,11 @@ public:
 	Face_index n_faces() const;
 	Cell_index n_cells() const;
 
-	template<class Tag>
-	auto n_elements(Tag) const
-	{
-		if constexpr (std::is_same_v<Tag, Vertex_tag>)
-			return n_vertices();
-		else if constexpr (std::is_same_v<Tag, Halfedge_tag>)
-			return n_halfedges();
-		else if constexpr (std::is_same_v<Tag, Edge_tag>)
-			return n_edges();
-		else if constexpr (std::is_same_v<Tag, Face_tag>)
-			return n_faces();
-		else if constexpr (std::is_same_v<Tag, Cell_tag>)
-			return n_cells();
-	}
+	Vertex_index n_elements(Vertex_tag) const;
+	Halfedge_index n_elements(Halfedge_tag) const;
+	Edge_index n_elements(Edge_tag) const;
+	Face_index n_elements(Face_tag) const;
+	Cell_index n_elements(Cell_tag) const;
 
 	void reserve(Index n_vertices, Index n_edges = 0, Index n_faces = 0);
 

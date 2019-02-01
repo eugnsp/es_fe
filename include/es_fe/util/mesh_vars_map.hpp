@@ -24,7 +24,7 @@ public:
 	{
 		n_layers_ = n_layers;
 		es_util::tuple_for_each(
-			[&mesh, n_layers](auto& list) { list.init_storage(mesh, n_layers); }, maps_);
+			[&mesh, &value, n_layers](auto& list) { list.init_storage(mesh, n_layers, value); }, maps_);
 	}
 
 	template<class Element_index, std::size_t var>

@@ -10,13 +10,13 @@
 #include <vector>
 #include <utility>
 
-namespace fe
+namespace es_fe
 {
 template<unsigned int n>
 auto turtle(const Point (&points)[n])
 {
-	auto pts = es::util::to_array(points);
-	es::util::for_each_pair(pts.begin(), pts.end(), [](const auto& p1, auto& p2) { p2 += p1; });
+	auto pts = es_util::to_array(points);
+	es_util::for_each_pair(pts.begin(), pts.end(), [](const auto& p1, auto& p2) { p2 += p1; });
 
 	return pts;
 }
@@ -30,13 +30,14 @@ public:
 	using Geometry_tag = Polygon_tag;
 
 private:
-	static_assert(n > 2, "Degenerate polygons are not allowed");
+	static_assert(n > 2);
 	using Base = Points<n>;
 
 public:
 	using Base::Base;
 };
 
+/*
 template<>
 class Polygon<dynamic> : public Points<dynamic>
 {
@@ -57,4 +58,5 @@ public:
 		assert(n_vertices() > 2);
 	}
 };
-} // namespace fe
+*/
+} // namespace es_fe
