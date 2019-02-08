@@ -4,17 +4,20 @@
 namespace es_fe
 {
 template<class Element, bool is_essential_ = true>
-class Const_boundary_cond : public Boundary_cond<Element, is_essential_>
+class Uniform_boundary_cond : public Boundary_cond<Element, is_essential_>
 {
+public:
+	static constexpr bool is_uniform = true;
+
 private:
-	using Base = Boundary_cond<Element, is_essential_>;
+	using Base = Boundary_cond<Element, is_essential_>;	
 	
 public:
-	Const_boundary_cond(const Mesh2& mesh, const Linestring& boundary) :
+	Uniform_boundary_cond(const Mesh2& mesh, const Linestring& boundary) :
 		Base(mesh, boundary)
 	{}	
 	
-	Const_boundary_cond(const Mesh2& mesh, const Linestring& boundary, double value) :
+	Uniform_boundary_cond(const Mesh2& mesh, const Linestring& boundary, double value) :
 		Base(mesh, boundary), value_(value)
 	{}	
 	

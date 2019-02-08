@@ -1,6 +1,6 @@
 #pragma once
 #include <es_fe/geom/linestring.hpp>
-#include <es_fe/mesh/algorithm/elements_in_linestring.hpp>
+#include <es_fe/mesh/algorithm/linestring.hpp>
 #include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/types.hpp>
 
@@ -16,6 +16,7 @@ class Boundary_cond
 {
 public:
 	static constexpr bool is_essential = is_essential_;
+	static constexpr bool is_uniform = false;
 
 public:
 	Boundary_cond(const Mesh2& mesh, const Linestring& boundary)
@@ -30,13 +31,15 @@ public:
 			halfedges_ = halfedges_in_linestring(mesh, boundary);
 	}
 	
-	auto vertices() const
+	template<class... Args>
+	auto vertices(const Args&...) const
 	{
 		static_assert(Element::has_vertex_dofs);
 		return es_util::Iterable{vertices_};
 	}
 
-	auto halfedges() const
+	template<class... Args>
+	auto halfedges(const Args&...) const
 	{
 		static_assert(Element::has_edge_dofs);
 		return es_util::Iterable{halfedges_};

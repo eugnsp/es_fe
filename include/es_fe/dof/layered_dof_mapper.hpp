@@ -146,13 +146,12 @@ public:
 
 				if constexpr (Element::has_vertex_dofs)
 					for (Index layer = 0; layer < n_layers_; ++layer)
-						for (auto vertex = bc.begin_vertex(layer); vertex != bc.end_vertex(layer);
-							 ++vertex)
+						for (Vertex_index vertex : bc.vertices(layer))
 						{
-							if (!is_active_vertex[**vertex + layer * *mesh.n_vertices()])
+							if (!is_active_vertex[*vertex + layer * *mesh.n_vertices()])
 								continue;
 
-							Dof_index& dof = this->indices_.at(layer, *vertex, var);
+							Dof_index& dof = this->indices_.at(layer, vertex, var);
 							assert(dof.is_free);
 
 							this->n_free_dofs_ -= v.n_dofs(Vertex_tag{});
@@ -161,12 +160,12 @@ public:
 
 				if constexpr (Element::has_edge_dofs)
 					for (Index layer = 0; layer < n_layers_; ++layer)
-						for (auto edge = bc.begin_edge(layer); edge != bc.end_edge(layer); ++edge)
+						for (Halfedge_index halfedge : bc.halfedges(layer))
 						{
-							if (!is_active_edge[**edge + layer * *mesh.n_edges()])
+							if (!is_active_edge[*edge(halfedge) + layer * *mesh.n_edges()])
 								continue;
 
-							Dof_index& dof = this->indices_.at(layer, *edge, var);
+							Dof_index& dof = this->indices_.at(layer, edge(halfedge), var);
 							assert(dof.is_free);
 
 							this->n_free_dofs_ -= v.n_dofs(Edge_tag{});

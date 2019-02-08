@@ -1,4 +1,4 @@
-#include <es_fe/mesh/algorithm/elements_in_linestring.hpp>
+#include <es_fe/mesh/algorithm/linestring.hpp>
 #include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/geom/linestring.hpp>
 #include <es_fe/geom/algorithm.hpp>
