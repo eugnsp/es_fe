@@ -14,9 +14,17 @@ struct Triangle_tag : Polygon_tag
 {};
 struct Segment_tag
 {};
-struct Points_tag
+struct Segment1_tag : Segment_tag
+{};
+struct Segment2_tag : Segment_tag
+{};
+struct Points2_tag
 {};
 struct Point_tag
+{};
+struct Point1_tag : Point_tag
+{};
+struct Point2_tag : Point_tag
 {};
 
 //////////////////////////////////////////////////////////////////////

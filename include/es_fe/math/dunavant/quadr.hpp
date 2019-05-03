@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/math/dunavant/data.hpp>
+#include <es_fe/types.hpp>
 
 #include <es_util/array.hpp>
 
@@ -55,8 +55,7 @@ private:
 };
 
 template<Local_index order>
-using Dunavant_quadr_t = Dunavant_quadr<
-	order,
+using Dunavant_quadr_t = Dunavant_quadr<order,
 	Make_local_index_sequence<std::tuple_size_v<decltype(Dunavant_data<order>::groups)>>>;
 } // namespace internal
 
@@ -72,7 +71,7 @@ public:
 
 public:
 	// Returns a quadrature point with the given index in the reference triangle
-	static constexpr la::Vector_2d point(Local_index point)
+	static constexpr es_la::Vector_2d point(Local_index point)
 	{
 		constexpr auto points = Base::points();
 		assert(point < points.size());

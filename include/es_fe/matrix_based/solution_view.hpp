@@ -1,8 +1,8 @@
 #pragma once
-#include <es_fe/types.hpp>
+#include <es_fe/geometry/point2.hpp>
+#include <es_fe/geometry/rect.hpp>
 #include <es_fe/math/jacobian.hpp>
-#include <es_fe/geom/rect.hpp>
-#include <es_fe/geom/point.hpp>
+#include <es_fe/types.hpp>
 
 #include <es_la/base/expression.hpp>
 #include <es_util/type_traits.hpp>
@@ -27,7 +27,7 @@ public:
 
 	// TODO : vector variables (dim > 1, static / dynamic)
 	template<typename... Args>
-	Value operator()(const typename Mesh::Face_view& face, Point pt, Args&... args) const
+	Value operator()(const typename Mesh::Face_view& face, es_fe::Point2 pt, Args&... args) const
 	{
 		pt = to_ref_triangle(face, pt);
 
@@ -48,10 +48,11 @@ public:
 
 private:
 	// Maps a given point on given face to a point in the corresponding reference triangle
-	static Point to_ref_triangle(const typename Mesh::Face_view& face, const Point& pt)
+	static es_fe::Point2 to_ref_triangle(
+		const typename Mesh::Face_view& face, const es_fe::Point2& pt)
 	{
 		const auto j = es_fe::inv_jacobian(face);
-		la::Vector_2d p0 = pt - face.vertex_circ()->vertex();
+		es_la::Vector_2d p0 = pt - face.vertex_circ()->vertex();
 		return j * p0;
 	}
 

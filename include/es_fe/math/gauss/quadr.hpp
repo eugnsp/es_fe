@@ -1,6 +1,7 @@
 #pragma once
-#include <es_fe/types.hpp>
+#include <es_fe/geometry/point1.hpp>
 #include <es_fe/math/gauss/data.hpp>
+#include <es_fe/types.hpp>
 
 #include <cassert>
 
@@ -19,14 +20,14 @@ public:
 		return static_cast<Local_index>(points.size());
 	}
 
-	// Returns the quadrature point that has index (point) on
-	// edge (0, 0) - (1, 0) of the reference triangle
-	static constexpr la::Vector_2d point(Local_index point)
+	// Returns the quadrature point with the given index
+	// on the reference interval [0, 1]
+	static constexpr es_fe::Point1 point(Local_index point)
 	{
 		assert(point < size());
 
-		// Map from [-1, 1] to [0, 1]
-		return la::Vector_2d({(1 + points[point].x) / 2, 0});
+		// Map the interval [-1, 1], which is used in data, to [0, 1]
+		return es_fe::Point1{(1 + points[point].x) / 2};
 	}
 
 	// Computes a weighted sum over quadrature points,

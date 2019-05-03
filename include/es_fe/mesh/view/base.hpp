@@ -12,9 +12,9 @@ class Element_view_base
 public:
 	using Element_index = Element_index_by_tag<Element_tag>;
 
-	// For all elements, except edges, store index of the corresponding type,
-	// for edges store halfedge index (of either corresponding halfedge)
-	using Internal_index = Decay_element_index_in_view<Element_index>;
+	// For all elements of 2D meshes, except edges, store index of the corresponding
+	// type, for edges store halfedge index (of either corresponding halfedge)
+	using Internal_index = Decay_element_index_in_view<Element_index, Mesh>;
 
 public:
 	Element_view_base(const Mesh& mesh, Internal_index index) : index_(index), mesh_(mesh)

@@ -1,16 +1,16 @@
 #pragma once
-#include <es_fe/types.hpp>
-#include <es_fe/type_traits.hpp>
+#include <es_fe/geometry/point2.hpp>
+#include <es_fe/geometry/rect.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
-#include <es_fe/mesh/view/vertex_mesh2.hpp>
-#include <es_fe/mesh/view/halfedge_mesh2.hpp>
-#include <es_fe/mesh/view/edge_mesh2.hpp>
-#include <es_fe/mesh/view/face_mesh2.hpp>
 #include <es_fe/mesh/iterator/circulator_halfedge_edge.hpp>
 #include <es_fe/mesh/iterator/circulator_vertex_face.hpp>
 #include <es_fe/mesh/iterator/random_access.hpp>
-#include <es_fe/geom/point.hpp>
-#include <es_fe/geom/rect.hpp>
+#include <es_fe/mesh/view/edge_mesh2.hpp>
+#include <es_fe/mesh/view/face_mesh2.hpp>
+#include <es_fe/mesh/view/halfedge_mesh2.hpp>
+#include <es_fe/mesh/view/vertex_mesh2.hpp>
+#include <es_fe/type_traits.hpp>
+#include <es_fe/types.hpp>
 
 #include <es_util/error.hpp>
 #include <es_util/iterator.hpp>
@@ -31,22 +31,23 @@
 
 namespace es_fe
 {
-class Mesh2 : public internal::Halfedge_structure
+template<>
+class Mesh<2> : public internal::Halfedge_structure
 {
 public:
 	static constexpr std::size_t dim = 2;
 
 public:
-	using Vertex_view = Element_view<Vertex_tag, Mesh2>;
-	using Halfedge_view = Element_view<Halfedge_tag, Mesh2>;
-	using Edge_view = Element_view<Edge_tag, Mesh2>;
-	using Face_view = Element_view<Face_tag, Mesh2>;
+	using Vertex_view = Element_view<Vertex_tag, Mesh>;
+	using Halfedge_view = Element_view<Halfedge_tag, Mesh>;
+	using Edge_view = Element_view<Edge_tag, Mesh>;
+	using Face_view = Element_view<Face_tag, Mesh>;
 	using Cell_view = Face_view;
 
-	using Vertex_iter = Random_access_iterator<Vertex_tag, Mesh2>;
-	using Halfedge_iter = Random_access_iterator<Halfedge_tag, Mesh2>;
-	using Edge_iter = Random_access_iterator<Edge_tag, Mesh2>;
-	using Face_iter = Random_access_iterator<Face_tag, Mesh2>;
+	using Vertex_iter = Random_access_iterator<Vertex_tag, Mesh>;
+	using Halfedge_iter = Random_access_iterator<Halfedge_tag, Mesh>;
+	using Edge_iter = Random_access_iterator<Edge_tag, Mesh>;
+	using Face_iter = Random_access_iterator<Face_tag, Mesh>;
 	using Cell_iter = Face_iter;
 
 	using Boundary_vertex_circ = Circulator<Vertex_tag, Face_circ_tag>;
@@ -57,7 +58,7 @@ private:
 	using Base = internal::Halfedge_structure;
 
 public:
-	virtual ~Mesh2() = default;
+	virtual ~Mesh() = default;
 
 	//////////////////////////////////////////////////////////////////////////
 
@@ -81,7 +82,7 @@ public:
 		return faces_[*face].halfedge;
 	}
 
-	virtual Vertex_index find_vertex(const Point& point) const
+	virtual Vertex_index find_vertex(const es_fe::Point2& point) const
 	{
 		return Base::find_vertex(point);
 	}
@@ -146,7 +147,8 @@ public:
 	Index numberOfAdjacentCells(Vertex_index vertex) const
 	{
 		Index number = 0;
-		for_each(vertices_[*vertex].halfedge, [&number](auto) { ++number; }, Vertex_out_circ_tag{});
+		for_each(
+			vertices_[*vertex].halfedge, [&number](auto) { ++number; }, Vertex_out_circ_tag{});
 
 		number -= is_boundary(vertex);
 
@@ -191,7 +193,7 @@ private:
 };
 
 // Outputs human readable information about the mesh
-inline std::ostream& operator<<(std::ostream& os, const Mesh2& mesh)
+inline std::ostream& operator<<(std::ostream& os, const Mesh<2>& mesh)
 {
 	mesh.print(os);
 	return os;

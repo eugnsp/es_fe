@@ -1,8 +1,7 @@
 #pragma once
-#include <es_fe/types.hpp>
-#include <es_fe/type_traits.hpp>
+#include <es_fe/geometry/point2.hpp>
 #include <es_fe/mesh/view/base.hpp>
-#include <es_fe/geom/point.hpp>
+#include <es_fe/types.hpp>
 
 #include <iosfwd>
 
@@ -23,7 +22,7 @@ public:
 public:
 	using Element_view_base::Element_view_base;
 
-	const Point& vertex() const;
+	const es_fe::Point2& vertex() const;
 
 	Vertex_circ vertex_circ() const;
 	Halfedge_in_circ halfedge_in_circ() const;

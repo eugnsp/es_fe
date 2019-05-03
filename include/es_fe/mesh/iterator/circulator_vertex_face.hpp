@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/mesh/iterator/iterator_base.hpp>
+#include <es_fe/types.hpp>
 
 #include <cassert>
 #include <type_traits>
@@ -8,15 +8,15 @@
 namespace es_fe
 {
 template<class Element_tag, class Circ_tag>
-class Circulator_vertex_face : public internal::Iterator_base<Element_tag, Mesh2>
+class Circulator_vertex_face : public internal::Iterator_base<Element_tag, Mesh<2>>
 {
 private:
 	static_assert(std::is_same_v<Element_tag, Vertex_tag> || std::is_same_v<Element_tag, Face_tag>);
 
-	using Base = internal::Iterator_base<Element_tag, Mesh2>;
+	using Base = internal::Iterator_base<Element_tag, Mesh<2>>;
 
 public:
-	Circulator_vertex_face(const Mesh2& mesh, Halfedge_index halfedge) :
+	Circulator_vertex_face(const Mesh<2>& mesh, Halfedge_index halfedge) :
 		Base(mesh), halfedge_(halfedge)
 	{
 		assert(is_valid(halfedge));

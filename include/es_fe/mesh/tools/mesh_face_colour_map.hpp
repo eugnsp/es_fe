@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/mesh/algorithm/colour_cells.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 
 #include <es_util/iterator.hpp>
 #include <es_util/tuple.hpp>

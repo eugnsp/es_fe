@@ -1,14 +1,14 @@
 #pragma once
-#include "element_base.hpp"
 #include "../types.hpp"
-#include <es_la/dense.hpp>
+#include "element_base.hpp"
 #include <es/math/function.hpp>
+#include <es_la/dense.hpp>
 //#include "math/la/Vector.h"
 //#include "Util/Array.h"
-#include <es_util/type_traits.hpp>
-#include <cstddef>
-#include <utility>
 #include <array>
+#include <cstddef>
+#include <es_util/type_traits.hpp>
+#include <utility>
 
 namespace es_fe
 {

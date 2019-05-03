@@ -1,7 +1,7 @@
 #pragma once
 #include "e_geom/forward.hpp"
-#include "mesh2.hpp" // TODO ? : remove
 #include "edge_chain_iterator.hpp"
+#include "mesh2.hpp" // TODO ? : remove
 #include <vector>
 
 namespace es_fe

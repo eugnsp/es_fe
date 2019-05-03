@@ -1,7 +1,7 @@
+#include <es_fe/geometry/algorithm.hpp>
+#include <es_fe/geometry/linestring.hpp>
 #include <es_fe/mesh/algorithm/linestring.hpp>
 #include <es_fe/mesh/mesh2.hpp>
-#include <es_fe/geom/linestring.hpp>
-#include <es_fe/geom/algorithm.hpp>
 #include <es_fe/types.hpp>
 
 #include <es_util/type_traits.hpp>
@@ -65,9 +65,7 @@ std::vector<Vertex_index> vertices_in_linestring(const Mesh2& mesh, const Linest
 	std::vector<Vertex_index> vertices;
 
 	elements_in_linestring(
-		mesh,
-		linestring,
-		[&vertices](const auto& vertex) { vertices.push_back(*vertex); },
+		mesh, linestring, [&vertices](const auto& vertex) { vertices.push_back(*vertex); },
 		es_util::Nop_fn{});
 
 	return vertices;
@@ -77,10 +75,7 @@ std::vector<Halfedge_index> halfedges_in_linestring(const Mesh2& mesh, const Lin
 {
 	std::vector<Halfedge_index> halfedges;
 
-	elements_in_linestring(
-		mesh,
-		linestring,
-		es_util::Nop_fn{},
+	elements_in_linestring(mesh, linestring, es_util::Nop_fn{},
 		[&halfedges](const auto& halfedge) { halfedges.push_back(*halfedge); });
 
 	return halfedges;
@@ -93,24 +88,20 @@ vertices_and_halfedges_in_linestring(const Mesh2& mesh, const Linestring& linest
 	std::vector<Halfedge_index> halfedges;
 
 	elements_in_linestring(
-		mesh,
-		linestring,
-		[&vertices](const auto& vertex) { vertices.push_back(*vertex); },
+		mesh, linestring, [&vertices](const auto& vertex) { vertices.push_back(*vertex); },
 		[&halfedges](const auto& halfedge) { halfedges.push_back(*halfedge); });
 
 	return {vertices, halfedges};
 }
 
-std::pair<std::vector<Vertex_index>, std::vector<Edge_index>>
-vertices_and_edges_in_linestring(const Mesh2& mesh, const Linestring& linestring)
+std::pair<std::vector<Vertex_index>, std::vector<Edge_index>> vertices_and_edges_in_linestring(
+	const Mesh2& mesh, const Linestring& linestring)
 {
 	std::vector<Vertex_index> vertices;
 	std::vector<Edge_index> edges;
 
 	elements_in_linestring(
-		mesh,
-		linestring,
-		[&vertices](const auto& vertex) { vertices.push_back(*vertex); },
+		mesh, linestring, [&vertices](const auto& vertex) { vertices.push_back(*vertex); },
 		[&edges](const auto& halfedge) { edges.push_back(halfedge.edge_index()); });
 
 	return {vertices, edges};

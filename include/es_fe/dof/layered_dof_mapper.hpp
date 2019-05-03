@@ -1,10 +1,10 @@
 #pragma once
-#include <es_fe/types.hpp>
-#include <es_fe/type_traits.hpp>
-#include <es_fe/var_list.hpp>
 #include <es_fe/dof/dof_index.hpp>
 #include <es_fe/dof/dof_mapper_base.hpp>
+#include <es_fe/type_traits.hpp>
+#include <es_fe/types.hpp>
 #include <es_fe/util/mesh_vars_map.hpp>
+#include <es_fe/var_list.hpp>
 
 #include <vector>
 
@@ -123,15 +123,15 @@ public:
 			std::count(is_active_face.begin(), is_active_face.end(), true);
 
 		this->n_dofs_ = 0;
-		for_each_var<Var_list>([this, &system, active_vertex_dofs, active_edge_dofs,
-								active_face_dofs](auto var) {
-			this->n_dofs_ +=
-				static_cast<Index>(system.variable(var).n_dofs(Vertex_tag{}) * active_vertex_dofs);
-			this->n_dofs_ +=
-				static_cast<Index>(system.variable(var).n_dofs(Edge_tag{}) * active_edge_dofs);
-			this->n_dofs_ +=
-				static_cast<Index>(system.variable(var).n_dofs(Face_tag{}) * active_face_dofs);
-		});
+		for_each_var<Var_list>(
+			[this, &system, active_vertex_dofs, active_edge_dofs, active_face_dofs](auto var) {
+				this->n_dofs_ += static_cast<Index>(
+					system.variable(var).n_dofs(Vertex_tag{}) * active_vertex_dofs);
+				this->n_dofs_ +=
+					static_cast<Index>(system.variable(var).n_dofs(Edge_tag{}) * active_edge_dofs);
+				this->n_dofs_ +=
+					static_cast<Index>(system.variable(var).n_dofs(Face_tag{}) * active_face_dofs);
+			});
 
 		// Assign indices
 		this->indices_.init_storage(mesh, Dof_index::invalid_free(), n_layers_);
@@ -141,7 +141,7 @@ public:
 		for_each_var<Var_list>([&](auto var) {
 			const auto& v = system.variable(var);
 			v.for_each_ess_bnd_cond([this, &mesh, &is_active_vertex, &is_active_edge,
-									 &is_active_face, &v, var](auto& bc) {
+										&is_active_face, &v, var](auto& bc) {
 				using Element = typename Var_by_var_index<Var_list, decltype(var)>::Element;
 
 				if constexpr (Element::has_vertex_dofs)
@@ -208,10 +208,10 @@ public:
 	}
 
 	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(
+	es_la::Sparsity_pattern<Symmetry_tag> sparsity_pattern(
 		const My_system& system, Couplig_func coupling) const
 	{
-		la::Sparsity_pattern<Symmetry_tag> pattern(this->n_free_dofs_);
+		es_la::Sparsity_pattern<Symmetry_tag> pattern(this->n_free_dofs_);
 
 		std::vector<std::size_t> cols;
 		for (auto& cell : system.mesh().faces())
@@ -252,7 +252,7 @@ public:
 							if (dofs1[i].is_valid() && dofs1[i].is_free)
 							{
 								const auto row = dofs1[i].index + dim1;
-								if constexpr (std::is_same_v<Symmetry_tag, la::Symmetric_upper>)
+								if constexpr (std::is_same_v<Symmetry_tag, es_la::Symmetric_upper>)
 								{
 									const auto pos =
 										std::lower_bound(cols.begin(), cols.end(), row);
@@ -294,10 +294,10 @@ public:
 	}
 
 	template<class Symmetry_tag, class Couplig_func>
-	la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(
+	es_la::Sparsity_pattern<Symmetry_tag> sparsity_pattern2(
 		const My_system& system, Couplig_func coupling) const
 	{
-		la::Sparsity_pattern<Symmetry_tag> pattern(this->n_free_dofs_);
+		es_la::Sparsity_pattern<Symmetry_tag> pattern(this->n_free_dofs_);
 		std::vector<Vars_dofs> dofs(n_layers_);
 		std::vector<std::size_t> cols;
 
@@ -327,7 +327,7 @@ public:
 						if (dofs1[i].is_valid() && dofs1[i].is_free)
 						{
 							const auto row = dofs1[i].index + c1.dim;
-							if constexpr (std::is_same_v<Symmetry_tag, la::Symmetric_upper>)
+							if constexpr (std::is_same_v<Symmetry_tag, es_la::Symmetric_upper>)
 							{
 								const auto pos = std::lower_bound(cols.begin(), cols.end(), row);
 								pattern.insert(row, pos, cols.end());
@@ -369,10 +369,7 @@ private:
 	}
 
 	template<class Dofs, std::size_t... vars>
-	void dofs_impl(
-		const typename Mesh::Cell_view& cell,
-		Index layer,
-		Dofs& dofs,
+	void dofs_impl(const typename Mesh::Cell_view& cell, Index layer, Dofs& dofs,
 		std::index_sequence<vars...>) const
 	{
 		typename Cell_view::Vertex_indices vertices;
@@ -383,16 +380,13 @@ private:
 	}
 
 	template<std::size_t var, class Dofs>
-	void var_dofs_impl(
-		const typename Cell_view::Vertex_indices& vertices,
-		const typename Cell_view::Edge_with_dir_indices& edges,
-		Face_index cell,
-		Index layer,
+	void var_dofs_impl(const typename Cell_view::Vertex_indices& vertices,
+		const typename Cell_view::Edge_with_dir_indices& edges, Face_index cell, Index layer,
 		Dofs& dofs) const // TODO Cell_index
 	{
 		using Var = Var_t<var>;
 
-		// TODO : replace indexing with iterator (when iterators are ready in la::)
+		// TODO : replace indexing with iterator (when iterators are ready in es_la::)
 		std::size_t i = 0;
 		auto first_degree_dofs = dofs.template col<0>();
 		if constexpr (Var::Element::has_vertex_dofs)
@@ -410,12 +404,8 @@ private:
 	}
 
 	template<class T_Tag, std::size_t var, class Dofs>
-	void var_dofs_impl2(
-		Index layer,
-		internal::Element_index_by_tag<T_Tag> element,
-		Dofs& dofs,
-		std::size_t& i,
-		bool reversed = false) const
+	void var_dofs_impl2(Index layer, internal::Element_index_by_tag<T_Tag> element, Dofs& dofs,
+		std::size_t& i, bool reversed = false) const
 	{
 		using Element = typename Var_t<var>::Element;
 

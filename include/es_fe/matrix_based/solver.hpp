@@ -29,7 +29,7 @@ private:
 	friend class Solution_view;
 
 public:
-	Matrix_based_solver(const Mesh& mesh) : system_(mesh)
+	Matrix_based_solver(const Mesh& mesh) : linear_solver_(matrix_), system_(mesh)
 	{}
 
 	template<class... Args>
@@ -56,7 +56,7 @@ public:
 		assemble();
 		after_assemble();
 
-		linear_solver_.analyze_factorize_solve(matrix_, rhs_, solution_);
+		linear_solver_.analyze_factorize_solve(rhs_, solution_);
 
 		after_solve();
 	}
@@ -118,9 +118,9 @@ protected:
 	virtual void assemble() = 0;
 
 protected:
-	la::Vector_xd solution_;
+	es_la::Vector_xd solution_;
 	typename Linear_solver_::Sparse_matrix matrix_;
-	la::Vector_xd rhs_;
+	es_la::Vector_xd rhs_;
 
 	Linear_solver_ linear_solver_;
 	System system_;

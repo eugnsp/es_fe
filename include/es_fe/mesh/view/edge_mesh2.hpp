@@ -1,5 +1,5 @@
 #pragma once
-#include <es_fe/geom/point.hpp>
+#include <es_fe/geometry/point2.hpp>
 #include <es_fe/mesh/view/base.hpp>
 #include <es_fe/types.hpp>
 
@@ -9,7 +9,7 @@ template<>
 class Element_view<Edge_tag, Mesh2> : public internal::Element_view_base<Edge_tag, Mesh2>
 {
 public:
-	using Geometry_tag = Segment_tag;
+	using Geometry_tag = Segment2_tag;
 
 public:
 	using Element_view_base::Element_view_base;
@@ -27,7 +27,7 @@ public:
 
 	bool is_boundary() const;
 
-	const Point& vertex(Local_index) const;
+	const es_fe::Point2& vertex(Local_index) const;
 	Vertex_index vertex_index(Local_index) const;
 
 	// Outputs human readable information about the view

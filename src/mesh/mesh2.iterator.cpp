@@ -1,5 +1,5 @@
-#include <es_fe/types.hpp>
 #include <es_fe/mesh/mesh2.hpp>
+#include <es_fe/types.hpp>
 
 namespace es_fe
 {
@@ -43,10 +43,10 @@ auto Mesh2::end_edge() const -> Edge_iter
 	return {*this, n_halfedges()};
 }
 
-// auto Mesh2::edges() const -> es::util::Iterable<Edge_iter>
-// {
-// 	return {begin_edge(), end_edge()};
-// }
+auto Mesh2::edges() const -> es_util::Iterable<Edge_iter>
+{
+	return {begin_edge(), end_edge()};
+}
 
 auto Mesh2::begin_face() const -> Face_iter
 {

@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/element/lagrange/util.hpp>
+#include <es_fe/types.hpp>
 
 #include <es_la/dense.hpp>
 
@@ -17,7 +17,7 @@ public:
 
 public:
 	// Returns the value of the basis function (dof) at the given point (point)
-	static constexpr double basis(Local_index dof, la::Vector_2d point)
+	static constexpr double basis(Local_index dof, es_la::Vector_2d point)
 	{
 		const auto r = ijk_by_dof_index(dof);
 
@@ -29,7 +29,7 @@ public:
 	}
 
 	// Returns the value of the basis function (dof) gradient at the given point (point)
-	static constexpr la::Vector_2d basis_grad(Local_index dof, la::Vector_2d point)
+	static constexpr es_la::Vector_2d basis_grad(Local_index dof, es_la::Vector_2d point)
 	{
 		const auto r = ijk_by_dof_index(dof);
 
@@ -53,7 +53,7 @@ public:
 			pz_dz += prod_frac_xmk_nmk(z, r[2], p);
 
 		// pz/dx = pz/dy = -pz/dz
-		return la::Vector_2d(
+		return es_la::Vector_2d(
 			{py * (px * -pz_dz + pz * px_dx) * order, px * (py * -pz_dz + pz * py_dy) * order});
 	}
 

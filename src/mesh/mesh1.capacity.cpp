@@ -35,4 +35,9 @@ auto Mesh1::n_elements(Cell_tag) const -> Cell_index
 {
 	return n_cells();
 }
-} // es_fe
+
+bool Mesh1::is_empty() const
+{
+	return vertices_.empty();
+}
+} // namespace es_fe

@@ -1,4 +1,6 @@
 #pragma once
+#include <es_fe/dof/dof_mapper_util.hpp>
+
 #include <utility>
 
 namespace es_fe

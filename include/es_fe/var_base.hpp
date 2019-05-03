@@ -60,8 +60,7 @@ public:
 	void for_each_ess_bnd_cond(Func func) const
 	{
 		es_util::tuple_for_each(
-			[&func](const auto& bnd_cond)
-			{
+			[&func](const auto& bnd_cond) {
 				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);
@@ -75,8 +74,7 @@ public:
 	void for_each_non_ess_bnd_cond(Func func) const
 	{
 		es_util::tuple_for_each(
-			[&func](const auto& bnd_cond)
-			{
+			[&func](const auto& bnd_cond) {
 				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);

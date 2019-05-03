@@ -24,7 +24,8 @@ public:
 	{
 		n_layers_ = n_layers;
 		es_util::tuple_for_each(
-			[&mesh, &value, n_layers](auto& list) { list.init_storage(mesh, n_layers, value); }, maps_);
+			[&mesh, &value, n_layers](auto& list) { list.init_storage(mesh, n_layers, value); },
+			maps_);
 	}
 
 	template<class Element_index, std::size_t var>
@@ -86,12 +87,12 @@ template<class Mesh, class Var_list, typename T>
 class Mesh_var_map;
 
 template<class Var_list, typename T>
-class Mesh_var_map<Mesh1, Var_list, T> :
+class Mesh_var_map<Mesh<1>, Var_list, T> :
 	public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index>
 {};
 
 template<class Var_list, typename T>
-class Mesh_var_map<Mesh2, Var_list, T> :
+class Mesh_var_map<Mesh<2>, Var_list, T> :
 	public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index, Face_index>
 {};
 } // namespace es_fe::internal

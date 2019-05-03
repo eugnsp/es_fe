@@ -1,12 +1,12 @@
 #pragma once
-#include <cstddef>
-#include <array>
-#include <vector>
 #include <algorithm>
-#include <queue>
-#include <memory>
-#include <tuple>
+#include <array>
 #include <cassert>
+#include <cstddef>
+#include <memory>
+#include <queue>
+#include <tuple>
+#include <vector>
 
 namespace es_fe::internal
 {
@@ -417,14 +417,14 @@ private:
 	bool is_to_be_split(const Cell& cell) const
 	{
 		return !cell.is_leaf() && (is_to_be_split(cell, Neighbour_type::NORTH) ||
-								   is_to_be_split(cell, Neighbour_type::SOUTH) ||
-								   is_to_be_split(cell, Neighbour_type::WEST) ||
-								   is_to_be_split(cell, Neighbour_type::EAST));
+									  is_to_be_split(cell, Neighbour_type::SOUTH) ||
+									  is_to_be_split(cell, Neighbour_type::WEST) ||
+									  is_to_be_split(cell, Neighbour_type::EAST));
 	}
 
 private:
 	std::vector<Cell> forest_;
-	// la::Matrix<Cell, la::dynamic, la::dynamic> forest_;
+	// es_la::Matrix<Cell, la::dynamic, la::dynamic> forest_;
 
 	const std::size_t n_cells_x_;
 	const std::size_t n_cells_y_;

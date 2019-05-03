@@ -1,9 +1,9 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/mesh/tools/mesh_face_colour_map.hpp>
+#include <es_fe/types.hpp>
 
 #if _MSC_VER
-#	define NOMINMAX
+	#define NOMINMAX
 #endif
 #include <tbb/tbb.h>
 

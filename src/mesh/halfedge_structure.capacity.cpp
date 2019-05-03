@@ -1,5 +1,5 @@
-#include <es_fe/types.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
+#include <es_fe/types.hpp>
 
 #include <cstddef>
 
@@ -53,6 +53,11 @@ Face_index Halfedge_structure::n_elements(Face_tag) const
 auto Halfedge_structure::n_elements(Cell_tag) const -> Cell_index
 {
 	return n_cells();
+}
+
+bool Halfedge_structure::is_empty() const
+{
+	return vertices_.empty() || halfedges_.empty() || faces_.empty();
 }
 
 void Halfedge_structure::reserve(Index n_vertices, Index n_edges, Index n_faces)

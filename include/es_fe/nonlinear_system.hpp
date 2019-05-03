@@ -10,14 +10,12 @@
 #include <cstddef>
 #include <string>
 
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 
 namespace es_fe
 {
-template<
-	class Linear_solver,
-	class Var_or_var_list,
+template<class Linear_solver, class Var_or_var_list,
 	template<class> class T_Dof_mapper = Dof_mapper>
 class Nonlinear_system : public System<Var_or_var_list, T_Dof_mapper>
 {
@@ -43,7 +41,7 @@ protected:
 	virtual void after_solve()
 	{}
 
-	virtual void after_step(const la::Vector_xd&)
+	virtual void after_step(const es_la::Vector_xd&)
 	{}
 
 	virtual void generate_init_guess() = 0;
@@ -164,11 +162,11 @@ protected:
 	using Base::solution_;
 
 	typename Linear_solver::Sparse_matrix jacobian_;
-	la::Vector_xd residual_;
+	es_la::Vector_xd residual_;
 	Linear_solver linear_solver_;
 
 private:
-	la::Vector_xd step_;
+	es_la::Vector_xd step_;
 };
 
 //		template<std::size_t _dim>

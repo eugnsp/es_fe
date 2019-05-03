@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/mesh/mesh2.hpp>
+#include <es_fe/types.hpp>
 #include <es_util/time.hpp>
 
 #include <array>
@@ -22,7 +22,7 @@ private:
 	};
 
 public:
-	Vtk_writer(const std::string& file_name, const Mesh2& mesh, double mesh_scale = 1) :
+	Vtk_writer(const std::string& file_name, const Mesh<2>& mesh, double mesh_scale = 1) :
 		file_(file_name), mesh_(mesh)
 	{
 		if (!file_)
@@ -201,7 +201,7 @@ private:
 
 private:
 	std::ofstream file_;
-	const Mesh2& mesh_;
+	const Mesh<2>& mesh_;
 	Data_section last_section_ = Data_section::UNDEF;
 };
 } // namespace es_fe

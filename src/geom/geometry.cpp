@@ -1,9 +1,9 @@
-#include <es_fe/geom/point.hpp>
-#include <es_fe/geom/geometry.hpp>
+#include <es_fe/geometry/geometry.hpp>
+#include <es_fe/geometry/point2.hpp>
 
 #include <es_la/function.hpp>
 //#include <es_util/numeric.hpp>
-#include <es_fe/geom/algorithm.hpp>
+#include <es_fe/geometry/algorithm.hpp>
 //#include "math/LA/VectorFunction.h"
 #include <algorithm>
 #include <cassert>
@@ -13,7 +13,7 @@ namespace es_fe
 {
 /** Checks whether four points form a rectangle.
  *  Precondition: points should be ordered anti-clockwise. */
-// bool isAlignedRect(const Point& p1, const Point& p2, const Point& p3, const Point& p4)
+// bool isAlignedRect(const Point2& p1, const Point2& p2, const Point2& p3, const Point2& p4)
 // {
 // 	return ((is_phys_equal(p1.y(), p2.y()) && is_equal(p3.y(), p4.y()) &&
 // 		is_phys_equal(p1.x(), p4.x()) && is_equal(p2.x(), p3.x())) ||
@@ -22,7 +22,7 @@ namespace es_fe
 // }
 
 // Checks if the point lies on the line segment [a, b]
-bool is_point_on_line_segment(const Point& point, const Point& a, const Point& b)
+bool is_point_on_line_segment(const Point2& point, const Point2& a, const Point2& b)
 {
 	if (a == point || b == point)
 		return true;
@@ -42,7 +42,7 @@ bool is_point_on_line_segment(const Point& point, const Point& a, const Point& b
 	return true;
 }
 
-double GetDistanceToLineSegment(const Point& point, const Point& a, const Point& b)
+double GetDistanceToLineSegment(const Point2& point, const Point2& a, const Point2& b)
 {
 	if (a == point || b == point)
 		return 0;
@@ -67,11 +67,11 @@ double GetDistanceToLineSegment(const Point& point, const Point& a, const Point&
 	if (t >= 1)
 		return distance(point, b);
 
-	return distance(point, Point{a.x() + t * dx, a.y() + t * dy});
+	return distance(point, Point2{a.x() + t * dx, a.y() + t * dy});
 }
 
 // Computes which side of the line (a -> b) the point is located at
-Side which_side(const Point& point, const Point& a, const Point& b)
+Side which_side(const Point2& point, const Point2& a, const Point2& b)
 {
 	if (point == a || point == b)
 		return Side::ON_THE_LINE;
@@ -88,8 +88,8 @@ Side which_side(const Point& point, const Point& a, const Point& b)
 
 // Computes the intersection point between the line segment [x1, x2] and
 // the line passing through points (y1) and (y2)
-Point GetSegmentAndLineIntersectionPoint(
-	const Point& x1, const Point& x2, const Point& y1, const Point& y2)
+Point2 GetSegmentAndLineIntersectionPoint2(
+	const Point2& x1, const Point2& x2, const Point2& y1, const Point2& y2)
 {
 	const double dXx = x2.x() - x1.x();
 	const double dXy = x2.y() - x1.y();
@@ -121,7 +121,7 @@ Point GetSegmentAndLineIntersectionPoint(
 }
 
 // Clips simple by the line passing through points (y1) and (y2)
-// void ClipSimpleByLine(SimplePolygon& out, const SimplePolygon& in, const Point& y1, const Point&
+// void ClipSimpleByLine(SimplePolygon& out, const SimplePolygon& in, const Point2& y1, const Point2&
 // y2)
 //{
 //	assert(!in.IsEmpty());
@@ -129,17 +129,17 @@ Point GetSegmentAndLineIntersectionPoint(
 //	out.Clear();
 //
 //	const unsigned int sizeOfIn = in.GetNumberOfVertices();
-//	const Point* a = &in.GetVertex(sizeOfIn - 1);
+//	const Point2* a = &in.GetVertex(sizeOfIn - 1);
 //
 //	for (unsigned int i = 0; i < sizeOfIn; ++i)
 //	{
-//		const Point* b = &in.GetVertex(i);
+//		const Point2* b = &in.GetVertex(i);
 //
 //		switch (GetWhichSide(*b, y1, y2))
 //		{
 //			case SIDE::ON_THE_LEFT:
 //				if (GetWhichSide(*a, y1, y2) == SIDE::ON_THE_RIGHT)
-//					out.AddVertex(GetSegmentAndLineIntersectionPoint(*a, *b, y1, y2));
+//					out.AddVertex(GetSegmentAndLineIntersectionPoint2(*a, *b, y1, y2));
 //				// no break!
 //
 //			case SIDE::ON_THE_LINE:
@@ -148,7 +148,7 @@ Point GetSegmentAndLineIntersectionPoint(
 //
 //			case SIDE::ON_THE_RIGHT:
 //				if (GetWhichSide(*a, y1, y2) == SIDE::ON_THE_LEFT)
-//					out.AddVertex(GetSegmentAndLineIntersectionPoint(*a, *b, y1, y2));
+//					out.AddVertex(GetSegmentAndLineIntersectionPoint2(*a, *b, y1, y2));
 //				break;
 //		}
 //
@@ -156,7 +156,7 @@ Point GetSegmentAndLineIntersectionPoint(
 //	}
 //}
 
-double circumradius(const Point& a, const Point& b, const Point& c)
+double circumradius(const Point2& a, const Point2& b, const Point2& c)
 {
 	throw 0;
 	// return distance(a, b) * distance(b, c) * distance(c, a) / (4 * area(a, b, c));

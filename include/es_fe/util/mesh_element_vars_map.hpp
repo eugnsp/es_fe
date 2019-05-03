@@ -1,11 +1,13 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/type_traits.hpp>
+#include <es_fe/types.hpp>
 #include <es_fe/var_list.hpp>
-#include <es_util/array.hpp>
+
 #include <es_util/algorithm.hpp>
-#include <array>
+#include <es_util/array.hpp>
+
 #include <algorithm>
+#include <array>
 #include <cstddef>
 #include <vector>
 

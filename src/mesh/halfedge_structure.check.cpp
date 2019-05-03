@@ -1,7 +1,6 @@
-#include <es_fe/types.hpp>
+#include <es_fe/geometry.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
-#include <es_fe/geom/algorithm.hpp>
-#include <es_fe/geom/point.hpp>
+#include <es_fe/types.hpp>
 
 #include <es_util/error.hpp>
 
@@ -38,9 +37,8 @@ es_util::Error Halfedge_structure::check() const
 	// Check vertices
 	for (Index i = 0; i < *n_vertices(); ++i)
 		if (vertices_[i].halfedge >= n_halfedges())
-			err.append_ln(
-				"The vertex #", i, " has bad halfedge index (", index_string(vertices_[i].halfedge),
-				')');
+			err.append_ln("The vertex #", i, " has bad halfedge index (",
+				index_string(vertices_[i].halfedge), ')');
 
 	if (err)
 		return err;
@@ -55,9 +53,8 @@ es_util::Error Halfedge_structure::check() const
 				"The halfedge #", i, " has bad vertex index (", index_string(halfedge.vertex), ')');
 
 		if (halfedge.next >= n_halfedges())
-			err.append_ln(
-				"The halfedge #", i, " has bad next halfedge index (", index_string(halfedge.next),
-				')');
+			err.append_ln("The halfedge #", i, " has bad next halfedge index (",
+				index_string(halfedge.next), ')');
 
 		// halfedge.face is invalid for outter halfedges
 		if (is_valid(halfedge.face) && halfedge.face >= n_cells())
@@ -71,9 +68,8 @@ es_util::Error Halfedge_structure::check() const
 	// Check faces
 	for (Index i = 0; i < *n_cells(); ++i)
 		if (faces_[i].halfedge >= n_halfedges())
-			err.append_ln(
-				"The face #", i, " has bad halfedge index (", index_string(faces_[i].halfedge),
-				')');
+			err.append_ln("The face #", i, " has bad halfedge index (",
+				index_string(faces_[i].halfedge), ')');
 
 	if (err)
 		return err;
@@ -125,7 +121,7 @@ es_util::Error Halfedge_structure::check() const
 		return err;
 
 	// Check for duplicated vertices
-	using Vertices = std::vector<std::pair<Index, Point>>;
+	using Vertices = std::vector<std::pair<Index, es_fe::Point2>>;
 	Vertices vertices;
 	vertices.reserve(*n_vertices());
 
@@ -148,9 +144,8 @@ es_util::Error Halfedge_structure::check() const
 
 	// Check for unused nodes
 	std::vector<bool> seen_nodes(*n_vertices(), false);
-	std::for_each(halfedges_.begin(), halfedges_.end(), [&seen_nodes](auto& edge) {
-		seen_nodes[*edge.vertex] = true;
-	});
+	std::for_each(halfedges_.begin(), halfedges_.end(),
+		[&seen_nodes](auto& edge) { seen_nodes[*edge.vertex] = true; });
 
 	for (Index i = 0; i < *n_vertices(); ++i)
 		if (!seen_nodes[i])

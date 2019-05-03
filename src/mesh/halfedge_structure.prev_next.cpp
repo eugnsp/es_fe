@@ -1,5 +1,5 @@
-#include <es_fe/types.hpp>
 #include <es_fe/mesh/halfedge_structure.hpp>
+#include <es_fe/types.hpp>
 
 namespace es_fe::internal
 {

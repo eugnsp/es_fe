@@ -1,6 +1,7 @@
 #pragma once
-#include <es_fe/types.hpp>
 #include <es_fe/element/lagrange/util.hpp>
+#include <es_fe/geometry/point1.hpp>
+#include <es_fe/types.hpp>
 
 #include <array>
 #include <cassert>
@@ -15,20 +16,20 @@ public:
 
 public:
 	// Returns the value of the basis function (dof) at the given point (point)
-	static constexpr double basis(Local_index dof, double point)
+	static constexpr double basis(Local_index dof, es_fe::Point1 point)
 	{
 		const auto r = ij_by_dof_index(dof);
 
-		const auto x = point * order;
+		const auto x = point.x() * order;
 		return prod_frac_xmk_nmk(x, r[0]) * prod_frac_xmk_nmk(order - x, r[1]);
 	}
 
 	// Returns the value of the basis function (dof) gradient at the given point (point)
-	static constexpr double basis_grad(Local_index dof, double point)
+	static constexpr double basis_grad(Local_index dof, es_fe::Point1 point)
 	{
 		const auto r = ij_by_dof_index(dof);
 
-		const auto x = point * order;
+		const auto x = point.x() * order;
 		const double px = prod_frac_xmk_nmk(x, r[0]);
 		double px_dx = 0;
 		for (Local_index p = 0; p < r[0]; ++p)

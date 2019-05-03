@@ -1,6 +1,6 @@
 #pragma once
-#include <es_fe/mesh/mesh2.hpp>
 #include <es_fe/geom.hpp>
+#include <es_fe/mesh/mesh2.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -11,7 +11,7 @@
 namespace es_fe
 {
 // A triangular tensor mesh
-class Tri_tensor_mesh : public Mesh2
+class Tri_tensor_mesh : public Mesh<2>
 {
 public:
 	using Grid = std::vector<double>;

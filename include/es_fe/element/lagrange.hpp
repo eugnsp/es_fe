@@ -1,11 +1,10 @@
 #pragma once
-#include <es_fe/types.hpp>
-#include <es_fe/element/lagrange/element_quadr_lagrange_1.hpp>
-#include <es_fe/element/lagrange/element_quadr_lagrange_2.hpp>
+#include <es_fe/element/lagrange/element_quadr_lagrange.hpp>
 #include <es_fe/element/lagrange/lagrange_base_1.hpp>
 #include <es_fe/element/lagrange/lagrange_base_2.hpp>
 #include <es_fe/element/linear_element.hpp>
 #include <es_fe/element/triangular_element.hpp>
+#include <es_fe/types.hpp>
 
 namespace es_fe
 {

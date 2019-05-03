@@ -1,9 +1,0 @@
-#pragma once
-#include <es_fe/geom/algorithm/area.hpp>
-#include <es_fe/geom/algorithm/bounding_rect.hpp>
-#include <es_fe/geom/algorithm/center.hpp>
-#include <es_fe/geom/algorithm/circumcentre.hpp>
-#include <es_fe/geom/algorithm/contains.hpp>
-#include <es_fe/geom/algorithm/distance.hpp>
-#include <es_fe/geom/algorithm/equals.hpp>
-#include <es_fe/geom/algorithm/length.hpp>

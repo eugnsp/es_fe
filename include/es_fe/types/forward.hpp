@@ -6,8 +6,11 @@ namespace es_fe
 //////////////////////////////////////////////////////////////////////////
 /** Mesh-related forward declarations */
 
-class Mesh1;
-class Mesh2;
+template<Local_index>
+class Mesh;
+
+using Mesh1 = Mesh<1>;
+using Mesh2 = Mesh<2>;
 
 template<class Element_tag, class Circ_tag>
 class End_circular_iterator
@@ -51,4 +54,16 @@ class System;
 
 template<class System>
 class Dof_tools;
+
+namespace internal
+{
+template<es_fe::Local_index dim, class Element>
+class Boundary_cond_base;
+
+template<es_fe::Local_index, class Var_list>
+class Dof_mapper;
+} // namespace internal
+
+template<class Var_list>
+using Dof_mapper = internal::Dof_mapper<Var_list::space_dim, Var_list>;
 } // namespace es_fe

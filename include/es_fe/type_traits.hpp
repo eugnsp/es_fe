@@ -110,8 +110,8 @@ struct Is_var_list<Var_list<Vars...>> : std::true_type
 {};
 
 template<class Var_or_var_list>
-using Wrap_into_var_list_t = std::
-	conditional_t<Is_var_list<Var_or_var_list>::value, Var_or_var_list, Var_list<Var_or_var_list>>;
+using Wrap_into_var_list_t = std::conditional_t<Is_var_list<Var_or_var_list>::value,
+	Var_or_var_list, Var_list<Var_or_var_list>>;
 
 template<class System>
 struct System_traits;
@@ -136,6 +136,8 @@ struct Is_edge_tag : std::is_same<Tag, Edge_tag>
 template<class Tag>
 constexpr bool is_edge_tag_v = Is_edge_tag<Tag>::value;
 
+////////////////////////////////////////////////////////////////
+
 template<class Element_index>
 struct Decay_element_in_view_index_impl
 {
@@ -148,11 +150,24 @@ struct Decay_element_in_view_index_impl<Edge_index>
 	using Type = Halfedge_index;
 };
 
+template<class Element_index, class Mesh>
+struct Decay_element_index_in_view_impl
+{
+	using Type = Element_index;
+};
+
+template<class Element_index>
+struct Decay_element_index_in_view_impl<Element_index, Mesh2>
+{
+	using Type = std::conditional_t<std::is_same_v<Element_index, Edge_index>, Halfedge_index,
+		Element_index>;
+};
+
 // For Edge_index returns Halfedge_index,
 // for other index types returns them intact
-template<class Element_index>
+template<class Element_index, class Mesh>
 using Decay_element_index_in_view =
-	std::conditional_t<std::is_same_v<Element_index, Edge_index>, Halfedge_index, Element_index>;
+	typename Decay_element_index_in_view_impl<Element_index, Mesh>::Type;
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -182,18 +197,6 @@ struct Circulator_type_selector<Edge_tag, Circ_tag>
 {
 	using Type = Circulator_halfedge_edge<Edge_tag, Circ_tag>;
 };
-
-// Mesh type selector based on dimension
-template<std::size_t dim>
-struct Mesh_selector
-{
-	static_assert(dim == 1 || dim == 2, "Bad mesh dimension");
-	using Type = std::conditional_t<dim == 1, Mesh1, Mesh2>;
-};
-
-template<std::size_t dim>
-using Mesh_t = typename Mesh_selector<dim>::Type;
-
 } // namespace es_fe::internal
 
 namespace es_fe

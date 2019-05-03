@@ -1,0 +1,12 @@
+#pragma once
+#include <es_fe/geometry/algorithm.hpp>
+#include <es_fe/geometry/compare.hpp>
+#include <es_fe/geometry/geometry.hpp>
+#include <es_fe/geometry/linear_grid.hpp>
+#include <es_fe/geometry/linestring.hpp>
+#include <es_fe/geometry/point1.hpp>
+#include <es_fe/geometry/point2.hpp>
+#include <es_fe/geometry/points2.hpp>
+#include <es_fe/geometry/polygon.hpp>
+#include <es_fe/geometry/rect.hpp>
+//#include <es_fe/geometry/segment.hpp>

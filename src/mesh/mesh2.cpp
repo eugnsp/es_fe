@@ -1,12 +1,11 @@
+#include <es_fe/geometry.hpp>
 #include <es_fe/mesh/mesh2.hpp>
-#include <es_fe/geom/algorithm.hpp>
-#include <es_fe/geom/rect.hpp>
 
 #include <es_util/error.hpp>
 #include <es_util/string.hpp>
 
-#include <cassert>
 #include <algorithm>
+#include <cassert>
 #include <ostream>
 
 namespace es_fe
@@ -18,8 +17,8 @@ Rect Mesh2::bounding_rect() const
 
 	const auto first = boundary_vertex_circ();
 
-	Point bottom_left = first->vertex();
-	Point top_right = first->vertex();
+	es_fe::Point2 bottom_left = first->vertex();
+	es_fe::Point2 top_right = first->vertex();
 
 	auto circ = first;
 	do

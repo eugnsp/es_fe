@@ -1,7 +1,7 @@
 #pragma once
-#include <es_fe/types.hpp>
+#include <es_fe/geometry/point2.hpp>
 #include <es_fe/mesh/view/base.hpp>
-#include <es_fe/geom/point.hpp>
+#include <es_fe/types.hpp>
 
 namespace es_fe
 {
@@ -10,7 +10,7 @@ template<>
 class Element_view<Halfedge_tag, Mesh2> : public internal::Element_view_base<Halfedge_tag, Mesh2>
 {
 public:
-	using Geometry_tag = Segment_tag;
+	using Geometry_tag = Segment2_tag;
 
 	using Vertex_view = Element_view<Vertex_tag, Mesh2>;
 	using Face_view = Element_view<Face_tag, Mesh2>;
@@ -18,10 +18,10 @@ public:
 public:
 	using Element_view_base::Element_view_base;
 
-	const Point& vertex() const;
-	const Point& vertex(Local_index) const;
+	const es_fe::Point2& vertex() const;
+	const es_fe::Point2& vertex(Local_index) const;
 
-	Point vector() const;
+	es_fe::Point2 vector() const;
 
 	Vertex_index vertex_index() const;
 	Vertex_index vertex_index(Local_index) const;
