@@ -18,13 +18,18 @@ class Dunavant_quadr;
 template<Local_index order, Local_index... group_indices>
 class Dunavant_quadr<order, Local_index_sequence<group_indices...>>
 {
-public:
-	// Returns the total number of quadrature points
-	static constexpr Local_index size()
-	{
-		return es_util::array_sum<Local_index>(group_sizes, 0);
-	}
+private:
+	static constexpr auto point_groups = Dunavant_data<order>::groups;
+	static constexpr auto group_sizes =
+		es_util::make_array(std::get<group_indices>(point_groups).size()...);
 
+public:
+	static constexpr Local_index dim = 2;
+
+	// The total number of quadrature points
+	static constexpr Local_index size = es_util::array_sum<Local_index>(group_sizes, 0);
+
+public:
 	// Computes a weighted sum over quadrature points,
 	// sum_i weight(i) * fn(i) for i = 0, ... size() - 1
 	template<class Fn>
@@ -39,11 +44,6 @@ protected:
 	{
 		return es_util::array_cat(std::get<group_indices>(point_groups).points()...);
 	}
-
-private:
-	static constexpr auto point_groups = Dunavant_data<order>::groups;
-	static constexpr auto group_sizes =
-		es_util::make_array(std::get<group_indices>(point_groups).size()...);
 
 private:
 	// Returns the index of the first point in the group with the given index

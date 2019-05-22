@@ -37,7 +37,7 @@ es_fe::Point2 center(const Triangle& triangle, Triangle_tag)
 	c += (++circ)->vertex();
 	c += (++circ)->vertex();
 
-	return c / 3;
+	return es_fe::Point2{c / 3};
 }
 
 template<class Polygon>

@@ -2,9 +2,11 @@
 #include <es_fe/geometry/point2.hpp>
 #include <es_fe/geometry/rect.hpp>
 #include <es_fe/math/jacobian.hpp>
+#include <es_fe/matrix_based/solution_base.hpp>
 #include <es_fe/types.hpp>
 
-#include <es_la/base/expression.hpp>
+#include <es_la/core/expression.hpp>
+#include <es_la/dense.hpp>
 #include <es_util/type_traits.hpp>
 
 #include <cstddef>
@@ -12,53 +14,64 @@
 
 namespace es_fe
 {
-template<class Solver, std::size_t var>
-class Solution_view
+template<class System, typename Value>
+class Solution_view : public internal::Solution_base<System, const es_la::Vector_x<Value>&>
 {
-public:
-	using System = typename Solver::System;
-	using Mesh = typename Solver::Mesh;
-
-	using Value = double;
+private:
+	using Vector = es_la::Vector_x<Value>;
+	using Base = internal::Solution_base<System, const Vector&>;
 
 public:
-	Solution_view(const Solver& solver) : solver_(solver)
-	{}
-
-	// TODO : vector variables (dim > 1, static / dynamic)
-	template<typename... Args>
-	Value operator()(const typename Mesh::Face_view& face, es_fe::Point2 pt, Args&... args) const
-	{
-		pt = to_ref_triangle(face, pt);
-
-		const auto dofs = solver_.system().template dofs<var>(face, std::forward<Args>(args)...);
-
-		double value = 0;
-		for (Local_index dof = 0; dof < dofs.size(); ++dof)
-			value += System::template Var_t<var>::Element::basis(dof, pt) *
-					 solver_.solution_[dofs[dof].index];
-
-		return value;
-	}
-
-	const Mesh& mesh() const
-	{
-		return solver_.mesh();
-	}
-
-private:
-	// Maps a given point on given face to a point in the corresponding reference triangle
-	static es_fe::Point2 to_ref_triangle(
-		const typename Mesh::Face_view& face, const es_fe::Point2& pt)
-	{
-		const auto j = es_fe::inv_jacobian(face);
-		es_la::Vector_2d p0 = pt - face.vertex_circ()->vertex();
-		return j * p0;
-	}
-
-private:
-	const Solver& solver_;
+	using Base::Base;
 };
+
+// template<class Solver, std::size_t var>
+// class Solution_view
+// {
+// public:
+// 	using System = typename Solver::System;
+// 	using Mesh = typename Solver::Mesh;
+
+// 	using Value = double;
+
+// public:
+// 	Solution_view(const Solver& solver) : solver_(solver)
+// 	{}
+
+// 	// TODO : vector variables (dim > 1, static / dynamic)
+// 	template<typename... Args>
+// 	Value operator()(const typename Mesh::Face_view& face, es_fe::Point2 pt, Args&... args) const
+// 	{
+// 		pt = to_ref_triangle(face, pt);
+
+// 		const auto dofs = solver_.system().template dofs<var>(face, std::forward<Args>(args)...);
+
+// 		double value = 0;
+// 		for (Local_index dof = 0; dof < dofs.size(); ++dof)
+// 			value += System::template Var_t<var>::Element::basis(dof, pt) *
+// 					 solver_.solution_[dofs[dof].index];
+
+// 		return value;
+// 	}
+
+// 	const Mesh& mesh() const
+// 	{
+// 		return solver_.mesh();
+// 	}
+
+// private:
+// 	// Maps a given point on given face to a point in the corresponding reference triangle
+// 	static es_fe::Point2 to_ref_triangle(
+// 		const typename Mesh::Face_view& face, const es_fe::Point2& pt)
+// 	{
+// 		const auto j = es_fe::inv_jacobian(face);
+// 		es_la::Vector_2d p0 = pt - face.vertex_circ()->vertex();
+// 		return j * p0;
+// 	}
+
+// private:
+// 	const Solver& solver_;
+// };
 
 // template<class System, std::size_t var>
 // class Solution_view;

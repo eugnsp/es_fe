@@ -1,6 +1,7 @@
 #pragma once
+#include <es_fe/types/tags.hpp>
+
 #include <es_la/dense.hpp>
-#include <es_la/function.hpp>
 
 namespace es_fe
 {
@@ -32,8 +33,8 @@ es_la::Matrix_2d jacobian(const Triangle& triangle, Triangle_tag)
 
 	es_la::Matrix_2d j;
 
-	j.col<0>() = b - a;
-	j.col<1>() = c - a;
+	j.col_view<0>() = b - a;
+	j.col_view<1>() = c - a;
 	return j;
 }
 

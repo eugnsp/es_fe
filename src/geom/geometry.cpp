@@ -1,10 +1,12 @@
 #include <es_fe/geometry/geometry.hpp>
 #include <es_fe/geometry/point2.hpp>
 
-#include <es_la/function.hpp>
+#include <es_la/dense.hpp>
+
 //#include <es_util/numeric.hpp>
 #include <es_fe/geometry/algorithm.hpp>
 //#include "math/LA/VectorFunction.h"
+
 #include <algorithm>
 #include <cassert>
 #include <cmath>
@@ -28,15 +30,15 @@ bool is_point_on_line_segment(const Point2& point, const Point2& a, const Point2
 		return true;
 
 	const auto pa = point - a;
-	const auto d = b - a;
-	const double dd = dot(d, d);
+	const auto ba = b - a;
+	const double d = dot(ba, ba);
 
-	const double cross_d_pa = cross2(d, pa);
-	if (std::abs(cross_d_pa) > delta * std::sqrt(dd))
+	const double cross_ba_pa = cross(ba, pa);
+	if (std::abs(cross_ba_pa) > delta * std::sqrt(d))
 		return false;
 
-	const double dot_d_pa = dot(d, pa);
-	if (dot_d_pa < 0 || dot_d_pa > dd)
+	const double dot_d_pa = dot(ba, pa);
+	if (dot_d_pa < 0 || dot_d_pa > d)
 		return false;
 
 	return true;
@@ -77,13 +79,13 @@ Side which_side(const Point2& point, const Point2& a, const Point2& b)
 		return Side::ON_THE_LINE;
 
 	// TODO : evaluate d
-	const auto d = b - a;
-	const double cross = cross2(d, point - a);
+	const auto ba = b - a;
+	const double cross_ba_pa = cross(ba, point - a);
 
-	if (std::abs(cross) < delta * dot(d, d))
+	if (std::abs(cross_ba_pa) < delta * dot(ba, ba))
 		return Side::ON_THE_LINE;
 
-	return cross > 0 ? Side::ON_THE_LEFT : Side::ON_THE_RIGHT;
+	return cross_ba_pa > 0 ? Side::ON_THE_LEFT : Side::ON_THE_RIGHT;
 }
 
 // Computes the intersection point between the line segment [x1, x2] and
@@ -156,7 +158,7 @@ Point2 GetSegmentAndLineIntersectionPoint2(
 //	}
 //}
 
-double circumradius(const Point2& a, const Point2& b, const Point2& c)
+double circumradius(const Point2& , const Point2& , const Point2& )
 {
 	throw 0;
 	// return distance(a, b) * distance(b, c) * distance(c, a) / (4 * area(a, b, c));

@@ -95,7 +95,7 @@ struct Var_by_var_index_impl<Var_list, Var_index<index>>
 
 template<class Var_list, class Var_index>
 using Var_by_var_index =
-	typename Var_by_var_index_impl<Var_list, es_util::Remove_cvref<Var_index>>::Type;
+	typename Var_by_var_index_impl<Var_list, es_util::Remove_cv_ref<Var_index>>::Type;
 
 } // namespace es_fe
 

@@ -61,7 +61,7 @@ public:
 	{
 		es_util::tuple_for_each(
 			[&func](const auto& bnd_cond) {
-				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
+				using Bnd_cond = es_util::Remove_cv_ref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);
 				if constexpr (Bnd_cond::is_essential)
@@ -75,7 +75,7 @@ public:
 	{
 		es_util::tuple_for_each(
 			[&func](const auto& bnd_cond) {
-				using Bnd_cond = es_util::Remove_cvref<decltype(*bnd_cond)>;
+				using Bnd_cond = es_util::Remove_cv_ref<decltype(*bnd_cond)>;
 
 				assert(bnd_cond);
 				if constexpr (!Bnd_cond::is_essential)

@@ -1,4 +1,5 @@
 #pragma once
+#include <es_fe/matrix_based/solver_base.hpp>
 #include <es_fe/matrix_based/solution_view.hpp>
 
 #include <es_la/dense.hpp>
@@ -9,13 +10,10 @@
 namespace es_fe
 {
 template<class System_, class Linear_solver_>
-class Matrix_based_solver
+class Matrix_based_solver : public Matrix_based_solver_base<System_, Linear_solver_>
 {
-public:
-	using System = System_;
-	using Mesh = typename System::Mesh;
-
 private:
+	using Base = Matrix_based_solver_base<System_, Linear_solver_>;
 	// template<std::size_t var>
 	// using Solution_view_t = Solution_view<System, var>;
 
@@ -29,26 +27,18 @@ private:
 	friend class Solution_view;
 
 public:
-	Matrix_based_solver(const Mesh& mesh) : linear_solver_(matrix_), system_(mesh)
-	{}
+	using Base::Base;
 
 	template<class... Args>
 	void init(Args&&... args)
 	{
-		system_.init(std::forward<Args>(args)...);
-
-		const auto n = system_.n_dofs();
-		const auto nf = system_.n_free_dofs();
-
-		solution_.resize(n);
-		matrix_.resize(nf, nf);
-		rhs_.resize(nf);
+		Base::init(std::forward<Args>(args)...);
 	}
 
 	void solve()
 	{
 		matrix_.zero();
-		rhs_.zero();
+		rhs_ = 0;
 
 		before_solve();
 
@@ -59,27 +49,6 @@ public:
 		linear_solver_.analyze_factorize_solve(rhs_, solution_);
 
 		after_solve();
-	}
-
-	System& system()
-	{
-		return system_;
-	}
-
-	const System& system() const
-	{
-		return system_;
-	}
-
-	const Mesh& mesh() const
-	{
-		return system_.mesh();
-	}
-
-	template<std::size_t var = 0>
-	My_solution_view<var> solution_view() const
-	{
-		return My_solution_view<var>{*this};
 	}
 
 	// 	template<std::size_t var>
@@ -96,13 +65,6 @@ public:
 	// 	return Solution_view_t2<var, Mesh_el_tag>{*this};
 	// }
 
-	std::size_t memory_size() const
-	{
-		// return solution_.memory_size() + rhs_.memory_size() + matrix_.memory_size() +
-		// system_.memory_size();
-		return 0;
-	}
-
 protected:
 	virtual void set_bnd_values() = 0;
 
@@ -118,11 +80,9 @@ protected:
 	virtual void assemble() = 0;
 
 protected:
-	es_la::Vector_xd solution_;
-	typename Linear_solver_::Sparse_matrix matrix_;
-	es_la::Vector_xd rhs_;
-
-	Linear_solver_ linear_solver_;
-	System system_;
+	using Base::solution_;
+	using Base::rhs_;
+	using Base::matrix_;
+	using Base::linear_solver_;
 };
 } // namespace es_fe

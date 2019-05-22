@@ -34,7 +34,7 @@ Vertex_index V::vertex_index(Local_index vertex) const
 
 es_fe::Point2 V::vector() const
 {
-	return vertex() - mesh_.vertex(mesh_.vertex_index(twin(index_)));
+	return es_fe::Point2{vertex() - mesh_.vertex(mesh_.vertex_index(twin(index_)))};
 }
 
 Edge_index V::edge_index() const

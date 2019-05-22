@@ -5,17 +5,22 @@
 
 #include <cstddef>
 #include <memory>
+#include <random>
+#include <utility>
 
 #include <es_la/sparse.hpp>
 
 namespace es_fe
 {
-template<class System_, class Eigen_solver_>
+template<class System_, class Eigen_solver>
 class Matrix_based_eigen_solver
 {
 public:
 	using System = System_;
 	using Mesh = typename System::Mesh;
+
+	using Value = typename Eigen_solver::Sparse_matrix::Value;
+	using Solution_view = Eigen_solution_view<System, Value>;
 
 public:
 	// template<std::size_t var>
@@ -24,11 +29,12 @@ public:
 	// template<std::size_t var, class Mesh_el_tag>
 	// using Solution_view_t2 = Solution_view2<System, var, Mesh_el_tag>;
 
-	template<std::size_t var>
-	using Solution_view = Eigen_solution_view<System, var>;
+	// template<std::size_t var>
+	// using Solution_view = Eigen_solution_view<System, var>;
 
 	// template<class Solver, std::size_t var>
 	// friend class Solution_view;
+
 
 public:
 	Matrix_based_eigen_solver(const Mesh& mesh) : eigen_solver_(matrix_a_, matrix_b_), system_(mesh)
@@ -43,6 +49,9 @@ public:
 
 		matrix_a_.resize(nf, nf);
 		matrix_b_.resize(nf, nf);
+
+		std::random_device rand_dev;
+		rand_gen_.seed(rand_dev());
 	}
 
 	void solve()
@@ -53,49 +62,35 @@ public:
 		assemble();
 		after_assemble();
 
-		// linear_solver_.analyze_factorize_solve(matrix_, rhs_, solution_);
-
+		const auto size = matrix_a_.rows();
 		auto dim = eigen_space_dim();
+		const auto old_dim = eigen_values_.size();
+
 		eigen_values_.resize(dim);
-		eigen_vectors_.resize(matrix_a_.rows(), dim);
+		eigen_vectors_.resize(size, dim);
 
 		auto range = eigen_values_range();
 
-		{
-			// sparse_matrix_t a;
-			// auto z = matrix_a_.row_indices();
-			// auto v = matrix_a_.values();
-			// auto r1 = mkl_sparse_d_create_csr(&a, SPARSE_INDEX_BASE_ZERO, matrix_a_.rows(),
-			// 	matrix_a_.cols(), (MKL_INT*)(z), (MKL_INT*)(matrix_a_.row_indices()) + 1,
-			// 	(MKL_INT*)(matrix_a_.col_indices()), (double*)v);
-
-			// sparse_matrix_t b;
-			// auto r3 = mkl_sparse_convert_csr(a, SPARSE_OPERATION_TRANSPOSE, &b);
-
-			// sparse_index_base_t indexing;
-			// MKL_INT rows;
-			// MKL_INT cols;
-			// MKL_INT* rows_start;
-			// MKL_INT* rows_end;
-			// MKL_INT* col_indx;
-			// double* values;
-			// auto r2 = mkl_sparse_d_export_csr(
-			// 	b, &indexing, &rows, &cols, &rows_start, &rows_end, &col_indx, &values);
-
-			// mkl_sparse_destroy(a);
-			// mkl_sparse_destroy(b);
-		}
-
 		while (true)
 		{
-			if (eigen_solver_.solve(eigen_vectors_, eigen_values_, range))
+			const auto has_initial_guess = (old_dim > 0);
+			if (has_initial_guess > 0)
+			{
+				// Randomize the rest of eigenvectors
+				eigen_vectors_.cols_view(old_dim, dim - old_dim) =
+					es_la::Random_matrix(size, dim - old_dim, std::uniform_real_distribution{}, rand_gen_);
+			}
+
+			if (eigen_solver_.solve(eigen_vectors_, eigen_values_, range, has_initial_guess))
 				break;
 
-			dim += 2;
+			dim += 5;
 			dim *= 1.2;
 		}
 
-		n_eigen_values_ = eigen_solver_.n_eigen_values();
+		const auto new_dim = eigen_solver_.n_eigen_values();
+		eigen_values_.resize(new_dim);
+		eigen_vectors_.resize(size, new_dim);
 
 		after_solve();
 	}
@@ -115,10 +110,10 @@ public:
 		return system_.mesh();
 	}
 
-	template<std::size_t var = 0>
-	Solution_view<var> solution_view() const
+	//template<std::size_t var = 0>
+	Solution_view solution_view() const
 	{
-		return Solution_view<var>{system(), n_eigen_values_, eigen_values_, eigen_vectors_};
+		return {system(), eigen_values_, eigen_vectors_};
 	}
 
 	// 	template<std::size_t var>
@@ -137,9 +132,8 @@ public:
 
 	std::size_t memory_size() const
 	{
-		// return solution_.memory_size() + rhs_.memory_size() + matrix_.memory_size() +
-		// system_.memory_size();
-		return 0;
+		return eigen_values_.memory_size() + eigen_vectors_.memory_size() + matrix_a_.memory_size() +
+			   matrix_b_.memory_size();
 	}
 
 protected:
@@ -163,12 +157,14 @@ protected:
 protected:
 	es_la::Vector_xd eigen_values_;
 	es_la::Matrix_xd eigen_vectors_;
-	std::size_t n_eigen_values_;
 
-	typename Eigen_solver_::Sparse_matrix matrix_a_;
-	typename Eigen_solver_::Sparse_matrix matrix_b_;
+	typename Eigen_solver::Sparse_matrix matrix_a_;
+	typename Eigen_solver::Sparse_matrix matrix_b_;
 
-	Eigen_solver_ eigen_solver_;
+	Eigen_solver eigen_solver_;
 	System system_;
+
+private:
+	std::mt19937 rand_gen_;
 };
 } // namespace es_fe

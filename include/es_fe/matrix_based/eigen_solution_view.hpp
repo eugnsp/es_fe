@@ -8,73 +8,93 @@
 
 namespace es_fe
 {
-template<class System, std::size_t var>
+template<class System, typename Value>
 class Eigen_solution_view
 {
 public:
 	using Mesh = typename System::Mesh;
-	using Value = double;
 
 public:
-	Eigen_solution_view() = default;
-
-	Eigen_solution_view(const System& system, const unsigned int& n_eigen_values,
-		const es_la::Vector_xd& eigen_values, const es_la::Matrix_xd& eigen_vectors) :
-		system_(&system),
-		n_eigen_values_(&n_eigen_values), eigen_values_(&eigen_values),
-		eigen_vectors_(&eigen_vectors)
+	Eigen_solution_view(
+		const System& system, const es_la::Vector_x<Value>& eigen_values, const es_la::Matrix_x<Value>& eigen_vectors) :
+		eigen_values_(eigen_values),
+		eigen_vectors_(eigen_vectors), system_(system)
 	{}
 
 	std::size_t size() const
 	{
-		return *n_eigen_values_;
+		return eigen_values_.size();
 	}
 
 	Value operator[](std::size_t index) const
 	{
-		return (*eigen_values_)[index];
+		return eigen_values_[index];
 	}
 
 	Value operator()(std::size_t i, std::size_t j) const
 	{
-		return (*eigen_vectors_)(i, j);
+		return eigen_vectors_(i, j);
+	}
+
+	template<std::size_t var = 0>
+	Value at(Vertex_index vertex, std::size_t eigen_pair) const
+	{
+		typename System::template Var_vertex_dofs<var> dofs;
+		system_.dof_mapper().template vertex_dofs<var>(vertex, dofs);
+		if (dofs[0].is_free)
+			return eigen_vectors_(dofs[0].index, eigen_pair);
+		else
+			return 0;
 	}
 
 	// TODO : make a non-member
-	template<class Element, class Quadr>
-	Value get(std::size_t index, std::size_t iq,
-		const typename System::template Var_dofs<var>& dofs) const
+	template<class Element, class Quadr, std::size_t var = 0>
+	auto at_quadr(std::size_t index, const typename System::template Var_dofs<var>& dofs) const
 	{
-		Value value = 0;
-		for (std::size_t k = 0; k < dofs.size(); ++k)
-		{
-			// HACK
-			if (dofs[k].is_free)
-			{
-				value += es_fe::Element_quadr<Element, Quadr>::basis()(iq, k) *
-						 (*eigen_vectors_)(dofs[k].index, index);
-			}
-		}
+		assert(index < size());
+		es_la::Vector<Value, Quadr::size> vals_at_quadr{};
 
-		return value;
+		for (std::size_t iq = 0; iq < Quadr::size; ++iq)
+			for (std::size_t id = 0; id < dofs.size(); ++id)
+				if (dofs[id].is_free)
+				{
+					const auto v = eigen_vectors_(dofs[id].index, index);
+					vals_at_quadr[iq] += es_fe::Element_quadr<Element, Quadr>::basis()(iq, id) * v;
+				}
+
+		return vals_at_quadr;
 	}
 
-	template<class Element, class Quadr>
-	Value get(std::size_t index, std::size_t iq, const typename Mesh::Cell_view& cell) const
+	template<class Element, class Quadr, std::size_t var = 0>
+	auto at_quadr(std::size_t index, const typename Mesh::Cell_view& cell) const
 	{
-		const auto dofs = system_->dof_mapper().template dofs<var>(cell);
-		return get<Element, Quadr>(index, iq, dofs);
+		const auto dofs = system_.dof_mapper().template dofs<var>(cell);
+		return at_quadr<Element, Quadr>(index, dofs);
 	}
 
 	const Mesh& mesh() const
 	{
-		return system_->mesh();
+		return system_.mesh();
 	}
 
 private:
-	const System* system_ = nullptr;
-	const unsigned int* n_eigen_values_ = nullptr;
-	const es_la::Vector_xd* eigen_values_ = nullptr;
-	const es_la::Matrix_xd* eigen_vectors_ = nullptr;
+	const es_la::Vector_x<Value>& eigen_values_;
+	const es_la::Matrix_x<Value>& eigen_vectors_;
+
+	const System& system_;
 };
+
+template<class Element, class Quadr, std::size_t var = 0, class System, class Value>
+auto at_quadr(const Eigen_solution_view<System, Value>& solution, std::size_t index,
+	const typename System::template Var_dofs<var>& dofs)
+{
+	return solution.template at_quadr<Element, Quadr, var>(index, dofs);
+}
+
+template<class Element, class Quadr, std::size_t var = 0, class System, class Value>
+auto at_quadr(
+	const Eigen_solution_view<System, Value>& solution, std::size_t index, const typename System::Mesh::Cell_view& cell)
+{
+	return solution.template at_quadr<Element, Quadr, var>(index, cell);
+}
 } // namespace es_fe

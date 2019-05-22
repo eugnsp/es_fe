@@ -10,7 +10,7 @@ class Element_quadr<es_fe::Lagrange<order, dim>, Quadr>
 {
 private:
 	using Element = es_fe::Lagrange<order, dim>;
-	static constexpr auto n_points = Quadr::size();
+	static constexpr auto n_points = Quadr::size;
 	static constexpr auto n_dofs = Element::n_total_cell_dofs;
 
 public:

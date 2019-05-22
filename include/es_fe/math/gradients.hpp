@@ -21,7 +21,7 @@ auto gradients(Grads& grads, const Inv_tr_jacobian& j)
 template<class Element, class Quadr>
 auto gradients(double inv_j)
 {
-	es_la::Matrix<double, Quadr::size(), Element::n_total_edge_dofs> grads;
+	es_la::Matrix<double, Quadr::size, Element::n_total_edge_dofs> grads;
 	es_fe::internal::gradients<Element, Quadr>(grads, inv_j);
 	return grads;
 }

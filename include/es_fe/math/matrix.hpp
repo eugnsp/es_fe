@@ -81,8 +81,8 @@ auto stiffness_matrix(const Grads& grads, Func func, double scale = 1)
 {
 	constexpr auto n_dofs = Element::n_total_cell_dofs;
 
-	static_assert(grads.rows() == Quadr::size());
-	static_assert(grads.cols() == n_dofs);
+	static_assert(Grads::rows() == Quadr::size);
+	static_assert(Grads::cols() == n_dofs);
 
 	es_la::Matrix_d<n_dofs, n_dofs> m;
 	for (Local_index i = 0; i < n_dofs; ++i)
