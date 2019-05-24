@@ -6,7 +6,7 @@ namespace es_fe
 {
 using V = Element_view<Vertex_tag, Mesh2>;
 
-const es_fe::Point2& V::vertex() const
+const Point2& V::vertex() const
 {
 	return mesh_.vertex(index_);
 }

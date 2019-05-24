@@ -10,10 +10,9 @@ template<>
 class Element_view<Vertex_tag, Mesh1> : public internal::Element_view_base<Vertex_tag, Mesh1>
 {
 public:
-public:
 	using Element_view_base::Element_view_base;
 
-	double vertex() const;
+	Point1 vertex() const;
 
 	// Outputs human readable information about the view
 	void print(std::ostream&) const;

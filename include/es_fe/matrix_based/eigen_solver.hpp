@@ -61,9 +61,11 @@ public:
 		//		set_bnd_values();
 		assemble();
 		after_assemble();
+		
+		const auto grow_factor = 1.2;
 
 		const auto size = matrix_a_.rows();
-		auto dim = eigen_space_dim();
+		auto dim = static_cast<std::size_t>(5 + grow_factor * eigen_space_dim());
 		const auto old_dim = eigen_values_.size();
 
 		eigen_values_.resize(dim);
@@ -85,7 +87,7 @@ public:
 				break;
 
 			dim += 5;
-			dim *= 1.2;
+			dim *= grow_factor;
 		}
 
 		const auto new_dim = eigen_solver_.n_eigen_values();
@@ -141,7 +143,7 @@ protected:
 
 	virtual std::pair<double, double> eigen_values_range() const = 0;
 
-	virtual unsigned int eigen_space_dim() const = 0;
+	virtual std::size_t eigen_space_dim() const = 0;
 
 	virtual void before_solve()
 	{}

@@ -22,7 +22,7 @@ public:
 public:
 	using Element_view_base::Element_view_base;
 
-	const es_fe::Point2& vertex() const;
+	const Point2& vertex() const;
 
 	Vertex_circ vertex_circ() const;
 	Halfedge_in_circ halfedge_in_circ() const;
