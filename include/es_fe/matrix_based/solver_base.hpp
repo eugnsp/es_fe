@@ -11,9 +11,6 @@ namespace es_fe
 template<class System_, class Linear_solver>
 class Matrix_based_solver_base
 {
-	// template<class Solver, std::size_t var>
-	// friend class Solution_view;
-
 public:
 	using System = System_;
 	using Mesh = typename System::Mesh;
@@ -63,26 +60,6 @@ public:
 	{
 		return {system_, solution_};
 	}
-
-	// template<std::size_t var = 0>
-	// auto solution_view() const
-	// {
-	// 	return Solution_view<Matrix_based_solver_base, var>{*this};
-	// }
-
-	// 	template<std::size_t var>
-	// Solution_view_t<var> solution_view() const
-	// {
-	// 	debug_check_var_index<var>();
-	// 	return {*this};
-	// }
-
-	// template<std::size_t var, class Mesh_el_tag>
-	// auto solution_view2() const
-	// {
-	// 	debug_check_var_index<var>();
-	// 	return Solution_view_t2<var, Mesh_el_tag>{*this};
-	// }
 
 	std::size_t memory_size() const
 	{

@@ -14,17 +14,6 @@ class Matrix_based_solver : public Matrix_based_solver_base<System_, Linear_solv
 {
 private:
 	using Base = Matrix_based_solver_base<System_, Linear_solver_>;
-	// template<std::size_t var>
-	// using Solution_view_t = Solution_view<System, var>;
-
-	// template<std::size_t var, class Mesh_el_tag>
-	// using Solution_view_t2 = Solution_view2<System, var, Mesh_el_tag>;
-
-	template<std::size_t var>
-	using My_solution_view = Solution_view<Matrix_based_solver, var>;
-
-	template<class Solver, std::size_t var>
-	friend class Solution_view;
 
 public:
 	using Base::Base;
@@ -50,20 +39,6 @@ public:
 
 		after_solve();
 	}
-
-	// 	template<std::size_t var>
-	// Solution_view_t<var> solution_view() const
-	// {
-	// 	debug_check_var_index<var>();
-	// 	return {*this};
-	// }
-
-	// template<std::size_t var, class Mesh_el_tag>
-	// auto solution_view2() const
-	// {
-	// 	debug_check_var_index<var>();
-	// 	return Solution_view_t2<var, Mesh_el_tag>{*this};
-	// }
 
 protected:
 	virtual void set_bnd_values() = 0;

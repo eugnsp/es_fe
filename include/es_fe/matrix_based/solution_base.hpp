@@ -1,4 +1,6 @@
 #pragma once
+#include <es_fe/geometry.hpp>
+#include <es_fe/math.hpp>
 #include <es_fe/types.hpp>
 
 #include <es_la/dense.hpp>
@@ -15,8 +17,13 @@ namespace internal
 template<class System, class T>
 class Solution_base
 {
-private:
+public:
 	using Value = es_la::Value_type<T>;
+	using Mesh = typename System::Mesh;
+
+private:
+	template<std::size_t var>
+	using Element = typename System::template Var_t<var>::Element;
 
 public:
 	Solution_base(const System& system, const T& values) : values_(values), system_(system)
@@ -30,7 +37,7 @@ public:
 		return values_;
 	}
 
-	template<class Element, class Quadr, std::size_t var = 0>
+	template<class Quadr, std::size_t var = 0>
 	auto at_quadr(const typename System::template Var_dofs<var>& dofs) const
 	{
 		es_la::Vector<Value, Quadr::size> vals_at_quadr{};
@@ -39,43 +46,50 @@ public:
 			for (std::size_t id = 0; id < dofs.size(); ++id)
 			{
 				const auto v = values_[dofs[id].index];
-				vals_at_quadr[iq] += Element_quadr<Element, Quadr>::basis()(iq, id) * v;
+				vals_at_quadr[iq] += Element_quadr<Element<var>, Quadr>::basis()(iq, id) * v;
 			}
 
 		return vals_at_quadr;
 	}
 
-	auto& operator[](Vertex_index vertex) const
+	template<class Quadr, std::size_t var = 0>
+	auto at_quadr(const typename System::Mesh::Cell_view& cell) const
 	{
-		constexpr auto var = 0;
+		const auto dofs = system_.dof_mapper().template dofs<var>(cell);
+		return at_quadr<Quadr, var>(dofs);
+	}
 
+	template<std::size_t var = 0>
+	auto& at(Vertex_index vertex) const
+	{
 		typename System::template Var_vertex_dofs<var> dofs;
 		system_.dof_mapper().template vertex_dofs<var>(vertex, dofs);
 
+		// TODO : return a vector if we have several DoFs
 		return values_[dofs[0].index];
 	}
 
-	// TODO : make a non-member
-	template<class Element, class Quadr>
-	auto get(std::size_t iq, const typename System::Mesh::Cell_view& cell) const
+	auto& operator[](Vertex_index vertex) const
 	{
-		constexpr auto var = 0;
-		const auto dofs = system_.dof_mapper().template dofs<var>(cell);
-		return get<Element, Quadr>(iq, dofs);
+		return at<0>(vertex);
 	}
 
-	// TODO : make a non-member
-	template<class Element, class Quadr, std::size_t var = 0>
-	auto get(std::size_t iq, const typename System::template Var_dofs<var>& dofs) const
+	template<std::size_t var = 0>
+	Value at(const es_fe::Point2& pt, const typename Mesh::Cell_view& cell) const
 	{
-		Value value = 0;
-		for (std::size_t k = 0; k < dofs.size(); ++k)
-		{
-			const auto s = values_[dofs[k].index];
-			value += es_fe::Element_quadr<Element, Quadr>::basis()(iq, k) * s;
-		}
+		static_assert(Mesh::dim == 2);
 
+		const auto pt_ref = point_to_ref_triangle(pt, cell);
+		const auto dofs = system_.dof_mapper().template dofs<var>(cell);
+		Value value{};
+		for (Local_index id = 0; id < dofs.size(); ++id)
+			value += Element<var>::basis(id, pt_ref) * values_[dofs[id].index];
 		return value;
+	}
+
+	Value operator()(const es_fe::Point2& pt, const typename Mesh::Cell_view& cell) const
+	{
+		return at<0>(pt, cell);
 	}
 
 	const System& system() const
@@ -83,15 +97,26 @@ public:
 		return system_;
 	}
 
+	const typename System::Mesh& mesh() const
+	{
+		return system_.mesh();
+	}
+
 protected:
 	T values_;
 	const System& system_;
 };
-}
+} // namespace internal
 
-template<class Element, class Quadr, std::size_t var = 0, class System, class T>
+template<class Quadr, std::size_t var = 0, class System, class T>
 auto at_quadr(const internal::Solution_base<System, T>& solution, const typename System::template Var_dofs<var>& dofs)
 {
-	return solution.template at_quadr<Element, Quadr, var>(dofs);
+	return solution.template at_quadr<Quadr, var>(dofs);
 }
-} // namespace es_fe::internal
+
+template<class Quadr, std::size_t var = 0, class System, class T>
+auto at_quadr(const internal::Solution_base<System, T>& solution, const typename System::Mesh::Cell_view& cell)
+{
+	return solution.template at_quadr<Quadr, var>(cell);
+}
+} // namespace es_fe

@@ -29,7 +29,7 @@ auto gradients(double inv_j)
 template<class Element, class Quadr>
 auto gradients(const es_la::Matrix_2d& inv_tr_j)
 {
-	es_la::Matrix<es_la::Vector_2d, Quadr::size(), Element::n_total_face_dofs> grads;
+	es_la::Matrix<es_la::Vector_2d, Quadr::size, Element::n_total_face_dofs> grads;
 	es_fe::internal::gradients<Element, Quadr>(grads, inv_tr_j);
 	return grads;
 }

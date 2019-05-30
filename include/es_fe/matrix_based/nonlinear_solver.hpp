@@ -1,6 +1,5 @@
 #pragma once
 #include <es_fe/matrix_based/solution_view.hpp>
-#include <es_fe/matrix_based/solution_view1.hpp>
 #include <es_fe/matrix_based/solver_base.hpp>
 
 #include <es_la/dense.hpp>
@@ -12,23 +11,6 @@ namespace es_fe
 template<class System_, class Linear_solver_>
 class Matrix_based_nonlinear_solver : public Matrix_based_solver_base<System_, Linear_solver_>
 {
-public:
-	using System = System_;
-	using Mesh = typename System::Mesh;
-
-public:
-	// template<std::size_t var>
-	// using Solution_view_t = Solution_view<System, var>;
-
-	// template<std::size_t var, class Mesh_el_tag>
-	// using Solution_view_t2 = Solution_view2<System, var, Mesh_el_tag>;
-
-	// template<std::size_t var>
-	// using Solution_view = Solution_view1<System, var>;
-
-	template<class Solver, std::size_t var>
-	friend class Solution_view1;
-
 private:
 	using Base = Matrix_based_solver_base<System_, Linear_solver_>;
 
@@ -77,32 +59,6 @@ public:
 	{
 		solution_ = solution.values();
 	}
-
-	// template<std::size_t var = 0>
-	// Solution_view<var> solution_view()
-	// {
-	// 	return Solution_view<var>{system(), solution_};
-	// }
-
-	// template<std::size_t var = 0>
-	// Solution_view<var> solution_view(const es_la::Vector_xd& solution) const
-	// {
-	// 	return Solution_view<var>{system(), solution};
-	// }
-
-	// 	template<std::size_t var>
-	// Solution_view_t<var> solution_view() const
-	// {
-	// 	debug_check_var_index<var>();
-	// 	return {*this};
-	// }
-
-	// template<std::size_t var, class Mesh_el_tag>
-	// auto solution_view2() const
-	// {
-	// 	debug_check_var_index<var>();
-	// 	return Solution_view_t2<var, Mesh_el_tag>{*this};
-	// }
 
 	std::size_t memory_size() const
 	{

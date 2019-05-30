@@ -6,14 +6,8 @@ namespace es_fe
 struct Dof_index
 {
 public:
-	// TODO : remove initializers
 	Index index = invalid_index;
 	bool is_free = true;
-
-	static Dof_index invalid_free()
-	{
-		return {invalid_index, true};
-	}
 
 	bool is_valid() const
 	{
