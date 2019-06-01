@@ -16,7 +16,7 @@ Boltzmann-Poisson solver based on spherical harmonics expansion.
 * Guass and Dunavant rules for itegration
 * Matrix-based linear, non-linear and eigensolvers
 * Mesh faces colouring and multi-threaded matrix assembly
-* Import from Gmsh mash files, export into VTK `.vtk` and Matlab `.mat` files
+* Import from Gmsh mesh files, export into VTK `.vtk` and Matlab `.mat` files
 
 ## Dependencies
 

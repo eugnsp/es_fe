@@ -23,6 +23,13 @@ public:
 		mat_file_.write(var_name, field);
 	}
 
+	template<class Field>
+	void write_edge_field(const std::string& var_name, const Field& field)
+	{
+		assert(field.size() == *mesh_.n_edges());
+		mat_file_.write(var_name, field);
+	}
+
 	template<typename T>
 	void write_scalar(const std::string& var_name, T value)
 	{

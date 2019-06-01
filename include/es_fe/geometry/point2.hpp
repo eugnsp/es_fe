@@ -24,7 +24,7 @@ private:
 public:
 	using Base::Base;
 
-	Point2(double x, double y) : Base({x, y})
+	Point2(double x, double y) : Base{x, y}
 	{}
 
 	double& x()

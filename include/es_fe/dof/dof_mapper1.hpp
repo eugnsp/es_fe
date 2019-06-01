@@ -31,7 +31,7 @@ public:
 	using Var_edge_dofs = typename Base::template Var_edge_dofs<vi>;
 
 public:
-	template<std::size_t var>
+	template<std::size_t var = 0>
 	Var_dofs<var> dofs(const Edge_view& cell) const
 	{
 		Var_dofs<var> dofs;
@@ -46,10 +46,18 @@ public:
 		return dofs_list;
 	}
 
-	template<std::size_t var>
-	void vertex_dofs(Vertex_index vertex, Var_vertex_dofs<var>& dofs_list) const
+	template<std::size_t var = 0>
+	void vertex_dofs(Vertex_index vertex, Var_vertex_dofs<var>& dofs) const
 	{
-		var_vertex_dofs<var>(vertex, dofs_list);
+		var_vertex_dofs<var>(vertex, dofs);
+	}
+
+	template<std::size_t var = 0>
+	Var_vertex_dofs<var> vertex_dofs(Vertex_index vertex) const
+	{
+		Var_vertex_dofs<var> dofs;
+		var_vertex_dofs<var>(vertex,  dofs);
+		return dofs;
 	}
 
 private:

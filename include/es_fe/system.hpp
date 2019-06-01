@@ -78,19 +78,6 @@ public:
 		return dof_mapper_;
 	}
 
-	template<std::size_t var = 0, class Element_view, typename... Args>
-	Var_dofs<var> dofs(const Element_view& element, Args&&... args) const
-	{
-		debug_check_var_index<var>();
-		return dof_mapper_.template dofs<var>(element, std::forward<Args>(args)...);
-	}
-
-	template<typename... Args>
-	auto all_dofs(const typename Mesh::Cell_view& cell, Args&&... args) const
-	{
-		return dof_mapper_.all_dofs(cell, std::forward<Args>(args)...);
-	}
-
 	// 	template<std::size_t var>
 	// 	void vertex_dofs(mesh::Index vertex, Var_vertex_dofs<var>& dofs_list) const
 	// 	{

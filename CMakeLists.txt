@@ -12,6 +12,10 @@ target_compile_features(es_fe PUBLIC cxx_std_17)
 target_compile_options(es_fe PRIVATE -Wall -Wpedantic -Wextra -Werror=return-type -m64 -march=native 
 					   $<$<CONFIG:DEBUG>:-O0 -g> $<$<CONFIG:RELEASE>:-Wno-unused-parameter -Wno-deprecated-declarations -O3 -DNDEBUG>)
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+	target_compile_options(es_fe PRIVATE -Wno-psabi)
+endif()
+
 if (NOT TARGET es_util)
 	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/es_util")
 endif()
