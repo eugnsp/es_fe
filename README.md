@@ -23,4 +23,4 @@ Boltzmann-Poisson solver based on spherical harmonics expansion.
 * [`es_la` library](https://github.com/eugnsp/es_la)
 * [`es_util` library](https://github.com/eugnsp/es_util)
 
-Requires C++11/14/17 compiler.
+Requires C++17 compiler. Tested with GCC 8.3.0 and Clang 7.0.0.

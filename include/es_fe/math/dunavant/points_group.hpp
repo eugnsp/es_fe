@@ -29,20 +29,19 @@ public:
 		return n * (n + 1) / 2;
 	}
 
-	constexpr auto points() const
+	constexpr std::array<es_la::Vector_2d, size()> points() const
 	{
 		using V = es_la::Vector_2d;
-		using Ret = std::array<V, size()>;
 
 		if constexpr (n == 1)
-			return Ret{V{{coords_[0], coords_[0]}}};
+			return {V{coords_[0], coords_[0]}};
 		else if constexpr (n == 2)
-			return Ret{V{{coords_[0], coords_[1]}}, V{{coords_[1], coords_[0]}},
-				V{{coords_[1], coords_[1]}}};
+			return {V{coords_[0], coords_[1]}, V{coords_[1], coords_[0]},
+				V{coords_[1], coords_[1]}};
 		else if constexpr (n == 3)
-			return Ret{V{{coords_[0], coords_[1]}}, V{{coords_[0], coords_[2]}},
-				V{{coords_[1], coords_[2]}}, V{{coords_[1], coords_[0]}},
-				V{{coords_[2], coords_[0]}}, V{{coords_[2], coords_[1]}}};
+			return {V{coords_[0], coords_[1]}, V{coords_[0], coords_[2]},
+				V{coords_[1], coords_[2]}, V{coords_[1], coords_[0]},
+				V{coords_[2], coords_[0]}, V{coords_[2], coords_[1]}};
 	}
 
 	// Computes the sum (weight) * (fn(start_index) + fn(start_index + 1) + ...)

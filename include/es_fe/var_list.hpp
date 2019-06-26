@@ -26,6 +26,6 @@ struct Var_list
 	using Tuple_map = std::tuple<Fn<Variables>...>;
 
 	// Returns the list of variables as an `std::tuple`
-	using Tuple = Tuple_map<es_util::Identity>;
+	using Tuple = Tuple_map<es_util::Type_identity>;
 };
 } // namespace es_fe

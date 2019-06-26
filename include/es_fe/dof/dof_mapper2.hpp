@@ -53,7 +53,7 @@ public:
 	// 		return dofs;
 	// 	}
 
-	template<std::size_t var>
+	template<std::size_t var = 0>
 	Var_dofs<var> dofs(const Face_view& cell, Halfedge_index first_halfedge) const
 	{
 		Var_dofs<var> dofs;
@@ -61,7 +61,7 @@ public:
 		return dofs;
 	}
 
-	template<std::size_t var>
+	template<std::size_t var = 0>
 	Var_dofs<var> dofs(const Face_view& cell) const
 	{
 		Var_dofs<var> dofs;
@@ -76,13 +76,13 @@ public:
 		return dofs_list;
 	}
 
-	template<std::size_t var>
+	template<std::size_t var = 0>
 	void vertex_dofs(Vertex_index vertex, Var_vertex_dofs<var>& dofs_list) const
 	{
 		var_vertex_dofs<var>(vertex, dofs_list);
 	}
 
-	template<std::size_t var>
+	template<std::size_t var = 0>
 	void edge_dofs(Edge_index edge, Var_edge_dofs<var>& dofs_list) const
 	{
 		var_edge_dofs<var>(edge, dofs_list);
