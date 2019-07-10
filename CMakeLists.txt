@@ -25,3 +25,7 @@ if (NOT TARGET es_la)
 	add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/external/es_la")
 endif()
 target_link_libraries(es_fe PUBLIC es_la)
+
+set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
+find_package(Threads REQUIRED)
+target_link_libraries(es_fe PUBLIC Threads::Threads)
