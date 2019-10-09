@@ -1,6 +1,6 @@
-#include <es_fe/element/lagrange.hpp>
-#include <es_fe/types.hpp>
-#include <es_la/dense.hpp>
+#include <esf/element/lagrange.hpp>
+#include <esf/types.hpp>
+#include <esl/dense.hpp>
 
 #include <cassert>
 #include <cmath>

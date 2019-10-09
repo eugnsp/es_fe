@@ -1,8 +1,8 @@
-#include <es_fe/geometry.hpp>
-#include <es_fe/mesh/mesh2.hpp>
+#include <esf/geometry.hpp>
+#include <esf/mesh/mesh2.hpp>
 
-#include <es_util/error.hpp>
-#include <es_util/string.hpp>
+#include <esu/error.hpp>
+#include <esu/string.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -38,7 +38,7 @@ Rect Mesh2::bounding_rect() const
 }
 
 // Performs some basic checks of mesh data structure consistency
-es_util::Error Mesh2::check() const
+esu::Error Mesh2::check() const
 {
 	auto err = Halfedge_structure::check();
 	if (err)
@@ -59,6 +59,6 @@ void Mesh2::print(std::ostream& os) const
 	   << "Vertices: " << *n_vertices() << '\n'
 	   << "Edges:    " << *n_edges() << '\n'
 	   << "Faces:    " << *n_faces() << '\n'
-	   << "Memory:   " << es_util::size_string(memory_size()) << std::endl;
+	   << "Memory:   " << esu::size_string(memory_size()) << std::endl;
 }
 } // namespace es_fe

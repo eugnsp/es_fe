@@ -1,8 +1,8 @@
-#include <es_fe/geometry.hpp>
-#include <es_fe/mesh/halfedge_structure.hpp>
-#include <es_fe/types.hpp>
+#include <esf/geometry.hpp>
+#include <esf/mesh/halfedge_structure.hpp>
+#include <esf/types.hpp>
 
-#include <es_util/error.hpp>
+#include <esu/error.hpp>
 
 #include <algorithm>
 #include <set>
@@ -18,9 +18,9 @@ std::string index_string(Index index)
 namespace es_fe::internal
 {
 // Performs some basic checks of mesh data structure consistency
-es_util::Error Halfedge_structure::check() const
+esu::Error Halfedge_structure::check() const
 {
-	es_util::Error err;
+	esu::Error err;
 
 	if (*n_vertices() == 0)
 		err.append_ln("The mesh contains no vertices");

@@ -1,10 +1,10 @@
-#include <es_fe/geometry/algorithm.hpp>
-#include <es_fe/geometry/linestring.hpp>
-#include <es_fe/mesh/algorithm/linestring.hpp>
-#include <es_fe/mesh/mesh2.hpp>
-#include <es_fe/types.hpp>
+#include <esf/geometry/algorithm.hpp>
+#include <esf/geometry/linestring.hpp>
+#include <esf/mesh/algorithm/linestring.hpp>
+#include <esf/mesh/mesh2.hpp>
+#include <esf/types.hpp>
 
-#include <es_util/type_traits.hpp>
+#include <esu/type_traits.hpp>
 
 #include <stdexcept>
 #include <utility>
@@ -66,7 +66,7 @@ std::vector<Vertex_index> vertices_in_linestring(const Mesh2& mesh, const Linest
 
 	elements_in_linestring(
 		mesh, linestring, [&vertices](const auto& vertex) { vertices.push_back(*vertex); },
-		es_util::Nop_fn{});
+		esu::Nop_fn{});
 
 	return vertices;
 }
@@ -75,7 +75,7 @@ std::vector<Halfedge_index> halfedges_in_linestring(const Mesh2& mesh, const Lin
 {
 	std::vector<Halfedge_index> halfedges;
 
-	elements_in_linestring(mesh, linestring, es_util::Nop_fn{},
+	elements_in_linestring(mesh, linestring, esu::Nop_fn{},
 		[&halfedges](const auto& halfedge) { halfedges.push_back(*halfedge); });
 
 	return halfedges;

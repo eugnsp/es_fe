@@ -1,10 +1,10 @@
-#include <es_fe/geometry/geometry.hpp>
-#include <es_fe/geometry/point2.hpp>
+#include <esf/geometry/geometry.hpp>
+#include <esf/geometry/point2.hpp>
 
-#include <es_la/dense.hpp>
+#include <esl/dense.hpp>
 
-//#include <es_util/numeric.hpp>
-#include <es_fe/geometry/algorithm.hpp>
+//#include <esu/numeric.hpp>
+#include <esf/geometry/algorithm.hpp>
 //#include "math/LA/VectorFunction.h"
 
 #include <algorithm>
