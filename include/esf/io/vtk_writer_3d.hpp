@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 class Vtk_writer_3d
 {
@@ -163,4 +163,4 @@ private:
 	const Mesh<2>& mesh_;
 	const std::vector<double>& grid_z_;
 };
-} // namespace es_fe
+} // namespace esf

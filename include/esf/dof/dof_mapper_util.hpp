@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Symmetry_tag, class System>
 esl::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system)
@@ -27,13 +27,13 @@ esl::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system)
 	{
 		const auto dofs_list = dof_mapper.all_dofs(cell);
 		indices.clear();
-		es_fe::for_each_var<typename System::Var_list>([&](auto var) {
+		esf::for_each_var<typename System::Var_list>([&](auto var) {
 			const auto& dofs = std::get<var>(dofs_list);
-			const auto n_dofs = static_cast<es_fe::Local_index>(dofs.size());
+			const auto n_dofs = static_cast<esf::Local_index>(dofs.size());
 
-			for (es_fe::Local_index i = 0; i < n_dofs; ++i)
+			for (esf::Local_index i = 0; i < n_dofs; ++i)
 				if (dofs[i].is_free)
-					for (es_fe::Index d = 0; d < system.variable(var).dim(); ++d)
+					for (esf::Index d = 0; d < system.variable(var).dim(); ++d)
 						indices.push_back(dofs[i].index + d * n_dofs);
 		});
 		for (std::size_t i = 0; i < indices.size(); ++i)
@@ -67,4 +67,4 @@ esl::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system)
 #endif
 	return pattern;
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

@@ -8,7 +8,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 // A triangular tensor mesh
 class Tri_tensor_mesh : public Mesh<2>
@@ -127,4 +127,4 @@ private:
 	Grid grid_x_;
 	Grid grid_y_;
 };
-} // namespace es_fe
+} // namespace esf

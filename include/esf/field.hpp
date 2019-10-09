@@ -3,7 +3,7 @@
 //#include "element_quadr.hpp"
 #include <cstddef>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -37,4 +37,4 @@ public:
 	}
 };
 } // namespace internal
-} // namespace es_fe
+} // namespace esf

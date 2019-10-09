@@ -5,7 +5,7 @@
 #include <esl/io/matfile_writer.hpp>
 #include <string>
 
-namespace es_fe
+namespace esf
 {
 class Matlab_writer1
 {
@@ -41,7 +41,7 @@ private:
 	{
 		// Vertices
 		esl::Vector_xd vertices(*mesh_.n_vertices());
-		for (es_fe::Vertex_index vertex{0}; vertex < mesh_.n_vertices(); ++vertex)
+		for (esf::Vertex_index vertex{0}; vertex < mesh_.n_vertices(); ++vertex)
 			vertices[*vertex] = mesh_.vertex(vertex).x() / mesh_scale;
 
 		mat_file_.write("vertices", vertices);
@@ -51,4 +51,4 @@ private:
 	esl::Matfile_writer mat_file_;
 	const Mesh1& mesh_;
 };
-} // namespace es_fe
+} // namespace esf

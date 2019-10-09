@@ -1,7 +1,7 @@
 #include <esf/mesh/mesh1.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 auto Mesh1::begin_vertex() const -> Vertex_iter
 {
@@ -47,4 +47,4 @@ auto Mesh1::cells() const -> esu::Iterable<Cell_iter>
 {
 	return edges();
 }
-} // namespace es_fe
+} // namespace esf

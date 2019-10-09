@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 namespace
 {
@@ -106,4 +106,4 @@ std::pair<std::vector<Vertex_index>, std::vector<Edge_index>> vertices_and_edges
 
 	return {vertices, edges};
 }
-} // namespace es_fe
+} // namespace esf

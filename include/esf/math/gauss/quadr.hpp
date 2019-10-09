@@ -5,7 +5,7 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 template<Local_index order>
 class Quadr<order, 1>
@@ -22,12 +22,12 @@ public:
 public:
 	// Returns the quadrature point with the given index
 	// on the reference interval [0, 1]
-	static constexpr es_fe::Point1 point(Local_index point)
+	static constexpr esf::Point1 point(Local_index point)
 	{
 		assert(point < size);
 
 		// Map the interval [-1, 1], which is used in data, to [0, 1]
-		return es_fe::Point1{(1 + points[point].x) / 2};
+		return esf::Point1{(1 + points[point].x) / 2};
 	}
 
 	// Computes a weighted sum over quadrature points,
@@ -45,4 +45,4 @@ private:
 		return (... + (points[indices].weight * fn(indices)));
 	}
 };
-} // namespace es_fe
+} // namespace esf

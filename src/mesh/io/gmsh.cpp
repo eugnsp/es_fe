@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 Mesh2 read_gmsh_mesh(const std::string& file_name, double scale)
 {
@@ -23,4 +23,4 @@ std::vector<unsigned int> read_gmsh_tags(const std::string& file_name, unsigned 
 	internal::Gmsh_file_reader reader(file_name);
 	return reader.read_tags(tag_index);
 }
-} // namespace es_fe
+} // namespace esf

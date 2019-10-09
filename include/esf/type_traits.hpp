@@ -6,7 +6,7 @@
 
 #include <type_traits>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class T>
 inline constexpr bool is_circulation_tag =
@@ -77,9 +77,9 @@ template<class Element_tag>
 using Element_tag_by_index = typename Element_tag_by_index_impl<Element_tag>::Type;
 
 //////////////////////////////////////////////////////////////////////////
-} // namespace es_fe::internal
+} // namespace esf::internal
 
-namespace es_fe
+namespace esf
 {
 template<std::size_t var>
 using Var_index = esu::Index<var>;
@@ -97,9 +97,9 @@ template<class Var_list, class Var_index>
 using Var_by_var_index =
 	typename Var_by_var_index_impl<Var_list, esu::Remove_cv_ref<Var_index>>::Type;
 
-} // namespace es_fe
+} // namespace esf
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class T>
 struct Is_var_list : std::false_type
@@ -197,9 +197,9 @@ struct Circulator_type_selector<Edge_tag, Circ_tag>
 {
 	using Type = Circulator_halfedge_edge<Edge_tag, Circ_tag>;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal
 
-namespace es_fe
+namespace esf
 {
 template<class Element_tag, class Circ_tag>
 using Circulator = typename internal::Circulator_type_selector<Element_tag, Circ_tag>::Type;

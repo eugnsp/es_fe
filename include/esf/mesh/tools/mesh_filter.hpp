@@ -4,7 +4,7 @@
 
 #include <unordered_map>
 
-namespace es_fe
+namespace esf
 {
 // Creates a new mesh from the given mesh retaining the faces specified
 // by the given predicate; the relative order of faces is preserved,
@@ -39,4 +39,4 @@ Mesh2 mesh_filter_by_faces(const Mesh2& mesh, Unary_predicate pred)
 	filtered_mesh.shrink();
 	return filtered_mesh;
 }
-} // namespace es_fe
+} // namespace esf

@@ -4,9 +4,9 @@
 
 #include <algorithm>
 
-namespace es_fe::internal
+namespace esf::internal
 {
-auto Halfedge_structure::find_vertex(const es_fe::Point2& point) const -> Vertex_index
+auto Halfedge_structure::find_vertex(const esf::Point2& point) const -> Vertex_index
 {
 	const auto pos = std::find_if(vertices_.begin(), vertices_.end(),
 		[&point](auto& vertex) { return vertex.point == point; });
@@ -30,4 +30,4 @@ auto Halfedge_structure::find_halfedge(Vertex_index from, Vertex_index to) const
 
 	return find_if(twin(halfedge), invalid_or_required, Vertex_in_circ_tag{});
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

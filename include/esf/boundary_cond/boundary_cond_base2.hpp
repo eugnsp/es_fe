@@ -9,7 +9,7 @@
 #include <tuple>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Element>
 class Boundary_cond_base<2, Element>
@@ -46,4 +46,4 @@ protected:
 	std::vector<Vertex_index> vertices_;
 	std::vector<Halfedge_index> halfedges_;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

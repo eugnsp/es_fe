@@ -6,7 +6,7 @@
 #include <cstddef>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 template<class System, typename Value_>
 class Eigen_solution_view
@@ -64,7 +64,7 @@ public:
 				if (dofs[id].is_free)
 				{
 					const auto v = eigen_vectors_(dofs[id].index, index);
-					vals_at_quadr[iq] += es_fe::Element_quadr<Element<var>, Quadr>::basis()(iq, id) * v;
+					vals_at_quadr[iq] += esf::Element_quadr<Element<var>, Quadr>::basis()(iq, id) * v;
 				}
 
 		return vals_at_quadr;
@@ -102,4 +102,4 @@ auto at_quadr(
 {
 	return solution.template at_quadr<Quadr, var>(index, cell);
 }
-} // namespace es_fe
+} // namespace esf

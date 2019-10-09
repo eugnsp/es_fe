@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 inline Local_index n_adjacent_edges(const Mesh2& mesh, Vertex_index vertex)
 {
@@ -25,4 +25,4 @@ inline Local_index n_adjacent_faces(const Mesh2& mesh, Vertex_index vertex)
 
 	return n;
 }
-} // namespace es_fe
+} // namespace esf

@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 Face_index Halfedge_structure::add_cell(const std::array<Vertex_index, 3>& vertices)
 {
@@ -152,4 +152,4 @@ Face_index Halfedge_structure::add_cell(const std::array<Vertex_index, 3>& verti
 
 	return cell;
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

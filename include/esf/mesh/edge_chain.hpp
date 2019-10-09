@@ -4,7 +4,7 @@
 #include "mesh2.hpp" // TODO ? : remove
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 class Edge_chain
 {
@@ -41,4 +41,4 @@ private:
 	std::vector<Index> half_edges_;
 	const Mesh2& mesh_;
 };
-} // namespace es_fe
+} // namespace esf

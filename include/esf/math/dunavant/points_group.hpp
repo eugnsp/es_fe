@@ -5,7 +5,7 @@
 
 #include <array>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // Group of Dunavant quadrature points; a group contains
 // weight and 1, 3 or 6 points that are obtained via all possible
@@ -66,4 +66,4 @@ private:
 
 template<typename... Coords>
 Dunavant_points_group(double, Coords...)->Dunavant_points_group<sizeof...(Coords)>;
-} // namespace es_fe::internal
+} // namespace esf::internal

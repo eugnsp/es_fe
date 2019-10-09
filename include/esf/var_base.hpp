@@ -12,7 +12,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // Base class of a variable
 //
@@ -98,4 +98,4 @@ private:
 	Bnd_conds_tuple bnd_conds_;
 	std::string name_ = "<un-named>";
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

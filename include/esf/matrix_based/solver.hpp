@@ -7,7 +7,7 @@
 #include <cstddef>
 #include <memory>
 
-namespace es_fe
+namespace esf
 {
 template<class System_, class Linear_solver_>
 class Matrix_based_solver : public Matrix_based_solver_base<System_, Linear_solver_>
@@ -60,4 +60,4 @@ protected:
 	using Base::matrix_;
 	using Base::linear_solver_;
 };
-} // namespace es_fe
+} // namespace esf

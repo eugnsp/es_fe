@@ -5,7 +5,7 @@
 #include <cassert>
 #include <type_traits>
 
-namespace es_fe
+namespace esf
 {
 template<class Element_tag, class Circ_tag>
 class Circulator_halfedge_edge : public internal::Iterator_base<Element_tag, Mesh<2>>
@@ -39,4 +39,4 @@ public:
 private:
 	using Base::view_;
 };
-} // namespace es_fe
+} // namespace esf

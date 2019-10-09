@@ -4,16 +4,16 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 using V = Element_view<Halfedge_tag, Mesh2>;
 
-const es_fe::Point2& V::vertex() const
+const esf::Point2& V::vertex() const
 {
 	return mesh_.vertex(vertex_index());
 }
 
-const es_fe::Point2& V::vertex(Local_index vertex) const
+const esf::Point2& V::vertex(Local_index vertex) const
 {
 	return mesh_.vertex(vertex_index(vertex));
 }
@@ -32,9 +32,9 @@ Vertex_index V::vertex_index(Local_index vertex) const
 		return mesh_.vertex_index(twin(index_));
 }
 
-es_fe::Point2 V::vector() const
+esf::Point2 V::vector() const
 {
-	return es_fe::Point2{vertex() - mesh_.vertex(mesh_.vertex_index(twin(index_)))};
+	return esf::Point2{vertex() - mesh_.vertex(mesh_.vertex_index(twin(index_)))};
 }
 
 Edge_index V::edge_index() const
@@ -80,4 +80,4 @@ auto V::face_view(Local_index index) const -> Face_view
 {
 	return {mesh_, face_index(index)};
 }
-} // namespace es_fe
+} // namespace esf

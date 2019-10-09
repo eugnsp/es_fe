@@ -1,6 +1,6 @@
 #pragma once
 
-namespace es_fe
+namespace esf
 {
 class Seq_cell_assembler
 {
@@ -16,4 +16,4 @@ public:
 	}
 };
 
-} // namespace es_fe
+} // namespace esf

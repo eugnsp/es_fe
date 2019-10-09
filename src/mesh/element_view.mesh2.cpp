@@ -3,7 +3,7 @@
 
 #include <ostream>
 
-namespace es_fe
+namespace esf
 {
 // Outputs human readable information about the view
 void Element_view<Vertex_tag, Mesh2>::print(std::ostream& os) const
@@ -39,4 +39,4 @@ void Element_view<Face_tag, Mesh2>::print(std::ostream& os) const
 	os << "  " << *(++circ);
 	os << "  " << *(++circ);
 }
-} // namespace es_fe
+} // namespace esf

@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 class Gmsh_file_reader
 {
@@ -43,4 +43,4 @@ private:
 	std::ifstream file_;
 	std::unordered_map<Index, Vertex_index> node_indices_map_;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

@@ -8,7 +8,7 @@
 #include <cassert>
 #include <ostream>
 
-namespace es_fe
+namespace esf
 {
 // Returns the smallest rectangle that contains the mesh
 Rect Mesh2::bounding_rect() const
@@ -17,8 +17,8 @@ Rect Mesh2::bounding_rect() const
 
 	const auto first = boundary_vertex_circ();
 
-	es_fe::Point2 bottom_left = first->vertex();
-	es_fe::Point2 top_right = first->vertex();
+	esf::Point2 bottom_left = first->vertex();
+	esf::Point2 top_right = first->vertex();
 
 	auto circ = first;
 	do
@@ -61,4 +61,4 @@ void Mesh2::print(std::ostream& os) const
 	   << "Faces:    " << *n_faces() << '\n'
 	   << "Memory:   " << esu::size_string(memory_size()) << std::endl;
 }
-} // namespace es_fe
+} // namespace esf

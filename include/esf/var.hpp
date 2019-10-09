@@ -13,7 +13,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 // Class of a variable with static dimension
 //
@@ -82,4 +82,4 @@ public:
 private:
 	Local_index dim_ = 1;
 };
-} // namespace es_fe
+} // namespace esf

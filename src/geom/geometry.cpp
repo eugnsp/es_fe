@@ -11,7 +11,7 @@
 #include <cassert>
 #include <cmath>
 
-namespace es_fe
+namespace esf
 {
 /** Checks whether four points form a rectangle.
  *  Precondition: points should be ordered anti-clockwise. */
@@ -163,4 +163,4 @@ double circumradius(const Point2& , const Point2& , const Point2& )
 	throw 0;
 	// return distance(a, b) * distance(b, c) * distance(c, a) / (4 * area(a, b, c));
 }
-} // namespace es_fe
+} // namespace esf

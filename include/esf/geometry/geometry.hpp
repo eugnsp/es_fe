@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace es_fe
+namespace esf
 {
 // Basic geometric functions
 
@@ -36,12 +36,12 @@ enum class Side
 };
 
 // Computes which side of the directed line (a -> b) the point is located at
-Side which_side(const es_fe::Point2&, const es_fe::Point2& a, const es_fe::Point2& b);
+Side which_side(const esf::Point2&, const esf::Point2& a, const esf::Point2& b);
 
 // Computes the intersection point between the line segment [x1, x2] and
 // the line passing through points (y1) and (y2)
-es_fe::Point2 GetSegmentAndLineIntersectionPoint(const es_fe::Point2& _x1, const es_fe::Point2& _x2,
-	const es_fe::Point2& _y1, const es_fe::Point2& _y2);
+esf::Point2 GetSegmentAndLineIntersectionPoint(const esf::Point2& _x1, const esf::Point2& _x2,
+	const esf::Point2& _y1, const esf::Point2& _y2);
 
 // Clips simple by the line passing through points (y1) and (y2)
 // void ClipSimpleByLine(SimplePolygon& _out, const SimplePolygon& _in, const Point2& _y1, const
@@ -67,4 +67,4 @@ inline double diameter(const Point2& a, const Point2& b, const Point2& c)
 {
 	return std::max({distance(b, c), distance(c, a), distance(a, b)});
 }
-} // namespace es_fe
+} // namespace esf

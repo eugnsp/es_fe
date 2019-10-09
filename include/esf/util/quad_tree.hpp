@@ -8,7 +8,7 @@
 #include <tuple>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class T>
 class Quad_tree
@@ -429,4 +429,4 @@ private:
 	const std::size_t n_cells_x_;
 	const std::size_t n_cells_y_;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

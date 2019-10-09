@@ -5,8 +5,8 @@
 #include <cassert>
 #include <iostream>
 
-using Element = es_fe::Lagrange<1, 2>;
-constexpr es_fe::Local_index dim = 6;
+using Element = esf::Lagrange<1, 2>;
+constexpr esf::Local_index dim = 6;
 
 struct Ess_bnd_cond
 {
@@ -57,43 +57,43 @@ void test_base(Var& var)
 
 void test_base_var()
 {
-	es_fe::internal::Var_base<Element, Ess_bnd_cond, Non_ess_bnd_cond> var;
+	esf::internal::Var_base<Element, Ess_bnd_cond, Non_ess_bnd_cond> var;
 	test_base<Element>(var);
 }
 
 void test_static_var()
 {
-	es_fe::Var<Element, dim, Ess_bnd_cond, Non_ess_bnd_cond> var;
+	esf::Var<Element, dim, Ess_bnd_cond, Non_ess_bnd_cond> var;
 	test_base<Element>(var);
 
 	static_assert(var.dim() == dim);
 
-	static_assert(var.n_dofs(es_fe::Vertex_tag{}) == dim * Element::n_vertex_dofs);
-	static_assert(var.n_dofs(es_fe::Edge_tag{}) == dim * Element::n_edge_dofs);
-	static_assert(var.n_dofs(es_fe::Face_tag{}) == dim * Element::n_face_dofs);
-	static_assert(var.n_dofs(es_fe::Cell_tag{}) == dim * Element::n_cell_dofs);
+	static_assert(var.n_dofs(esf::Vertex_tag{}) == dim * Element::n_vertex_dofs);
+	static_assert(var.n_dofs(esf::Edge_tag{}) == dim * Element::n_edge_dofs);
+	static_assert(var.n_dofs(esf::Face_tag{}) == dim * Element::n_face_dofs);
+	static_assert(var.n_dofs(esf::Cell_tag{}) == dim * Element::n_cell_dofs);
 
-	static_assert(var.n_total_dofs(es_fe::Edge_tag{}) == dim * Element::n_total_edge_dofs);
-	static_assert(var.n_total_dofs(es_fe::Face_tag{}) == dim * Element::n_total_face_dofs);
-	static_assert(var.n_total_dofs(es_fe::Cell_tag{}) == dim * Element::n_total_cell_dofs);
+	static_assert(var.n_total_dofs(esf::Edge_tag{}) == dim * Element::n_total_edge_dofs);
+	static_assert(var.n_total_dofs(esf::Face_tag{}) == dim * Element::n_total_face_dofs);
+	static_assert(var.n_total_dofs(esf::Cell_tag{}) == dim * Element::n_total_cell_dofs);
 }
 
 void test_dynamic_var()
 {
-	es_fe::Var_x<Element, Ess_bnd_cond, Non_ess_bnd_cond> var;
+	esf::Var_x<Element, Ess_bnd_cond, Non_ess_bnd_cond> var;
 	var.set_dim(dim);
 	test_base<Element>(var);
 
 	assert(var.dim() == dim);
 
-	assert(var.n_dofs(es_fe::Vertex_tag{}) == dim * Element::n_vertex_dofs);
-	assert(var.n_dofs(es_fe::Edge_tag{}) == dim * Element::n_edge_dofs);
-	assert(var.n_dofs(es_fe::Face_tag{}) == dim * Element::n_face_dofs);
-	assert(var.n_dofs(es_fe::Cell_tag{}) == dim * Element::n_cell_dofs);
+	assert(var.n_dofs(esf::Vertex_tag{}) == dim * Element::n_vertex_dofs);
+	assert(var.n_dofs(esf::Edge_tag{}) == dim * Element::n_edge_dofs);
+	assert(var.n_dofs(esf::Face_tag{}) == dim * Element::n_face_dofs);
+	assert(var.n_dofs(esf::Cell_tag{}) == dim * Element::n_cell_dofs);
 
-	assert(var.n_total_dofs(es_fe::Edge_tag{}) == dim * Element::n_total_edge_dofs);
-	assert(var.n_total_dofs(es_fe::Face_tag{}) == dim * Element::n_total_face_dofs);
-	assert(var.n_total_dofs(es_fe::Cell_tag{}) == dim * Element::n_total_cell_dofs);
+	assert(var.n_total_dofs(esf::Edge_tag{}) == dim * Element::n_total_edge_dofs);
+	assert(var.n_total_dofs(esf::Face_tag{}) == dim * Element::n_total_face_dofs);
+	assert(var.n_total_dofs(esf::Cell_tag{}) == dim * Element::n_total_cell_dofs);
 }
 
 int main()

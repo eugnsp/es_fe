@@ -6,7 +6,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 // Colours faces of the mesh using simple greedy algorithm such that
 // no two faces having at least one common vertex have the same colour
@@ -98,4 +98,4 @@ auto colour_cells(const Mesh2& mesh, Colours& colours)
 
 	return n_colours;
 }
-} // namespace es_fe
+} // namespace esf

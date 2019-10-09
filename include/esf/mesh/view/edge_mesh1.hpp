@@ -3,7 +3,7 @@
 #include <esf/mesh/view/base.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 template<>
 class Element_view<Edge_tag, Mesh1> : public internal::Element_view_base<Edge_tag, Mesh1>
@@ -18,7 +18,7 @@ public:
 
 	bool is_boundary() const;
 
-	const es_fe::Point1& vertex(Local_index) const;
+	const esf::Point1& vertex(Local_index) const;
 	Vertex_index vertex_index(Local_index) const;
 
 	void get_indices(Vertex_indices&) const;
@@ -33,4 +33,4 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Edge_tag, M
 	view.print(os);
 	return os;
 }
-} // namespace es_fe
+} // namespace esf

@@ -6,7 +6,7 @@
 #include <array>
 #include <cassert>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<Local_index order_>
 class Lagrange_base_1
@@ -16,7 +16,7 @@ public:
 
 public:
 	// Returns the value of the basis function (dof) at the given point (point)
-	static constexpr double basis(Local_index dof, es_fe::Point1 point)
+	static constexpr double basis(Local_index dof, esf::Point1 point)
 	{
 		const auto r = ij_by_dof_index(dof);
 
@@ -25,7 +25,7 @@ public:
 	}
 
 	// Returns the value of the basis function (dof) gradient at the given point (point)
-	static constexpr double basis_grad(Local_index dof, es_fe::Point1 point)
+	static constexpr double basis_grad(Local_index dof, esf::Point1 point)
 	{
 		const auto r = ij_by_dof_index(dof);
 
@@ -60,4 +60,4 @@ private:
 		return {dof, order - dof};
 	}
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

@@ -9,9 +9,9 @@
 
 void construction_test()
 {
-	using namespace es_fe::literals;
+	using namespace esf::literals;
 
-	std::vector<std::array<es_fe::Vertex_index, 3>> faces;
+	std::vector<std::array<esf::Vertex_index, 3>> faces;
 	faces.push_back({0_vi, 6_vi, 3_vi});
 	faces.push_back({3_vi, 4_vi, 2_vi});
 	faces.push_back({3_vi, 6_vi, 4_vi});
@@ -25,7 +25,7 @@ void construction_test()
 
 	do
 	{
-		es_fe::Mesh2 mesh;
+		esf::Mesh2 mesh;
 		mesh.add_vertex({0, 0});
 		mesh.add_vertex({1, 0});
 		mesh.add_vertex({1, 1});
@@ -46,7 +46,7 @@ void construction_test()
 	} while (std::next_permutation(faces.begin(), faces.end()));
 }
 
-// void basic_test(const es_fe::Mesh2& mesh)
+// void basic_test(const esf::Mesh2& mesh)
 // {
 // 	static_assert(mesh.dim == 2);
 // 	assert(!mesh.is_empty());

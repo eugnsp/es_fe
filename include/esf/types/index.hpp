@@ -5,7 +5,7 @@
 #include <cstdint>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 using Index = std::uint32_t;
 using Local_index = unsigned int;
@@ -70,4 +70,4 @@ inline bool is_second_halfedge(Halfedge_index index)
 {
 	return !is_first_halfedge(index);
 }
-} // namespace es_fe
+} // namespace esf

@@ -9,7 +9,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace es_fe
+namespace esf
 {
 class Vtk_writer
 {
@@ -204,4 +204,4 @@ private:
 	const Mesh<2>& mesh_;
 	Data_section last_section_ = Data_section::UNDEF;
 };
-} // namespace es_fe
+} // namespace esf

@@ -7,7 +7,7 @@
 
 #include <algorithm>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -32,4 +32,4 @@ Rect bounding_rect(const Geometry& geometry)
 {
 	return internal::bounding_rect(geometry, typename Geometry::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

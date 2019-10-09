@@ -10,7 +10,7 @@
 #include <esu/type_traits.hpp>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 class Edge_el : public internal::Triangular_element<0, 1, 0>
 {};
@@ -23,4 +23,4 @@ public:
 /************************************************************************/
 /* IMPLEMENTATION                                                       */
 /************************************************************************/
-} // namespace es_fe
+} // namespace esf

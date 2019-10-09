@@ -6,7 +6,7 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 template<class System, typename Value>
 class Solution : public internal::Solution_base<System, esl::Vector_x<Value>>
@@ -41,4 +41,4 @@ private:
 	using Base::system;
 	using Base::values_;
 };
-} // namespace es_fe
+} // namespace esf

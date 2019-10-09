@@ -3,7 +3,7 @@
 
 #include <esl/dense.hpp>
 
-namespace es_fe
+namespace esf
 {
 template<class System, typename Value>
 class Solution_view : public internal::Solution_base<System, const esl::Vector_x<Value>&>
@@ -15,4 +15,4 @@ private:
 public:
 	using Base::Base;
 };
-} // namespace es_fe
+} // namespace esf

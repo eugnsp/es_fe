@@ -1,7 +1,7 @@
 #include <esf/mesh/mesh2.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 auto Mesh2::view(Vertex_index index) const -> Vertex_view
 {
@@ -23,4 +23,4 @@ auto Mesh2::view(Face_index index) const -> Face_view
 {
 	return {*this, index};
 }
-} // namespace es_fe
+} // namespace esf

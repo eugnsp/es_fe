@@ -3,7 +3,7 @@
 
 #include <cmath>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -26,4 +26,4 @@ double distance(const Geometry1& geometry1, const Geometry2& geometry2)
 	return internal::distance(geometry1, geometry2, typename Geometry1::Geometry_tag{},
 		typename Geometry2::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

@@ -1,7 +1,7 @@
 #pragma once
 #include "iterator.hpp"
 
-namespace es_fe
+namespace esf
 {
 
 // 		class EdgeChainVertexIterator : public Internal::IteratorBase<2, Vertex_tag,
@@ -72,4 +72,4 @@ private:
 	const Edge_list::const_iterator itEnd_;
 };
 
-} // namespace es_fe
+} // namespace esf

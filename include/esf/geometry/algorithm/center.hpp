@@ -6,19 +6,19 @@
 
 #include <type_traits>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
 template<class Rect>
-es_fe::Point2 center(const Rect& rect, Rect_tag)
+esf::Point2 center(const Rect& rect, Rect_tag)
 {
 	return {rect.left() + rect.width() / 2, rect.bottom() + rect.height() / 2};
 }
 
 // TODO : generic by static/dynamic size
 template<class Segment>
-es_fe::Point2 center(const Segment& segment, Segment2_tag)
+esf::Point2 center(const Segment& segment, Segment2_tag)
 {
 	// return center_static(segment, tag);
 
@@ -29,19 +29,19 @@ es_fe::Point2 center(const Segment& segment, Segment2_tag)
 }
 
 template<class Triangle>
-es_fe::Point2 center(const Triangle& triangle, Triangle_tag)
+esf::Point2 center(const Triangle& triangle, Triangle_tag)
 {
 	auto circ = triangle.vertex_circ();
 
-	es_fe::Point2 c = circ->vertex();
+	esf::Point2 c = circ->vertex();
 	c += (++circ)->vertex();
 	c += (++circ)->vertex();
 
-	return es_fe::Point2{c / 3};
+	return esf::Point2{c / 3};
 }
 
 template<class Polygon>
-es_fe::Point2 center(const Polygon& geom, Polygon_tag)
+esf::Point2 center(const Polygon& geom, Polygon_tag)
 {
 	const auto n = geom.n_vertices();
 
@@ -80,8 +80,8 @@ es_fe::Point2 center(const Polygon& geom, Polygon_tag)
 } // namespace internal
 
 template<class Geometry>
-es_fe::Point2 center(const Geometry& geometry)
+esf::Point2 center(const Geometry& geometry)
 {
 	return internal::center(geometry, typename Geometry::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 Gmsh_file_reader::Gmsh_file_reader(const std::string& file_name) : file_(file_name)
 {
@@ -178,4 +178,4 @@ void Gmsh_file_reader::read_and_check_section_footer(const std::string& footer)
 	if (section_footer != footer)
 		throw Mesh_io_error("Bad Gmsh mesh file");
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

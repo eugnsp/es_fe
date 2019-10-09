@@ -4,12 +4,12 @@
 
 #include <esu/numeric.hpp>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
 template<class Triangle>
-es_fe::Point2 circumcentre(const Triangle& triangle, Triangle_tag)
+esf::Point2 circumcentre(const Triangle& triangle, Triangle_tag)
 {
 	auto&& a = triangle.vertex(0);
 	auto&& b = triangle.vertex(1);
@@ -31,8 +31,8 @@ es_fe::Point2 circumcentre(const Triangle& triangle, Triangle_tag)
 } // namespace internal
 
 template<class Geometry>
-es_fe::Point2 circumcentre(const Geometry& geometry)
+esf::Point2 circumcentre(const Geometry& geometry)
 {
 	return internal::circumcentre(geometry, typename Geometry::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

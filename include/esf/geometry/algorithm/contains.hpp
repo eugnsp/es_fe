@@ -8,7 +8,7 @@
 
 #include <type_traits>
 
-namespace es_fe
+namespace esf
 {
 // TODO : remove
 bool is_point_on_line_segment(const Point2&, const Point2& a, const Point2& b);
@@ -73,4 +73,4 @@ bool contains(const Geometry1& geometry1, const Geometry2& geometry2)
 	return internal::contains(geometry1, geometry2, typename Geometry1::Geometry_tag{},
 		typename Geometry2::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

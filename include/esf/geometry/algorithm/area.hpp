@@ -4,7 +4,7 @@
 #include <esu/algorithm.hpp>
 #include <esu/numeric.hpp>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -44,4 +44,4 @@ double area(const Geometry& geometry)
 {
 	return internal::area(geometry, typename Geometry::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

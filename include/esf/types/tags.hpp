@@ -1,6 +1,6 @@
 #pragma once
 
-namespace es_fe
+namespace esf
 {
 //////////////////////////////////////////////////////////////////////
 /** Geometry tags */
@@ -50,4 +50,4 @@ struct Vertex_in_circ_tag
 {};
 struct Face_circ_tag
 {};
-} // namespace es_fe
+} // namespace esf

@@ -4,7 +4,7 @@
 
 #include <array>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Var_list>
 class Dof_mapper<1, Var_list> : public Dof_mapper_base<Var_list>
@@ -99,7 +99,7 @@ private:
 
 	template<std::size_t var>
 	void var_dofs_impl([[maybe_unused]] const Vertex_indices& vertices,
-		[[maybe_unused]] es_fe::Edge_index edge, Var_dofs<var>& dofs) const
+		[[maybe_unused]] esf::Edge_index edge, Var_dofs<var>& dofs) const
 	{
 		using Element = typename Base::template Var<var>::Element;
 
@@ -120,11 +120,11 @@ private:
 	{
 		using Element = typename Base::template Var<var>::Element;
 
-		const es_fe::Dof_index& first_dof = this->indices_.at(element, es_fe::Var_index<var>{});
+		const esf::Dof_index& first_dof = this->indices_.at(element, esf::Var_index<var>{});
 
-		constexpr auto n = Element::n_dofs(es_fe::internal::Element_tag_by_index<Element_index>{});
-		for (es_fe::Local_index k = 0; k < n; ++k)
+		constexpr auto n = Element::n_dofs(esf::internal::Element_tag_by_index<Element_index>{});
+		for (esf::Local_index k = 0; k < n; ++k)
 			dofs[i++] = first_dof + k;
 	}
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

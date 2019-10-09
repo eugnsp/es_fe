@@ -23,10 +23,10 @@ auto enum_element_indices(Circulator circ)
 }
 
 template<class List>
-bool equal_indices(const List& vi1, std::initializer_list<es_fe::Index> vi2)
+bool equal_indices(const List& vi1, std::initializer_list<esf::Index> vi2)
 {
 	return std::equal(vi1.begin(), vi1.end(), vi2.begin(), vi2.end(),
-		[](auto i1, es_fe::Index i2) { return *i1 == i2; });
+		[](auto i1, esf::Index i2) { return *i1 == i2; });
 }
 
 int main(int argc, char** argv)
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
  	lines_y.add_tick(0);
  	lines_y.add_tick(2, 10);
 
-	es_fe::Tri_tensor_mesh mesh(lines_x.grid(), lines_y.grid());
+	esf::Tri_tensor_mesh mesh(lines_x.grid(), lines_y.grid());
 
 	//std::cout << mesh << '\n';
 
@@ -104,10 +104,10 @@ int main(int argc, char** argv)
 	//////////////////////////////////////////////////////////////////////////
 	/** Face view */
 	{
-		es_fe::Element_view<es_fe::Face_tag, es_fe::Mesh2>::Vertex_indices i_vertices;
-		es_fe::Element_view<es_fe::Face_tag, es_fe::Mesh2>::Edge_with_dir_indices i_edges;
+		esf::Element_view<esf::Face_tag, esf::Mesh2>::Vertex_indices i_vertices;
+		esf::Element_view<esf::Face_tag, esf::Mesh2>::Edge_with_dir_indices i_edges;
 
-		es_fe::Vertex_index vi{2};
+		esf::Vertex_index vi{2};
 
 		auto f1 = mesh.begin_face();
 		assert(***f1 == 0);

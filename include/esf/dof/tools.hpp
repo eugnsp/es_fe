@@ -3,7 +3,7 @@
 
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 template<class Sparse_matrix, class System>
 void compute_and_set_sparsity_pattern(const System& system, Sparse_matrix& matrix)
@@ -35,4 +35,4 @@ void compute_and_set_sparsity_pattern2(
 		system.template sparsity_pattern2<Symmetry>(std::forward<Coupling_fn>(coupling_fn));
 	matrix.set_sparsity_pattern(std::move(pattern));
 }
-} // namespace es_fe
+} // namespace esf

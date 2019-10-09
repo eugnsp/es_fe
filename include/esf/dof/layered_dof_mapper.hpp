@@ -13,7 +13,7 @@ class TD;
 template<bool>
 class TB;
 
-namespace es_fe
+namespace esf
 {
 template<class Var_list>
 class Layered_dof_mapper : public internal::Dof_mapper_base<Var_list>
@@ -21,7 +21,7 @@ class Layered_dof_mapper : public internal::Dof_mapper_base<Var_list>
 private:
 	using Base = internal::Dof_mapper_base<Var_list>;
 
-	using My_system = System<Var_list, es_fe::Layered_dof_mapper>;
+	using My_system = System<Var_list, esf::Layered_dof_mapper>;
 	using Mesh = typename My_system::Mesh;
 
 	using Cell_view = typename Mesh::Cell_view;
@@ -449,4 +449,4 @@ private:
 private:
 	Index n_layers_ = 1;
 };
-} // namespace es_fe
+} // namespace esf

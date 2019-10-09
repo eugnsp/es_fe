@@ -6,7 +6,7 @@
 #include <array>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 template<>
 class Element_view<Face_tag, Mesh2> : public internal::Element_view_base<Face_tag, Mesh2>
@@ -84,4 +84,4 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Face_tag, M
 	view.print(os);
 	return os;
 }
-} // namespace es_fe
+} // namespace esf

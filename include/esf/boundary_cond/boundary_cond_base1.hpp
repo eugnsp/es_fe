@@ -7,7 +7,7 @@
 
 #include <array>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Element>
 class Boundary_cond_base<1, Element>
@@ -16,7 +16,7 @@ class Boundary_cond_base<1, Element>
 	static_assert(Element::has_vertex_dofs);
 
 public:
-	Boundary_cond_base(const Mesh<1>& mesh, es_fe::Point1 point)
+	Boundary_cond_base(const Mesh<1>& mesh, esf::Point1 point)
 	{
 		vertex_[0] = mesh.find_vertex(point);
 	}
@@ -37,4 +37,4 @@ public:
 protected:
 	std::array<Vertex_index, 1> vertex_;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

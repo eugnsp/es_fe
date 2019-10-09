@@ -12,7 +12,7 @@
 // #include <utility>
 // #include <vector>
 
-// namespace es_fe
+// namespace esf
 // {
 // class Tbb_assembler
 // {
@@ -52,4 +52,4 @@
 // private:
 // 	std::shared_ptr<Mesh_face_colour_map> colour_map_;
 // };
-// } // namespace es_fe
+// } // namespace esf

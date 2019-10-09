@@ -4,7 +4,7 @@
 #include <cassert>
 #include <type_traits>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Element_tag, class Mesh>
 class Element_view_base
@@ -44,7 +44,7 @@ public:
 
 	bool is_valid() const
 	{
-		return es_fe::is_valid(index_);
+		return esf::is_valid(index_);
 	}
 
 	bool is_boundary() const
@@ -61,4 +61,4 @@ protected:
 	Internal_index index_;
 	const Mesh& mesh_;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

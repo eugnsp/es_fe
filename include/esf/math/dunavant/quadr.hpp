@@ -7,7 +7,7 @@
 #include <cassert>
 #include <tuple>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -91,4 +91,4 @@ public:
 	// 			bary_coords[1] * triangle.vertex(2);
 	// 	}
 };
-} // namespace es_fe
+} // namespace esf

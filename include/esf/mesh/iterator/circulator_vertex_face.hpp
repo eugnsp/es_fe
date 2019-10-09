@@ -5,7 +5,7 @@
 #include <cassert>
 #include <type_traits>
 
-namespace es_fe
+namespace esf
 {
 template<class Element_tag, class Circ_tag>
 class Circulator_vertex_face : public internal::Iterator_base<Element_tag, Mesh<2>>
@@ -78,4 +78,4 @@ private:
 
 	Halfedge_index halfedge_;
 };
-} // namespace es_fe
+} // namespace esf

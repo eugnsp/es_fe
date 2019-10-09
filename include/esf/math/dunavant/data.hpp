@@ -2,7 +2,7 @@
 #include <esf/math/dunavant/points_group.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // Dunavant quadrature rules data - weights and barycentric coordinates
 template<Local_index order>
@@ -89,4 +89,4 @@ struct Dunavant_data<9>
 		Dunavant_points_group{
 			.043283539377289, .036838412054736, .221962989160766, .741198598784498});
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

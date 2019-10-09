@@ -1,7 +1,7 @@
 #include <esf/mesh/halfedge_structure.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 bool Halfedge_structure::is_boundary(Vertex_index index) const
 {
@@ -31,4 +31,4 @@ bool Halfedge_structure::is_boundary(Face_index index) const
 
 	return is_valid(boundary_twin_halfedge);
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

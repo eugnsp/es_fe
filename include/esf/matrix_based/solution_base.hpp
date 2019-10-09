@@ -10,7 +10,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -75,7 +75,7 @@ public:
 	}
 
 	template<std::size_t var = 0>
-	Value at(const es_fe::Point2& pt, const typename Mesh::Cell_view& cell) const
+	Value at(const esf::Point2& pt, const typename Mesh::Cell_view& cell) const
 	{
 		static_assert(Mesh::dim == 2);
 
@@ -87,7 +87,7 @@ public:
 		return value;
 	}
 
-	Value operator()(const es_fe::Point2& pt, const typename Mesh::Cell_view& cell) const
+	Value operator()(const esf::Point2& pt, const typename Mesh::Cell_view& cell) const
 	{
 		return at<0>(pt, cell);
 	}
@@ -119,4 +119,4 @@ auto at_quadr(const internal::Solution_base<System, T>& solution, const typename
 {
 	return solution.template at_quadr<Quadr, var>(cell);
 }
-} // namespace es_fe
+} // namespace esf

@@ -10,7 +10,7 @@
 
 #include <esl/sparse.hpp>
 
-namespace es_fe
+namespace esf
 {
 template<class System_, class Eigen_solver>
 class Matrix_based_eigen_solver
@@ -169,4 +169,4 @@ protected:
 private:
 	std::mt19937 rand_gen_;
 };
-} // namespace es_fe
+} // namespace esf

@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 using V = Element_view<Face_tag, Mesh2>;
 
@@ -96,4 +96,4 @@ void V::get_indices(
 
 	assert(**(++halfedge) == first);
 }
-} // namespace es_fe
+} // namespace esf

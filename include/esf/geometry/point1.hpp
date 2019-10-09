@@ -11,7 +11,7 @@
 #include <cstddef>
 #include <iosfwd>
 
-namespace es_fe
+namespace esf
 {
 class Point1
 {
@@ -49,4 +49,4 @@ inline bool operator==(const Point1& a, const Point1& b)
 }
 
 std::ostream& operator<<(std::ostream& out, const Point1& p);
-} // namespace es_fe
+} // namespace esf

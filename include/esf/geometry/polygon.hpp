@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 template<unsigned int n>
 auto turtle(const Point2 (&points)[n])
@@ -59,4 +59,4 @@ public:
 	}
 };
 */
-} // namespace es_fe
+} // namespace esf

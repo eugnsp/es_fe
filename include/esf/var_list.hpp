@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <tuple>
 
-namespace es_fe
+namespace esf
 {
 // A variables list class used to represent a collection of variables as a single type
 template<class... Variables>
@@ -28,4 +28,4 @@ struct Var_list
 	// Returns the list of variables as an `std::tuple`
 	using Tuple = Tuple_map<esu::Type_identity>;
 };
-} // namespace es_fe
+} // namespace esf

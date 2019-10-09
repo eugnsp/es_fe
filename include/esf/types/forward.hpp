@@ -1,7 +1,7 @@
 #pragma once
 #include <esf/types/index.hpp>
 
-namespace es_fe
+namespace esf
 {
 //////////////////////////////////////////////////////////////////////////
 /** Mesh-related forward declarations */
@@ -57,13 +57,13 @@ class Dof_tools;
 
 namespace internal
 {
-template<es_fe::Local_index dim, class Element>
+template<esf::Local_index dim, class Element>
 class Boundary_cond_base;
 
-template<es_fe::Local_index, class Var_list>
+template<esf::Local_index, class Var_list>
 class Dof_mapper;
 } // namespace internal
 
 template<class Var_list>
 using Dof_mapper = internal::Dof_mapper<Var_list::space_dim, Var_list>;
-} // namespace es_fe
+} // namespace esf

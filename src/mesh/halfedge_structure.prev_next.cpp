@@ -1,7 +1,7 @@
 #include <esf/mesh/halfedge_structure.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 auto Halfedge_structure::prev(Halfedge_index index, Vertex_in_circ_tag) const -> Halfedge_index
 {
@@ -43,4 +43,4 @@ auto Halfedge_structure::next(Halfedge_index index, Face_circ_tag) const -> Half
 {
 	return halfedges_[*index].next;
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

@@ -1,7 +1,7 @@
 #pragma once
 #include <esf/boundary_cond/boundary_cond.hpp>
 
-namespace es_fe
+namespace esf
 {
 template<class Element, typename T = double, bool is_essential_ = true>
 class Uniform_boundary_cond : public Boundary_cond<Element, is_essential_>
@@ -37,4 +37,4 @@ public:
 private:
 	T value_;
 };
-} // namespace es_fe
+} // namespace esf

@@ -1,7 +1,7 @@
 #include <esf/mesh/mesh2.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 auto Mesh2::begin_vertex() const -> Vertex_iter
 {
@@ -92,4 +92,4 @@ auto Mesh2::boundary_edge_circ() const -> Boundary_edge_circ
 {
 	return {*this, first_boundary_halfedge()};
 }
-} // namespace es_fe
+} // namespace esf

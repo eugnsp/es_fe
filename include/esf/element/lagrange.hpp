@@ -6,7 +6,7 @@
 #include <esf/element/triangular_element.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 template<Local_index order>
 class Lagrange<order, 1> :
@@ -35,4 +35,4 @@ class Discontinuous_lagrange<order, 2> :
 	public internal::Triangular_element<0, 0, (order + 1) * (order + 2) / 2>,
 	public internal::Lagrange_base_2<order>
 {};
-} // namespace es_fe
+} // namespace esf

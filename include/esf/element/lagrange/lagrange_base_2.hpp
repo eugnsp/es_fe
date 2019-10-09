@@ -7,7 +7,7 @@
 #include <array>
 #include <cassert>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<Local_index order_>
 class Lagrange_base_2
@@ -91,4 +91,4 @@ private:
 		return {r[0] + 1, r[1] + 1, r[2] + 1};
 	}
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

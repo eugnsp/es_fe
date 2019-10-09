@@ -39,7 +39,7 @@ struct One : Constant<static_cast<T>(1)>
 
 } // namespace math
 
-namespace es_fe
+namespace esf
 {
 // TODO : use make_matrix ?
 // Returns a local mass matrix
@@ -156,4 +156,4 @@ auto load_vector(double scale = 1)
 		});
 	});
 }
-} // namespace es_fe
+} // namespace esf

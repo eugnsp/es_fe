@@ -3,7 +3,7 @@
 
 #include <esl/dense.hpp>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -76,4 +76,4 @@ auto inv_transp_jacobian(const Geometry& geometry)
 {
 	return internal::inv_transp_jacobian(geometry, typename Geometry::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

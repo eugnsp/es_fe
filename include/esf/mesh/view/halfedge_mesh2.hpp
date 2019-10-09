@@ -3,7 +3,7 @@
 #include <esf/mesh/view/base.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 
 template<>
@@ -18,10 +18,10 @@ public:
 public:
 	using Element_view_base::Element_view_base;
 
-	const es_fe::Point2& vertex() const;
-	const es_fe::Point2& vertex(Local_index) const;
+	const esf::Point2& vertex() const;
+	const esf::Point2& vertex(Local_index) const;
 
-	es_fe::Point2 vector() const;
+	esf::Point2 vector() const;
 
 	Vertex_index vertex_index() const;
 	Vertex_index vertex_index(Local_index) const;
@@ -115,4 +115,4 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Halfedge_ta
 	view.print(os);
 	return os;
 }
-} // namespace es_fe
+} // namespace esf

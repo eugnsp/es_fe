@@ -9,7 +9,7 @@
 #include <cstddef>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 class Linear_grid
 {
@@ -36,9 +36,9 @@ public:
 		ticks_.push_back({n, coord, bowing});
 	}
 
-	std::vector<es_fe::Point1> grid() const
+	std::vector<esf::Point1> grid() const
 	{
-		std::vector<es_fe::Point1> grid(ticks_.back().n + 1);
+		std::vector<esf::Point1> grid(ticks_.back().n + 1);
 
 		grid.front().x() = ticks_.front().coord;
 		esu::for_each_pair(ticks_.begin(), ticks_.end(),
@@ -56,7 +56,7 @@ private:
 	};
 
 	static void make_grid_on_interval(
-		std::vector<es_fe::Point1>& grid, const Tick& left, const Tick& right)
+		std::vector<esf::Point1>& grid, const Tick& left, const Tick& right)
 	{
 		if (right.bowing == 0)
 		{
@@ -83,4 +83,4 @@ private:
 private:
 	std::vector<Tick> ticks_;
 };
-} // namespace es_fe
+} // namespace esf

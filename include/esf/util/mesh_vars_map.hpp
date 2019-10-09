@@ -9,7 +9,7 @@
 #include <cstddef>
 #include <tuple>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // A class that maps a mesh element index, its type (vertex/edge/face)
 // and a variable index into an element of given type:
@@ -95,4 +95,4 @@ template<class Var_list, typename T>
 class Mesh_var_map<Mesh<2>, Var_list, T> :
 	public Mesh_var_map_impl<T, Var_list, Vertex_index, Edge_index, Face_index>
 {};
-} // namespace es_fe::internal
+} // namespace esf::internal

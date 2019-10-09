@@ -7,7 +7,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 // A linestring (a sequence of points and line segments connecting them)
 class Linestring : public Points2<invalid_local_index>
@@ -26,4 +26,4 @@ public:
 		assert(n_vertices() > 1);
 	}
 };
-} // namespace es_fe
+} // namespace esf

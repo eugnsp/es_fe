@@ -12,7 +12,7 @@
 #include <cstddef>
 #include <utility>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Var_list>
 class Dof_mapper_base
@@ -37,7 +37,7 @@ protected:
 	template<std::size_t vi>
 	using Var = typename Var_list::template Nth<vi>;
 
-	using Mesh = es_fe::Mesh<Var_list::space_dim>;
+	using Mesh = esf::Mesh<Var_list::space_dim>;
 
 public:
 	template<std::size_t vi>
@@ -67,18 +67,18 @@ public:
 	template<class Symmetry_tag, class System>
 	static esl::Sparsity_pattern<Symmetry_tag> sparsity_pattern(const System& system)
 	{
-		return es_fe::internal::sparsity_pattern<Symmetry_tag>(system);
+		return esf::internal::sparsity_pattern<Symmetry_tag>(system);
 	}
 
 	///////////////////////////////////////////////////////////////////////
 	//* Capacity */
 
-	es_fe::Index n_dofs() const
+	esf::Index n_dofs() const
 	{
 		return n_dofs_;
 	}
 
-	es_fe::Index n_free_dofs() const
+	esf::Index n_free_dofs() const
 	{
 		return n_free_dofs_;
 	}
@@ -96,7 +96,7 @@ private:
 	void compute_n_dofs(const System& system)
 	{
 		n_dofs_ = 0;
-		es_fe::for_each_var_element<Var_list>([this, &system](auto var, auto element_tag) {
+		esf::for_each_var_element<Var_list>([this, &system](auto var, auto element_tag) {
 			const auto n_dofs = system.variable(var).n_dofs(element_tag);
 			const auto n_elements = *system.mesh().n_elements(element_tag);
 			n_dofs_ += n_dofs * n_elements;
@@ -108,13 +108,13 @@ private:
 	{
 		n_free_dofs_ = n_dofs_;
 
-		es_fe::for_each_var<Var_list>([this, &system](auto var) {
+		esf::for_each_var<Var_list>([this, &system](auto var) {
 			const auto& v = system.variable(var);
 			v.for_each_ess_bnd_cond([this, &v, &var](const auto& bc) {
 				using Element = typename Var_by_var_index<Var_list, decltype(var)>::Element;
 
 				if constexpr (Element::has_vertex_dofs)
-					for (es_fe::Vertex_index vertex : bc.vertices())
+					for (esf::Vertex_index vertex : bc.vertices())
 					{
 						Dof_index& dof = indices_.at(vertex, var);
 						assert(dof.is_free);
@@ -125,7 +125,7 @@ private:
 
 				// TODO : looks sloppy
 				if constexpr (Var_list::space_dim == 2 && Element::has_edge_dofs)
-					for (es_fe::Halfedge_index halfedge : bc.halfedges())
+					for (esf::Halfedge_index halfedge : bc.halfedges())
 					{
 						Dof_index& dof = indices_.at(edge(halfedge), var);
 						assert(dof.is_free);
@@ -140,12 +140,12 @@ private:
 	template<class System>
 	void assign_indices(const System& system)
 	{
-		es_fe::Index free_index = 0;
-		es_fe::Index const_index = n_free_dofs_;
+		esf::Index free_index = 0;
+		esf::Index const_index = n_free_dofs_;
 
 		for_each_var_element<Var_list>(
 			[this, &system, &free_index, &const_index](auto var, auto element_tag) {
-				using Element_index = es_fe::internal::Element_index_by_tag<decltype(element_tag)>;
+				using Element_index = esf::internal::Element_index_by_tag<decltype(element_tag)>;
 
 				for (Element_index ei{}; ei < system.mesh().n_elements(element_tag); ++ei)
 				{
@@ -159,9 +159,9 @@ private:
 	}
 
 protected:
-	es_fe::internal::Mesh_var_map<Mesh, Var_list, Dof_index> indices_;
+	esf::internal::Mesh_var_map<Mesh, Var_list, Dof_index> indices_;
 
-	es_fe::Index n_dofs_ = 0;
-	es_fe::Index n_free_dofs_ = 0;
+	esf::Index n_dofs_ = 0;
+	esf::Index n_free_dofs_ = 0;
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

@@ -6,7 +6,7 @@
 
 #include <cstddef>
 
-namespace es_fe
+namespace esf
 {
 template<class System, class Linear_solver>
 class Matrix_based_nonlinear_solver : public Matrix_based_solver_base<System, Linear_solver>
@@ -112,4 +112,4 @@ protected:
 private:
 	esl::Vector_xd step_;
 };
-} // namespace es_fe
+} // namespace esf

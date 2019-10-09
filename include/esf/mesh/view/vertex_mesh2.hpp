@@ -5,7 +5,7 @@
 
 #include <iosfwd>
 
-namespace es_fe
+namespace esf
 {
 template<>
 class Element_view<Vertex_tag, Mesh2> : public internal::Element_view_base<Vertex_tag, Mesh2>
@@ -43,4 +43,4 @@ inline std::ostream& operator<<(std::ostream& os, const Element_view<Vertex_tag,
 	view.print(os);
 	return os;
 }
-} // namespace es_fe
+} // namespace esf

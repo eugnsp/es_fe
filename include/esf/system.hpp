@@ -16,7 +16,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 template<class Var_list_, template<class> class Dof_mapper_>
 class System
@@ -26,7 +26,7 @@ public:
 	static constexpr std::size_t n_vars = Var_list_::size;
 
 	using Var_list = Var_list_;
-	using Mesh = es_fe::Mesh<dim>;
+	using Mesh = esf::Mesh<dim>;
 	using Dof_mapper = Dof_mapper_<Var_list>;
 
 	template<std::size_t var>
@@ -58,17 +58,17 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	//* Degrees of freedom */
 
-	es_fe::Index n_dofs() const
+	esf::Index n_dofs() const
 	{
 		return dof_mapper_.n_dofs();
 	}
 
-	es_fe::Index n_free_dofs() const
+	esf::Index n_free_dofs() const
 	{
 		return dof_mapper_.n_free_dofs();
 	}
 
-	es_fe::Index n_const_dofs() const
+	esf::Index n_const_dofs() const
 	{
 		return n_dofs() - n_free_dofs();
 	}
@@ -225,4 +225,4 @@ std::ostream& operator<<(std::ostream& out, const System<Var_list, Dof_mapper>& 
 
 	return out;
 }
-} // namespace es_fe
+} // namespace esf

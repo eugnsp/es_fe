@@ -5,7 +5,7 @@
 #include <type_traits>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -50,9 +50,9 @@ void for_each_var_element(Function func)
 	if constexpr (space_dim == 2)
 		internal::for_each_var_element_impl2<Var_list, 0, Vertex_tag, Edge_tag, Face_tag>(func);
 }
-} // namespace es_fe
+} // namespace esf
 
-// namespace es_fe
+// namespace esf
 //{
 // namespace internal
 //{

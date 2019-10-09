@@ -15,7 +15,7 @@ std::string index_string(Index index)
 	return is_valid(index) ? std::to_string(*index) : "<invalid index>";
 }
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // Performs some basic checks of mesh data structure consistency
 esu::Error Halfedge_structure::check() const
@@ -121,7 +121,7 @@ esu::Error Halfedge_structure::check() const
 		return err;
 
 	// Check for duplicated vertices
-	using Vertices = std::vector<std::pair<Index, es_fe::Point2>>;
+	using Vertices = std::vector<std::pair<Index, esf::Point2>>;
 	Vertices vertices;
 	vertices.reserve(*n_vertices());
 
@@ -153,4 +153,4 @@ esu::Error Halfedge_structure::check() const
 
 	return err;
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

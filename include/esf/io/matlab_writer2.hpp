@@ -5,7 +5,7 @@
 #include <esl/io/matfile_writer.hpp>
 #include <string>
 
-namespace es_fe
+namespace esf
 {
 class Matlab_writer2
 {
@@ -102,4 +102,4 @@ private:
 	esl::Matfile_writer mat_file_;
 	const Mesh2& mesh_;
 };
-} // namespace es_fe
+} // namespace esf

@@ -3,13 +3,13 @@
 
 #include <esl/dense.hpp>
 
-namespace es_fe
+namespace esf
 {
-template<es_fe::Local_index order, es_fe::Local_index dim, class Quadr>
-class Element_quadr<es_fe::Lagrange<order, dim>, Quadr>
+template<esf::Local_index order, esf::Local_index dim, class Quadr>
+class Element_quadr<esf::Lagrange<order, dim>, Quadr>
 {
 private:
-	using Element = es_fe::Lagrange<order, dim>;
+	using Element = esf::Lagrange<order, dim>;
 	static constexpr auto n_points = Quadr::size;
 	static constexpr auto n_dofs = Element::n_total_cell_dofs;
 
@@ -32,8 +32,8 @@ public:
 	}
 };
 
-template<es_fe::Local_index order, es_fe::Local_index dim, class Quadr>
-class Element_quadr<es_fe::Discontinuous_lagrange<order, dim>, Quadr> :
-	public Element_quadr<es_fe::Lagrange<order, dim>, Quadr>
+template<esf::Local_index order, esf::Local_index dim, class Quadr>
+class Element_quadr<esf::Discontinuous_lagrange<order, dim>, Quadr> :
+	public Element_quadr<esf::Lagrange<order, dim>, Quadr>
 {};
-} // namespace es_fe
+} // namespace esf

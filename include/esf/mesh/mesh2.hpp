@@ -29,7 +29,7 @@
 // 	AFTER_REFINE
 // };
 
-namespace es_fe
+namespace esf
 {
 template<>
 class Mesh<2> : public internal::Halfedge_structure
@@ -82,7 +82,7 @@ public:
 		return faces_[*face].halfedge;
 	}
 
-	virtual Vertex_index find_vertex(const es_fe::Point2& point) const
+	virtual Vertex_index find_vertex(const esf::Point2& point) const
 	{
 		return Base::find_vertex(point);
 	}
@@ -198,4 +198,4 @@ inline std::ostream& operator<<(std::ostream& os, const Mesh<2>& mesh)
 	mesh.print(os);
 	return os;
 }
-} // namespace es_fe
+} // namespace esf

@@ -11,7 +11,7 @@
 #include <cstddef>
 #include <iosfwd>
 
-namespace es_fe
+namespace esf
 {
 class Point2 : public esl::Vector_2d
 {
@@ -88,22 +88,22 @@ inline bool operator<(const Point2& lhs, const Point2& rhs)
 // 		&& p.x() + p.y() < 1 + PHYS_MIN_POINT_DISTANCE;
 // }
 
-inline bool operator==(const es_fe::Point2& a, const es_fe::Point2& b)
+inline bool operator==(const esf::Point2& a, const esf::Point2& b)
 {
 	return equals(a, b);
 }
 
 /** Returns the dot product of two points @f$ a_x b_x + a_y b_y @f$. */
-inline double operator*(const es_fe::Point2& a, const es_fe::Point2& b)
+inline double operator*(const esf::Point2& a, const esf::Point2& b)
 {
 	return a.x() * b.x() + a.y() * b.y();
 }
 
 // Returns the cross product of two points, ax * by - ay * bx
-inline double operator^(const es_fe::Point2& a, const es_fe::Point2& b)
+inline double operator^(const esf::Point2& a, const esf::Point2& b)
 {
 	return esu::det(a.x(), a.y(), b.x(), b.y());
 }
 
-std::ostream& operator<<(std::ostream& out, const es_fe::Point2& p);
-} // namespace es_fe
+std::ostream& operator<<(std::ostream& out, const esf::Point2& p);
+} // namespace esf

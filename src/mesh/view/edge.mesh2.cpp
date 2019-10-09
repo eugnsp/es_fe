@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 using V = Element_view<Edge_tag, Mesh2>;
 
@@ -13,7 +13,7 @@ bool V::is_boundary() const
 	return mesh_.is_boundary(**this);
 }
 
-const es_fe::Point2& V::vertex(Local_index index) const
+const esf::Point2& V::vertex(Local_index index) const
 {
 	return mesh_.vertex(vertex_index(index));
 }
@@ -27,4 +27,4 @@ Vertex_index V::vertex_index(Local_index index) const
 	else
 		return mesh_.vertex_index(twin(index_));
 }
-} // namespace es_fe
+} // namespace esf

@@ -3,7 +3,7 @@
 
 #include <cassert>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Element_tag, class Mesh>
 class Iterator_base
@@ -54,4 +54,4 @@ bool operator!=(
 {
 	return !(it1 == it2);
 }
-} // namespace es_fe::internal
+} // namespace esf::internal

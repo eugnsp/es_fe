@@ -11,7 +11,7 @@
 #include <utility>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -118,4 +118,4 @@ public:
 		return static_cast<Local_index>(vertices_.size());
 	}
 };
-} // namespace es_fe
+} // namespace esf

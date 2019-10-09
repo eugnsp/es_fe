@@ -15,7 +15,7 @@
 // #include <string>
 // #include <iosfwd>
 
-namespace es_fe
+namespace esf
 {
 template<>
 class Mesh<1>
@@ -24,7 +24,7 @@ public:
 	static constexpr std::size_t dim = 1;
 
 public:
-	using Cell_index = es_fe::Edge_index;
+	using Cell_index = esf::Edge_index;
 	using Vertex_view = Element_view<Vertex_tag, Mesh>;
 	using Edge_view = Element_view<Edge_tag, Mesh>;
 	using Cell_view = Edge_view;
@@ -36,7 +36,7 @@ public:
 public:
 	Mesh() = default;
 
-	Mesh(std::vector<es_fe::Point1> vertices) : vertices_(std::move(vertices))
+	Mesh(std::vector<esf::Point1> vertices) : vertices_(std::move(vertices))
 	{
 		assert(std::is_sorted(vertices_.begin(), vertices_.end()));
 	}
@@ -44,21 +44,21 @@ public:
 	//////////////////////////////////////////////////////////////////////
 	//* Capacity */
 
-	es_fe::Vertex_index n_vertices() const;
-	es_fe::Edge_index n_edges() const;
+	esf::Vertex_index n_vertices() const;
+	esf::Edge_index n_edges() const;
 	Cell_index n_cells() const;
 
-	es_fe::Vertex_index n_elements(Vertex_tag) const;
-	es_fe::Edge_index n_elements(Edge_tag) const;
+	esf::Vertex_index n_elements(Vertex_tag) const;
+	esf::Edge_index n_elements(Edge_tag) const;
 	Cell_index n_elements(Cell_tag) const;
 
 	bool is_empty() const;
 
 	//////////////////////////////////////////////////////////////////////
 
-	es_fe::Vertex_index find_vertex(es_fe::Point1) const;
+	esf::Vertex_index find_vertex(esf::Point1) const;
 
-	std::pair<es_fe::Vertex_index, es_fe::Vertex_index> vertex_indices(es_fe::Edge_index) const;
+	std::pair<esf::Vertex_index, esf::Vertex_index> vertex_indices(esf::Edge_index) const;
 
 	// 	void reserve(Index n_vertices);
 	//
@@ -78,7 +78,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	/** Element access */
 
-	const es_fe::Point1& vertex(es_fe::Vertex_index vertex) const
+	const esf::Point1& vertex(esf::Vertex_index vertex) const
 	{
 		return vertices_[*vertex];
 	}
@@ -86,8 +86,8 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	/** Flags */
 
-	bool is_boundary(es_fe::Vertex_index) const;
-	bool is_boundary(es_fe::Edge_index) const;
+	bool is_boundary(esf::Vertex_index) const;
+	bool is_boundary(esf::Edge_index) const;
 
 	// 	//////////////////////////////////////////////////////////////////////////
 	// 	/** Views */
@@ -121,8 +121,8 @@ public:
 	// 	//Index add_vertex(double);
 	//
 private:
-	std::vector<es_fe::Point1> vertices_;
+	std::vector<esf::Point1> vertices_;
 };
 //
 // std::ostream& operator<<(std::ostream&, const Mesh1&);
-} // namespace es_fe
+} // namespace esf

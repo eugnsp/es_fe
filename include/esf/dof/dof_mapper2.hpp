@@ -16,7 +16,7 @@
 #include <tuple>
 #include <type_traits>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 template<class Var_list>
 class Dof_mapper<2, Var_list> : public Dof_mapper_base<Var_list>
@@ -174,11 +174,11 @@ private:
 	{
 		using Element = typename Base::template Var<var>::Element;
 
-		const es_fe::Dof_index& first_dof = this->indices_.at(element, es_fe::Var_index<var>{});
-		constexpr auto n = Element::n_dofs(es_fe::internal::Element_tag_by_index<Element_index>{});
+		const esf::Dof_index& first_dof = this->indices_.at(element, esf::Var_index<var>{});
+		constexpr auto n = Element::n_dofs(esf::internal::Element_tag_by_index<Element_index>{});
 
-		for (es_fe::Local_index k = 0; k < n; ++k)
+		for (esf::Local_index k = 0; k < n; ++k)
 			dofs[i++] = first_dof + (reversed ? n - k - 1 : k);
 	}
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

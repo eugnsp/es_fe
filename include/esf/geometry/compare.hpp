@@ -1,7 +1,7 @@
 #pragma once
 #include <cmath>
 
-namespace es_fe
+namespace esf
 {
 // Maximum distance between two points so that they are considered equal
 #ifdef ES_GEOM_DELTA
@@ -79,4 +79,4 @@ inline bool is_geom_greater_equal(double x, double y)
 {
 	return Is_geom_greater_equal{}(x, y);
 }
-} // namespace es_fe
+} // namespace esf

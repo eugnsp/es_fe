@@ -4,7 +4,7 @@
 #include <esu/array.hpp>
 #include <esu/numeric.hpp>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 struct Gauss_point
 {
@@ -60,4 +60,4 @@ struct Gauss_data<5>
 			Gauss_point{2.3931433524968324e-1, 5.3846931010568300e-1},
 			Gauss_point{1.1846344252809454e-1, 9.0617984593866385e-1});
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

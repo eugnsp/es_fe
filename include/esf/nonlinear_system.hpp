@@ -13,7 +13,7 @@
 #include <iomanip>
 #include <iostream>
 
-namespace es_fe
+namespace esf
 {
 template<class Linear_solver, class Var_or_var_list,
 	template<class> class T_Dof_mapper = Dof_mapper>
@@ -710,4 +710,4 @@ private:
 //		 		solution_ = oldSolution;
 //		 	}
 //		 }
-} // namespace es_fe
+} // namespace esf

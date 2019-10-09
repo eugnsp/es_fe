@@ -2,7 +2,7 @@
 #include <esf/mesh/mesh2.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 using V = Element_view<Vertex_tag, Mesh2>;
 
@@ -57,4 +57,4 @@ Local_index V::n_faces() const
 // Returns the number of neighbouring faces
 // Index n_faces() const;
 
-} // namespace es_fe
+} // namespace esf

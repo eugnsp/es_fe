@@ -2,7 +2,7 @@
 #include <esf/element/linear_element.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // 2D triangular element
 //		vertex_dofs		number of internal dofs per vertex
@@ -68,4 +68,4 @@ public:
 		return n_dofs(tag) > 0;
 	}
 };
-} // namespace es_fe::internal
+} // namespace esf::internal

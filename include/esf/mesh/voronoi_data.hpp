@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-namespace es_fe
+namespace esf
 {
 class Voronoi_data
 {
@@ -102,4 +102,4 @@ private:
 	std::vector<Data> data_;
 	const Mesh2& mesh_;
 };
-} // namespace es_fe
+} // namespace esf

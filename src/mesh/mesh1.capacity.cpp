@@ -1,7 +1,7 @@
 #include <esf/mesh/mesh1.hpp>
 #include <esf/types.hpp>
 
-namespace es_fe
+namespace esf
 {
 Vertex_index Mesh1::n_vertices() const
 {
@@ -40,4 +40,4 @@ bool Mesh1::is_empty() const
 {
 	return vertices_.empty();
 }
-} // namespace es_fe
+} // namespace esf

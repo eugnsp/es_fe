@@ -11,7 +11,7 @@
 #include <cstddef>
 #include <vector>
 
-namespace es_fe::internal
+namespace esf::internal
 {
 // A class that maps a mesh element index and a variable index
 // into an element of given type:
@@ -83,4 +83,4 @@ template<typename T, class Element_index, class... Vars>
 class Mesh_element_var_map<T, Element_index, Var_list<Vars...>> :
 	public Mesh_element_var_map_impl<T, Element_index, Vars...>
 {};
-} // namespace es_fe::internal
+} // namespace esf::internal

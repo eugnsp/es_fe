@@ -6,7 +6,7 @@
 #include <iterator>
 #include <type_traits>
 
-namespace es_fe
+namespace esf
 {
 template<class Element_tag, class Mesh>
 class Random_access_iterator : public internal::Iterator_base<Element_tag, Mesh>
@@ -137,4 +137,4 @@ auto operator-(const Random_access_iterator<Element_tag, Mesh>& it1,
 	using T = typename Random_access_iterator<Element_tag, Mesh>::difference_type;
 	return static_cast<T>(**it1) - static_cast<T>(**it2);
 }
-} // namespace es_fe
+} // namespace esf

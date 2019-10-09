@@ -4,7 +4,7 @@
 
 #include <cassert>
 
-namespace es_fe
+namespace esf
 {
 // An axis aligned rectangle
 class Rect
@@ -15,13 +15,13 @@ public:
 public:
 	Rect() = default;
 
-	Rect(es_fe::Point2 bottom_left, double width, double height) :
+	Rect(esf::Point2 bottom_left, double width, double height) :
 		bottom_left_(bottom_left), width_(width), height_(height)
 	{
 		assert(width_ >= 0 && height_ >= 0);
 	}
 
-	Rect(es_fe::Point2 bottom_left, es_fe::Point2 top_right) :
+	Rect(esf::Point2 bottom_left, esf::Point2 top_right) :
 		Rect(bottom_left, top_right.x() - bottom_left.x(), top_right.y() - bottom_left.y())
 	{}
 
@@ -55,22 +55,22 @@ public:
 		return height_;
 	}
 
-	es_fe::Point2 bottom_left() const
+	esf::Point2 bottom_left() const
 	{
 		return bottom_left_;
 	}
 
-	es_fe::Point2 bottom_right() const
+	esf::Point2 bottom_right() const
 	{
 		return {bottom(), right()};
 	}
 
-	es_fe::Point2 top_left() const
+	esf::Point2 top_left() const
 	{
 		return {top(), left()};
 	}
 
-	es_fe::Point2 top_right() const
+	esf::Point2 top_right() const
 	{
 		return {top(), right()};
 	}
@@ -121,8 +121,8 @@ public:
 	// 	}
 
 private:
-	const es_fe::Point2 bottom_left_;
+	const esf::Point2 bottom_left_;
 	const double width_ = 0;
 	const double height_ = 0;
 };
-} // namespace es_fe
+} // namespace esf

@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include <utility>
 
-namespace es_fe
+namespace esf
 {
 class Mesh_face_colour_map
 {
@@ -46,4 +46,4 @@ private:
 	Colour n_colours_ = 0;
 	std::unordered_multimap<Colour, Face_index> map_;
 };
-} // namespace es_fe
+} // namespace esf

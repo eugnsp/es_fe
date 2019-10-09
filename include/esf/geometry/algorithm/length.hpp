@@ -4,7 +4,7 @@
 
 #include <esu/algorithm.hpp>
 
-namespace es_fe
+namespace esf
 {
 namespace internal
 {
@@ -30,4 +30,4 @@ double length(const Geometry& geometry)
 {
 	return internal::length(geometry, typename Geometry::Geometry_tag{});
 }
-} // namespace es_fe
+} // namespace esf

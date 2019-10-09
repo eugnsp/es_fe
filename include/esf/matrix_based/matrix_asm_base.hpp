@@ -1,6 +1,6 @@
 #pragma once
 
-namespace es_fe
+namespace esf
 {
 template<class Solver>
 class Matrix_asm_base
@@ -16,4 +16,4 @@ public:
 protected:
 	Solver& solver_;
 };
-} // namespace es_fe
+} // namespace esf

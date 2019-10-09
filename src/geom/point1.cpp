@@ -4,7 +4,7 @@
 #include <ostream>
 #include <sstream>
 
-namespace es_fe
+namespace esf
 {
 std::ostream& operator<<(std::ostream& os, const Point1& p)
 {
@@ -15,4 +15,4 @@ std::ostream& operator<<(std::ostream& os, const Point1& p)
 
 	return os;
 }
-} // namespace es_fe
+} // namespace esf

@@ -2,7 +2,7 @@
 #include <esf/boundary_cond/boundary_cond_base1.hpp>
 #include <esf/boundary_cond/boundary_cond_base2.hpp>
 
-namespace es_fe
+namespace esf
 {
 template<class Element, bool is_essential_ = true>
 class Boundary_cond : public internal::Boundary_cond_base<Element::dim, Element>
@@ -17,4 +17,4 @@ public:
 public:
 	using Base::Base;
 };
-} // namespace es_fe
+} // namespace esf

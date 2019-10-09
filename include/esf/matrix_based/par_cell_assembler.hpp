@@ -8,18 +8,18 @@
 #include <thread>
 #include <vector>
 
-namespace es_fe
+namespace esf
 {
 class Par_cell_assembler
 {
 public:
-	Par_cell_assembler(const es_fe::Mesh_face_colour_map& colour_map) : colour_map_(colour_map)
+	Par_cell_assembler(const esf::Mesh_face_colour_map& colour_map) : colour_map_(colour_map)
 	{}
 
 	template<class System, class Fn>
 	void assemble(const System& system, Fn&& fn)
 	{
-		using Colour = es_fe::Mesh_face_colour_map::Colour;
+		using Colour = esf::Mesh_face_colour_map::Colour;
 
 		const Colour n_colours = colour_map_.n_colours();
 		Colour colour = 0;
@@ -35,7 +35,7 @@ public:
 		const auto assemble_for_colour = [&] {
 			while (colour < n_colours)
 			{
-				auto face = es_fe::Face_index::invalid;
+				auto face = esf::Face_index::invalid;
 				{
 					std::scoped_lock lock{range_mutex};
 					if (!range.empty())
@@ -67,6 +67,6 @@ private:
 	}
 
 private:
-	const es_fe::Mesh_face_colour_map& colour_map_;
+	const esf::Mesh_face_colour_map& colour_map_;
 };
-} // namespace es_fe
+} // namespace esf

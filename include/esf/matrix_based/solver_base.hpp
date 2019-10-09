@@ -6,7 +6,7 @@
 
 #include <cstddef>
 
-namespace es_fe
+namespace esf
 {
 template<class System_, class Linear_solver>
 class Matrix_based_solver_base
@@ -16,8 +16,8 @@ public:
 	using Mesh = typename System::Mesh;
 
 	using Value = typename Linear_solver::Sparse_matrix::Value;
-	using Solution = es_fe::Solution<System, Value>;
-	using Solution_view = es_fe::Solution_view<System, Value>;
+	using Solution = esf::Solution<System, Value>;
+	using Solution_view = esf::Solution_view<System, Value>;
 
 public:
 	Matrix_based_solver_base(const Mesh& mesh) : linear_solver_(matrix_), system_(mesh)
@@ -74,4 +74,4 @@ protected:
 	Linear_solver linear_solver_;
 	System system_;
 };
-} // namespace es_fe
+} // namespace esf
