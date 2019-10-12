@@ -2,9 +2,7 @@
 
 ## Synopsis
 
-This is a finite elements library that is being developed mostly
-for educational purposes. It was mainly written for a
-Boltzmann-Poisson solver based on spherical harmonics expansion.
+This is a finite elements library that is being developed mostly for educational purposes.
 
 ## Main features
 
