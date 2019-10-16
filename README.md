@@ -1,5 +1,7 @@
 # Finite elements library
 
+This repository is archived. The library has been merged into [`eslib` library](https://github.com/eugnsp/eslib).
+
 ## Synopsis
 
 This is a finite elements library that is being developed mostly for educational purposes.
